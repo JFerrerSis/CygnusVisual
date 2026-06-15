@@ -1,17 +1,19 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import vercel from '@astrojs/vercel'; // 1. Asegúrate de importar esto
+import netlify from '@astrojs/netlify'; // Cambiado a Netlify
+
 export default defineConfig({
   integrations: [tailwind()],
 
-  // 'server' es la opción correcta para API routes
-  output: 'server',
+  // Usamos 'hybrid' para que todo el sitio sea estático (rápido) 
+  // y SOLO la API de contacto corra en el servidor.
+  output: 'hybrid',
+
+  // El adaptador se declara aquí, en la raíz del objeto, NO dentro de 'server'
+  adapter: netlify(),
 
   server: {
     host: true,
     port: 4321,
-    adapter: vercel(),
-  },
-
-  adapter: vercel()
+  }
 });

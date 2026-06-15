@@ -1,5 +1,9 @@
 ---
+// src/pages/index.astro
 const acceptLanguage = Astro.request.headers.get('accept-language') || '';
-const preferredLang = acceptLanguage.startsWith('en') ? 'en' : 'es';
+
+// Buscamos si 'en' está en cualquier parte del inicio de las preferencias
+const preferredLang = acceptLanguage.toLowerCase().includes('en') ? 'en' : 'es';
+
 return Astro.redirect(`/${preferredLang}`, 302);
 ---
