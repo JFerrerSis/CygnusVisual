@@ -1,7 +1,7 @@
 /* empty css               */
-import { c as createComponent } from './astro-component_B2yGSP42.mjs';
-import { o as renderComponent, k as renderTemplate } from './entrypoint_Dp9r-Sdu.mjs';
-import { $ as $$BaseLayout, a as $$Hero, b as $$Services, c as $$About, d as $$Team, e as $$Location, f as $$Contact } from './Contact_DsKb3RMq.mjs';
+import { c as createComponent } from './astro-component_BZwXg0cz.mjs';
+import { o as renderComponent, k as renderTemplate } from './entrypoint_CIt0mbzC.mjs';
+import { $ as $$BaseLayout, a as $$Hero, b as $$Services, c as $$About, d as $$Team, e as $$Location, f as $$Contact } from './Contact_DiRu3Xni.mjs';
 
 const nav = {"home":"Home","services":"Services","about":"About","team":"Team","location":"Location","contact":"Contact"};
 const hero = {"badge":"Marketing & Audiovisual Production Agency","title":"CYGNUS VISUAL","slogan":"Audiovisual Marketing on Social Media • LATAM™","services":"Design | Branding | Photography | Video | Social Media Management | Audiovisual Production","cta":"Contact us","whatsapp":"WhatsApp","badgeAgency":"AUDIOVISUAL AGENCY","badgeServices":"SERVICES","scroll":"SCROLL","stats":{"followers":"+200%","followersLabel":"Average growth","projects":"100%","projectsLabel":"Client satisfaction","following":"24/7","followingLabel":"Continuous support"}};

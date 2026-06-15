@@ -1,6 +1,6 @@
 /* empty css               */
-import { c as createComponent } from './astro-component_B2yGSP42.mjs';
-import './entrypoint_Dp9r-Sdu.mjs';
+import { c as createComponent } from './astro-component_BZwXg0cz.mjs';
+import './entrypoint_CIt0mbzC.mjs';
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$props, $$slots);

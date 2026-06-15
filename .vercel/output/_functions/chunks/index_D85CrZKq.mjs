@@ -1,4 +1,4 @@
-import { y as getDefaultExportFromCjs } from './entrypoint_Dp9r-Sdu.mjs';
+import { y as getDefaultExportFromCjs } from './entrypoint_CIt0mbzC.mjs';
 import require$$0$1 from 'node:util';
 import require$$1$1 from 'node:stream';
 import require$$5 from 'detect-libc';

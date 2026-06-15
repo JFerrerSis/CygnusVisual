@@ -1,5 +1,5 @@
-import { c as createComponent } from './astro-component_B2yGSP42.mjs';
-import { p as createRenderInstruction, m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as renderSlot, v as renderHead } from './entrypoint_Dp9r-Sdu.mjs';
+import { c as createComponent } from './astro-component_BZwXg0cz.mjs';
+import { p as createRenderInstruction, m as maybeRenderHead, h as addAttribute, k as renderTemplate, o as renderComponent, q as renderSlot, v as renderHead } from './entrypoint_CIt0mbzC.mjs';
 
 async function renderScript(result, id) {
   const inlined = result.inlinedScripts.get(id);
