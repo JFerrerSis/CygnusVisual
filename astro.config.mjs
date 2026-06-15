@@ -1,16 +1,23 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import netlify from '@astrojs/netlify'; // Cambiado a Netlify
+import netlify from '@astrojs/netlify';
 
 export default defineConfig({
   integrations: [tailwind()],
 
-  // Usamos 'hybrid' para que todo el sitio sea estático (rápido) 
-  // y SOLO la API de contacto corra en el servidor.
-  output: 'hybrid',
+  // 1. ELIMINA por completo la línea de output o déjala como 'static'
+  output: 'static', 
 
-  // El adaptador se declara aquí, en la raíz del objeto, NO dentro de 'server'
+  // 2. El adaptador se encarga de dejar viva tu API automáticamente
   adapter: netlify(),
+
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: true
+    }
+  },
 
   server: {
     host: true,
