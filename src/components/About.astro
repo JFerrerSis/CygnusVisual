@@ -1,128 +1,98 @@
 ---
-const currentPath = Astro.url.pathname;
-const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
-const currentLang = isSpanish ? 'es' : 'en';
+// 1. Recibimos la prop original de traducciones desde el index
+const { t } = Astro.props;
 
-const texts = {
-  es: {
-    badge: 'Sobre nosotros',
-    title: 'Transformamos ideas en experiencias visuales',
-    description: 'En Cygnus Visual combinamos creatividad, estrategia y tecnología para potenciar la presencia digital de tu marca. Somos una agencia especializada en marketing audiovisual con enfoque en resultados.',
-    missionTitle: 'Misión',
-    missionDesc: 'Democratizar el acceso a contenido visual de alta calidad, ayudando a marcas a conectar con sus audiencias de manera auténtica y efectiva.',
-    visionTitle: 'Visión',
-    visionDesc: 'Ser referentes en innovación visual en Latinoamérica, reconocidos por nuestra creatividad, calidad y compromiso con los resultados.',
-    valuesTitle: 'Nuestros valores',
-    values: [
-      { title: 'Creatividad', desc: 'Soluciones originales que destacan' },
-      { title: 'Calidad', desc: 'Estándares profesionales en cada proyecto' },
-      { title: 'Compromiso', desc: 'Dedicación total a tus objetivos' },
-      { title: 'Innovación', desc: 'Siempre a la vanguardia' }
-    ],
-    cta: 'Conoce nuestro trabajo'
-  },
-  en: {
-    badge: 'About us',
-    title: 'We turn ideas into visual experiences',
-    description: 'At Cygnus Visual we combine creativity, strategy and technology to boost your brand\'s digital presence. We are an agency specialized in audiovisual marketing with a focus on results.',
-    missionTitle: 'Mission',
-    missionDesc: 'Democratize access to high-quality visual content, helping brands connect with their audiences authentically and effectively.',
-    visionTitle: 'Vision',
-    visionDesc: 'To be leaders in visual innovation in Latin America, recognized for our creativity, quality and commitment to results.',
-    valuesTitle: 'Our values',
-    values: [
-      { title: 'Creativity', desc: 'Original solutions that stand out' },
-      { title: 'Quality', desc: 'Professional standards in every project' },
-      { title: 'Commitment', desc: 'Total dedication to your goals' },
-      { title: 'Innovation', desc: 'Always at the forefront' }
-    ],
-    cta: 'See our work'
-  }
-};
+// 2. Extraemos el bloque "about" de forma segura
+const jsonAbout = t?.about || {};
 
-const t = texts[currentLang];
+// Separamos los títulos del cuerpo de la misión/visión para mantener la UX limpia con iconos individuales
+const missionText = jsonAbout.mission || "Misión: Democratizar el acceso a contenido visual de alta calidad.";
+const visionText = jsonAbout.vision || "Visión: Ser referentes en innovación visual en Latinoamérica.";
+
+const missionBody = missionText.includes("Misión:") ? missionText.split("Misión:")[1].trim() : missionText;
+const visionBody = visionText.includes("Visión:") ? visionText.split("Visión:")[1].trim() : visionText;
 ---
 
-<section id="about" class="py-24 bg-white">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<section id="about" class="py-28 bg-white relative overflow-hidden">
+  
+  <div class="absolute inset-0 pointer-events-none opacity-40 select-none">
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-gradient-to-tr from-azul-rey/5 to-transparent rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
-    <!-- ==================== ENCABEZADO ==================== -->
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <span class="text-azul-rey text-sm font-semibold uppercase tracking-wider mb-2 block">{t.badge}</span>
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
       
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-        {t.title}
-      </h2>
-      
-      <div class="w-16 h-1 bg-azul-rey mx-auto mb-6"></div>
-      
-      <p class="text-gray-600 text-lg leading-relaxed">
-        {t.description}
-      </p>
-    </div>
-    
-    <!-- ==================== MISIÓN Y VISIÓN ==================== -->
-    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
-      
-      <!-- Misión -->
-      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2a10 10 0 1010 10 10 10 0 00-10-10zM12 6v6l4 2"/>
-          </svg>
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10">
+          <span class="w-1.5 h-1.5 bg-azul-rey rounded-full animate-pulse"></span>
+          <span class="text-xs font-bold text-azul-rey uppercase tracking-widest">{t?.nav?.about || 'Nosotros'}</span>
         </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">{t.missionTitle}</h3>
-        <p class="text-gray-600 leading-relaxed">
-          {t.missionDesc}
+        
+        <h2 class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight leading-[1.1]">
+          {jsonAbout.title || 'Sobre Nosotros'}
+        </h2>
+        
+        <div class="w-16 h-1 bg-azul-rey rounded-full"></div>
+        
+        <p class="text-gray-600 text-lg leading-relaxed font-medium">
+          {jsonAbout.description || 'En Cygnus Visual combinamos tecnología de vanguardia con creatividad ilimitada...'}
         </p>
+
+        <div class="pt-4 hidden lg:block">
+          <a 
+            href="#portfolio" 
+            class="group inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-xl font-semibold hover:bg-azul-rey transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-azul-rey/20"
+          >
+            <span>{t?.services?.cta || 'Conoce nuestro trabajo'}</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
       </div>
       
-      <!-- Visión -->
-      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
-        <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-          </svg>
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">{t.visionTitle}</h3>
-        <p class="text-gray-600 leading-relaxed">
-          {t.visionDesc}
-        </p>
-      </div>
-      
-    </div>
-    
-    <!-- ==================== VALORES ==================== -->
-    <div class="text-center mb-12">
-      <h3 class="text-2xl font-bold text-gray-800">{t.valuesTitle}</h3>
-      <div class="w-12 h-0.5 bg-azul-rey mx-auto mt-3"></div>
-    </div>
-    
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
-      
-      {t.values.map((value) => (
-        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-100 hover:border-azul-rey/30 transition-all duration-300">
-          <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+      <div class="lg:col-span-6 grid sm:grid-cols-2 lg:grid-cols-1 gap-6 w-full">
+        
+        <div class="group bg-gray-50/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-100 hover:border-azul-rey/20 hover:bg-white hover:shadow-xl transition-all duration-500">
+          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-5 border border-gray-100 shadow-sm group-hover:bg-azul-rey/10 group-hover:border-azul-rey/20 transition-all duration-300">
             <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2a3.53 3.53 0 0 0-2.5 1.06A3.54 3.54 0 0 0 8.5 5.6a5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 4.5 7.4 3.54 3.54 0 0 0 6.5 12a3.53 3.53 0 0 0-2 4.6 3.54 3.54 0 0 0 4.6 2 5.47 5.47 0 0 0 0 1.6 3.53 3.53 0 0 0 1.9 2.9 3.54 3.54 0 0 0 4.6-2 5.47 5.47 0 0 0 1.6 0 3.53 3.53 0 0 0 2.9-1.9 3.54 3.54 0 0 0-2-4.6 5.47 5.47 0 0 0 0-1.6 3.53 3.53 0 0 0-1.9-2.9 3.54 3.54 0 0 0-4.6 2 5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 12 2Z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1010 10 10 10 0 00-10-10zM12 6v6l4 2"/>
             </svg>
           </div>
-          <h4 class="font-bold text-gray-800 mb-2">{value.title}</h4>
-          <p class="text-gray-500 text-sm">{value.desc}</p>
+          <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
+            {jsonAbout.mission ? "Misión" : "Misión"}
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-base font-medium">
+            {missionBody}
+          </p>
         </div>
-      ))}
-      
+        
+        <div class="group bg-gray-50/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-100 hover:border-azul-rey/20 hover:bg-white hover:shadow-xl transition-all duration-500">
+          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-5 border border-gray-100 shadow-sm group-hover:bg-azul-rey/10 group-hover:border-azul-rey/20 transition-all duration-300">
+            <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
+            {jsonAbout.vision ? "Visión" : "Visión"}
+          </h3>
+          <p class="text-gray-600 leading-relaxed text-base font-medium">
+            {visionBody}
+          </p>
+        </div>
+        
+      </div>
     </div>
     
-    <!-- ==================== CTA ==================== -->
-    <div class="text-center">
+    <div class="text-center mt-12 block lg:hidden">
       <a 
         href="#portfolio" 
-        class="inline-flex items-center gap-2 px-6 py-3 bg-azul-rey text-white rounded-lg font-semibold hover:bg-azul-rey/90 transition-all duration-300"
+        class="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-gray-900 text-white rounded-xl font-semibold hover:bg-azul-rey transition-all duration-300 shadow-md"
       >
-        <span>{t.cta}</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <span>{t?.services?.cta || 'Conoce nuestro trabajo'}</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>
       </a>
     </div>
@@ -132,15 +102,15 @@ const t = texts[currentLang];
 
 <script>
   (function() {
-    const ctaButton = document.querySelector('#about a[href="#portfolio"]');
-    if (ctaButton) {
-      ctaButton.addEventListener('click', (e) => {
+    const ctaButtons = document.querySelectorAll('#about a[href="#portfolio"]');
+    ctaButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
         const portfolioSection = document.getElementById('portfolio');
         if (portfolioSection) {
           portfolioSection.scrollIntoView({ behavior: 'smooth' });
         }
       });
-    }
+    });
   })();
 </script>
