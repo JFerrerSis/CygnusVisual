@@ -2,29 +2,30 @@
   "nav": {
     "home": "Inicio",
     "services": "Servicios",
+    "portfolio": "Portafolio",
     "about": "Nosotros",
     "team": "Equipo",
     "location": "Ubicación",
     "contact": "Contacto"
   },
-"hero": {
-  "badge": "Agencia de Marketing & Producción Audiovisual",
-  "slogan": "Marketing Audiovisual en RRSS • LATAM™",
-  "servicesList": ["Diseño", "Branding", "Fotografía", "Vídeo", "Gestión RRSS", "Producción Audiovisual"],
-  "cta": "Contáctanos",
-  "whatsapp": "WhatsApp",
-  "badgeAgency": "AGENCIA AUDIOVISUAL",
-  "badgeServices": "SERVICIOS",
-  "scroll": "SCROLL",
-"stats": {
-  "followers": "+200%",
-  "followersLabel": "Crecimiento promedio",
-  "projects": "100%",
-  "projectsLabel": "Satisfacción cliente",
-  "following": "24/7",
-  "followingLabel": "Soporte continuo"
-}
-},
+  "hero": {
+    "badge": "Agencia de Marketing & Producción Audiovisual",
+    "slogan": "Marketing Audiovisual en RRSS • Latam e Internacional™",
+    "servicesList": ["Diseño", "Branding", "Fotografía", "Vídeo", "Gestión RRSS", "Producción Audiovisual"],
+    "cta": "Contáctanos",
+    "whatsapp": "WhatsApp",
+    "badgeAgency": "AGENCIA AUDIOVISUAL",
+    "badgeServices": "SERVICIOS",
+    "scroll": "SCROLL",
+    "stats": {
+      "followers": "+200%",
+      "followersLabel": "Crecimiento promedio",
+      "projects": "100%",
+      "projectsLabel": "Satisfacción cliente",
+      "following": "24/7",
+      "followingLabel": "Soporte continuo"
+    }
+  },
   "services": {
     "title": "NUESTROS SERVICIOS",
     "subtitle": "Soluciones creativas y profesionales para potenciar tu marca",
@@ -68,11 +69,11 @@
           "description": "Edición profesional, motion graphics y post-producción"
         },
         {
-          "title": "Planificación",
-          "description": "Calendario editorial, estrategia y contenido"
+          "title": "Planificación de Contenido",
+          "description": "Calendario editorial, estrategia y contenido programado"
         },
         {
-          "title": "Creación",
+          "title": "Creación de Contenido",
           "description": "Fotografía profesional, diseño y contenido original"
         }
       ]
@@ -85,27 +86,33 @@
     "mission": "Misión: Democratizar el acceso a contenido visual de alta calidad.",
     "vision": "Visión: Ser referentes en innovación visual en Latinoamérica."
   },
-  "team": {
-    "title": "Nuestro Equipo",
-    "subtitle": "Profesionales apasionados por lo que hacen",
+"team": {
+    "title": "Nuestro Equipo de Expertos",
+    "subtitle": "5 roles especializados dedicados a potenciar tu marca",
     "members": [
-      {
-        "name": "Ana Martínez",
-        "role": "Directora Creativa",
-        "bio": "10+ años de experiencia en diseño y dirección de arte."
+      { 
+        "role": "Director Creativo", 
+        "bio": "Más de 10 años de experiencia en diseño visual y dirección de arte." 
       },
-      {
-        "name": "Laura Gómez",
-        "role": "Productora Audiovisual",
-        "bio": "Experta en producción de video y fotografía profesional."
+      { 
+        "role": "Productor Audiovisual", 
+        "bio": "Experto en producción de video de alto impacto y fotografía profesional." 
       },
-      {
-        "name": "Carlos López",
-        "role": "Community Manager",
-        "bio": "Estrategias de crecimiento en redes sociales."
+      { 
+        "role": "Community Manager", 
+        "bio": "Estrategias de crecimiento y gestión de comunidades en redes sociales." 
+      },
+      { 
+        "role": "Estratega Digital", 
+        "bio": "La mente maestra detrás de tu estructura de anuncios y crecimiento diario." 
+      },
+      { 
+        "role": "Editor de Post-producción", 
+        "bio": "Especialista en ritmo, corrección de color y contenido de ventas persuasivo." 
       }
     ]
-  },
+  }
+,
   "location": {
     "title": "Nuestra Ubicación",
     "address": "LATAM — Operaciones en toda la región",

@@ -1,32 +1,27 @@
 ---
-// Header que aparece al hacer scroll
+const { t = {} } = Astro.props;
+
 const currentPath = Astro.url.pathname;
 const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
-const isEnglish = currentPath.startsWith('/en');
+const isEnglish = currentPath.startsWith('/en'); // Definido correctamente
 
-// Detectar idioma actual para los links
-const currentLang = isSpanish ? 'es' : 'en';
+const navData = t?.nav || {};
 
-// Recibir traducciones como prop y establecer valores por defecto
-const t = Astro.props.t || {};
-
-// Valores por defecto para nav (en caso de que no existan)
-const defaultNav = {
-  home: currentLang === 'es' ? 'Inicio' : 'Home',
-  services: currentLang === 'es' ? 'Servicios' : 'Services',
-  about: currentLang === 'es' ? 'Nosotros' : 'About',
-  team: currentLang === 'es' ? 'Equipo' : 'Team',
-  location: currentLang === 'es' ? 'Ubicación' : 'Location',
-  contact: currentLang === 'es' ? 'Contacto' : 'Contact'
+// Definimos el tipo del objeto para que TS no se queje
+const nav: Record<string, string> = {
+  home: navData.home || (isSpanish ? 'Inicio' : 'Home'),
+  services: navData.services || (isSpanish ? 'Servicios' : 'Services'),
+  portfolio: navData.portfolio || (isSpanish ? 'Portafolio' : 'Portfolio'),
+  about: navData.about || (isSpanish ? 'Nosotros' : 'About'),
+  team: navData.team || (isSpanish ? 'Equipo' : 'Team'),
+  location: navData.location || (isSpanish ? 'Ubicación' : 'Location'),
+  contact: navData.contact || (isSpanish ? 'Contacto' : 'Contact')
 };
 
-// Usar t.nav si existe, si no usar defaultNav
-const nav = t.nav || defaultNav;
-
-// Links de navegación con sus anchors
 const navLinks = [
   { id: 'home', href: '#home' },
   { id: 'services', href: '#services' },
+  { id: 'portfolio', href: '#portfolio' },
   { id: 'about', href: '#about' },
   { id: 'team', href: '#team' },
   { id: 'location', href: '#location' },
@@ -36,308 +31,107 @@ const navLinks = [
 
 <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent overflow-x-hidden">
   <div class="container mx-auto px-4">
-    <!-- Altura más cómoda para móviles (h-14) y desktop (h-16) -->
     <div class="flex justify-between items-center h-14 sm:h-16">
       
-      <!-- Logo con mejor tamaño -->
-      <a 
-        href={currentLang === 'es' ? '/es' : '/en'} 
-        class="text-white font-bold text-base sm:text-lg md:text-xl whitespace-nowrap tracking-wide"
-      >
+      <a href={isSpanish ? '/es' : '/en'} class="text-white font-bold text-lg sm:text-xl tracking-wide">
         Cygnus<span class="text-gray-200 font-medium">Visual</span>
       </a>
       
-      <!-- Navegación Desktop -->
       <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
         {navLinks.map((link) => (
-          <a 
-            href={link.href}
-            class="nav-link text-white/80 hover:text-white transition-colors text-sm font-medium px-3 py-1.5 rounded-md hover:bg-white/10"
-          >
+          <a href={link.href} class="nav-link text-white/80 hover:text-white transition-colors text-sm font-medium px-3 py-1.5 rounded-md hover:bg-white/10">
             {nav[link.id]}
           </a>
         ))}
-        <a 
-          href="#contact" 
-          class="ml-3 px-4 py-2 bg-white text-azul-rey rounded-full text-sm font-semibold hover:bg-gray-100 transition-all shadow-md"
-        >
-          {t.hero?.cta || (currentLang === 'es' ? 'Cotizar' : 'Quote')}
+        <a href="#contact" class="ml-3 px-4 py-2 bg-white text-azul-rey rounded-full text-sm font-semibold hover:bg-gray-100 transition-all shadow-md">
+          {t.hero?.cta || (isSpanish ? 'Cotizar' : 'Quote')}
         </a>
       </nav>
       
-      <!-- Selector de idioma + Botón móvil -->
       <div class="flex items-center gap-3">
-        
-        <!-- Language Switcher optimizado con texto en azul rey cuando está activo -->
         <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full p-1 border border-white/20">
-          <a 
-            href="/es" 
-            class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${
-              isSpanish 
-                ? 'text-azul-rey bg-white shadow-sm' 
-                : 'text-white/80 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            ES
-          </a>
-          <a 
-            href="/en" 
-            class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${
-              isEnglish 
-                ? 'text-azul-rey bg-white shadow-sm' 
-                : 'text-white/80 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            EN
-          </a>
+          <a href="/es" class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${isSpanish ? 'text-azul-rey bg-white shadow-sm' : 'text-white/80'}`}>ES</a>
+          <a href="/en" class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${isEnglish ? 'text-azul-rey bg-white shadow-sm' : 'text-white/80'}`}>EN</a>
         </div>
         
-        <!-- Botón menú hamburguesa más grande y accesible -->
         <button id="menu-btn" class="md:hidden w-10 h-10 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Abrir menú">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
-      
     </div>
   </div>
   
-  <!-- Menú móvil - Fondo Azul Rey con desenfoque de fondo -->
-  <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-72 sm:w-80 bg-azul-rey/95 backdrop-blur-lg z-50 shadow-2xl invisible">
+  <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-80 bg-azul-rey/95 backdrop-blur-lg z-50 shadow-2xl invisible">
     <div class="flex flex-col h-full">
-      <!-- Header del drawer con botón cerrar -->
       <div class="flex justify-between items-center px-6 py-4 border-b border-white/10">
-        <span class="text-white font-bold text-lg tracking-wide">Menú</span>
-        <button id="close-menu-btn" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+        <span class="text-white font-bold text-lg">Menu</span>
+        <button id="close-menu-btn" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
-      
-      <!-- Links de navegación móviles -->
-      <nav class="flex flex-col p-6 space-y-2 overflow-y-auto">
-        {navLinks.map((link, index) => (
-          <a 
-            href={link.href}
-            class="mobile-nav-link text-white/85 hover:text-white hover:bg-white/10 px-4 py-3.5 rounded-xl text-base font-semibold transition-all"
-            style={`transition-delay: ${index * 0.03}s`}
-          >
+      <nav class="flex flex-col p-6 space-y-2">
+        {navLinks.map((link) => (
+          <a href={link.href} class="mobile-nav-link text-white/85 hover:text-white hover:bg-white/10 px-4 py-3.5 rounded-xl font-semibold transition-all">
             {nav[link.id]}
           </a>
         ))}
-        
-        <div class="border-t border-white/10 my-4"></div>
-        
-        <a 
-          href="#contact" 
-          class="px-4 py-3.5 bg-white text-azul-rey rounded-xl text-center font-bold text-base hover:bg-gray-100 transition-all shadow-lg"
-        >
-          {t.hero?.cta || (currentLang === 'es' ? 'Cotizar ahora' : 'Get a quote')}
-        </a>
       </nav>
     </div>
   </div>
   
-  <!-- Overlay oscuro detrás del drawer -->
   <div id="menu-overlay" class="md:hidden fixed inset-0 bg-black/60 z-40 invisible opacity-0 transition-opacity duration-300"></div>
-  
-  <!-- Barra de progreso de scroll -->
   <div id="progress-bar" class="absolute bottom-0 left-0 h-0.5 bg-white/50 w-0 transition-all duration-300"></div>
-  
 </header>
 
 <style>
-  /* Color de fondo Azul Rey con scroll */
   #main-header.scrolled {
     background-color: rgba(0, 51, 160, 0.95); 
     backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
   }
-  
-  #main-header.menu-open {
-    background-color: rgba(0, 51, 160, 1);
-    backdrop-filter: none;
-  }
-  
-  .nav-link {
-    transition: all 0.2s ease;
-  }
-  
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  section, [id] {
-    scroll-margin-top: 70px;
-  }
-  
-  /* Animación optimizada para prevenir saltos de pantalla horizontal */
   #mobile-menu {
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
   }
-  
-  #mobile-menu.open {
-    visibility: visible;
-    transform: translateX(0);
-  }
-  
-  /* Control del Overlay */
-  #menu-overlay.open {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  /* Animación interna de los links del menú móvil */
-  #mobile-menu.open .mobile-nav-link {
-    opacity: 0;
-    transform: translateX(10px);
-    animation: slideInRight 0.3s ease-out forwards;
-  }
-  
-  @keyframes slideInRight {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  body.menu-open {
-    overflow: hidden;
-  }
+  #mobile-menu.open { visibility: visible; transform: translateX(0); }
+  #menu-overlay.open { visibility: visible; opacity: 1; }
+  body.menu-open { overflow: hidden; }
 </style>
 
 <script>
-  (function() {
-    const header = document.getElementById('main-header');
-    const progressBar = document.getElementById('progress-bar');
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const closeMenuBtn = document.getElementById('close-menu-btn');
-    const menuOverlay = document.getElementById('menu-overlay');
-    
-    let ticking = false;
-    let isMenuOpen = false;
-    
-    function updateHeader() {
-      if (!header) return;
-      const currentScroll = window.pageYOffset;
-      
-      if (!isMenuOpen) {
-        if (currentScroll > 30) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
-        }
-      }
-      
-      if (progressBar) {
-        const scrollPercent = (currentScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = scrollPercent + '%';
-      }
-      
-      ticking = false;
-    }
-    
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(updateHeader);
-        ticking = true;
-      }
-    });
-    
-    // ==================== LÓGICA DE APERTURA Y CIERRE ====================
-    function openMenu() {
-      if (!mobileMenu || !menuOverlay) return;
-      
-      isMenuOpen = true;
-      mobileMenu.classList.add('open');
-      menuOverlay.classList.add('open');
+  const header = document.getElementById('main-header');
+  const menuBtn = document.getElementById('menu-btn');
+  const closeBtn = document.getElementById('close-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('menu-overlay');
+  const progressBar = document.getElementById('progress-bar');
+
+  function toggleMenu(open: boolean) {
+    if (open) {
+      menu?.classList.add('open');
+      overlay?.classList.add('open');
       document.body.classList.add('menu-open');
-      
-      if (header) {
-        header.classList.add('menu-open', 'scrolled');
-      }
-    }
-    
-    function closeMenu() {
-      if (!mobileMenu || !menuOverlay) return;
-      
-      isMenuOpen = false;
-      mobileMenu.classList.remove('open');
-      menuOverlay.classList.remove('open');
+    } else {
+      menu?.classList.remove('open');
+      overlay?.classList.remove('open');
       document.body.classList.remove('menu-open');
-      
-      if (header) {
-        header.classList.remove('menu-open');
-        if (window.pageYOffset <= 30) {
-          header.classList.remove('scrolled');
-        }
-      }
     }
-    
-    if (menuBtn) menuBtn.addEventListener('click', openMenu);
-    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
-    if (menuOverlay) menuOverlay.addEventListener('click', closeMenu);
-    
-    // Cerrar menú y scroll suave al hacer click en links del drawer
-    const mobileLinks = document.querySelectorAll('#mobile-menu a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
-          e.preventDefault();
-          closeMenu();
-          setTimeout(() => {
-            const targetElement = document.querySelector(href);
-            if (targetElement) {
-              targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-          }, 300);
-        } else {
-          closeMenu();
-        }
-      });
-    });
-    
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768 && isMenuOpen) {
-        closeMenu();
-      }
-    });
-    
-    // ==================== HIGHLIGHT LINK ACTIVO ====================
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    function highlightActiveLink() {
-      const scrollPosition = window.scrollY + 90;
-      
-      sections.forEach((section) => {
-        const sectionElement = section as HTMLElement;
-        const sectionTop = sectionElement.offsetTop;
-        const sectionBottom = sectionTop + sectionElement.offsetHeight;
-        const sectionId = sectionElement.getAttribute('id');
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          navLinks.forEach((link) => {
-            const anchor = link as HTMLAnchorElement;
-            anchor.classList.remove('text-white', 'font-bold', 'bg-white/10');
-            anchor.classList.add('text-white/80');
-            
-            if (anchor.getAttribute('href') === `#${sectionId}`) {
-              anchor.classList.remove('text-white/80');
-              anchor.classList.add('text-white', 'font-bold', 'bg-white/10');
-            }
-          });
-        }
-      });
-    }
-    
-    window.addEventListener('scroll', highlightActiveLink);
-    highlightActiveLink();
-    updateHeader();
-  })();
+  }
+
+  menuBtn?.addEventListener('click', () => toggleMenu(true));
+  closeBtn?.addEventListener('click', () => toggleMenu(false));
+  overlay?.addEventListener('click', () => toggleMenu(false));
+
+  window.addEventListener('scroll', () => {
+    // Scroll header
+    header?.classList.toggle('scrolled', window.scrollY > 30);
+    // Progress bar
+    const scroll = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    if (progressBar) progressBar.style.width = (scroll * 100) + '%';
+  });
+
+  // Cerrar al clickear links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
 </script>

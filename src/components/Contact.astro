@@ -306,164 +306,23 @@ const texts = formTexts[currentLang];
 
 <script>
   (() => {
-    const form = document.getElementById(
-      "contact-form",
-    ) as HTMLFormElement | null;
-    const emailBtn = document.getElementById(
-      "submit-email",
-    ) as HTMLButtonElement | null;
-    const whatsappBtn = document.getElementById(
-      "submit-whatsapp",
-    ) as HTMLButtonElement | null;
-    const btnText = document.getElementById("btn-text") as HTMLElement | null;
-    const btnLoading = document.getElementById(
-      "btn-loading",
-    ) as HTMLElement | null;
-    const formMessage = document.getElementById(
-      "form-message",
-    ) as HTMLElement | null;
-
-    const nameField = document.getElementById(
-      "name",
-    ) as HTMLInputElement | null;
-    const emailField = document.getElementById(
-      "email",
-    ) as HTMLInputElement | null;
-    const messageField = document.getElementById(
-      "message",
-    ) as HTMLTextAreaElement | null;
-
+    const whatsappBtn = document.getElementById("submit-whatsapp") as HTMLButtonElement | null;
+    const currentLang = window.location.pathname.startsWith("/en") ? "en" : "es";
     const phoneNumber = "584141586749";
-    const currentLang = window.location.pathname.startsWith("/en")
-      ? "en"
-      : "es";
 
-    // Textos para el script
-    const scriptTexts = {
-      es: {
-        success: "¡Mensaje enviado con éxito! Te responderemos pronto.",
-        error: "Error al enviar. Por favor intenta nuevamente.",
-        fillFields: "Por favor completa todos los campos",
-        invalidEmail: "Por favor ingresa un email válido",
-      },
-      en: {
-        success: "Message sent successfully! We will reply soon.",
-        error: "Error sending. Please try again.",
-        fillFields: "Please fill all fields",
-        invalidEmail: "Please enter a valid email",
-      },
+    // Mensaje predeterminado fijo
+    const fixedMessages = {
+      es: "Hola Cygnus Visual, vi su sitio web y me gustaría obtener más información sobre sus servicios de marketing audiovisual.",
+      en: "Hello Cygnus Visual, I saw your website and I would like to get more information about your audiovisual marketing services.",
     };
 
-    const t = scriptTexts[currentLang];
-
-    const showMessage = (msg: string, isSuccess: boolean): void => {
-      if (formMessage) {
-        formMessage.textContent = msg;
-        formMessage.classList.remove(
-          "hidden",
-          "bg-red-100",
-          "text-red-700",
-          "bg-green-100",
-          "text-green-700",
-        );
-        formMessage.classList.add(isSuccess ? "bg-green-100" : "bg-red-100");
-        formMessage.classList.add(
-          isSuccess ? "text-green-700" : "text-red-700",
-        );
-
-        setTimeout(() => {
-          formMessage.classList.add("hidden");
-        }, 5000);
-      }
-    };
-
-    const validateForm = (): boolean => {
-      if (!nameField || !emailField || !messageField) return false;
-
-      const nameVal = nameField.value.trim();
-      const emailVal = emailField.value.trim();
-      const messageVal = messageField.value.trim();
-
-      if (!nameVal || !emailVal || !messageVal) {
-        showMessage(t.fillFields, false);
-        return false;
-      }
-
-      if (!emailVal.includes("@") || !emailVal.includes(".")) {
-        showMessage(t.invalidEmail, false);
-        return false;
-      }
-
-      return true;
-    };
-
-    const resetFormFields = (): void => {
-      if (nameField) nameField.value = "";
-      if (emailField) emailField.value = "";
-      if (messageField) messageField.value = "";
-    };
-
-    const sendByEmail = async (): Promise<void> => {
-      if (!validateForm()) return;
-      if (!emailBtn) return;
-      if (!nameField || !emailField || !messageField) return;
-
-      emailBtn.disabled = true;
-      if (btnText) btnText.classList.add("hidden");
-      if (btnLoading) btnLoading.classList.remove("hidden");
-
-      const nameVal = nameField.value;
-      const emailVal = emailField.value;
-      const messageVal = messageField.value;
-
-      try {
-        const response = await fetch("/api/contacto", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: nameVal,
-            email: emailVal,
-            message: messageVal,
-            language: currentLang,
-          }),
-        });
-
-        const data = (await response.json()) as { error?: string };
-
-        if (response.ok) {
-          showMessage(t.success, true);
-          resetFormFields();
-        } else {
-          throw new Error(data.error || t.error);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        showMessage(t.error, false);
-      } finally {
-        if (emailBtn) emailBtn.disabled = false;
-        if (btnText) btnText.classList.remove("hidden");
-        if (btnLoading) btnLoading.classList.add("hidden");
-      }
-    };
-
-    // ==================== ENVÍO POR WHATSAPP (SIN VALIDACIÓN) ====================
     const sendByWhatsApp = (): void => {
-      // Mensaje de saludo predeterminado
-      const welcomeMessage = `Hola, vengo de la landing page de Cygnus Visual y me gustaría recibir información sobre sus servicios.`;
-      const encodedMessage = encodeURIComponent(welcomeMessage);
-      window.open(
-        `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
-        "_blank",
-      );
+      const message = fixedMessages[currentLang];
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
     };
 
-    if (emailBtn) {
-      emailBtn.addEventListener("click", (e: MouseEvent) => {
-        e.preventDefault();
-        sendByEmail();
-      });
-    }
-
+    // Solo escuchamos el botón de WhatsApp
     if (whatsappBtn) {
       whatsappBtn.addEventListener("click", (e: MouseEvent) => {
         e.preventDefault();

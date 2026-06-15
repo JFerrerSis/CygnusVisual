@@ -2,30 +2,33 @@
   "nav": {
     "home": "Home",
     "services": "Services",
+    "portfolio": "Portfolio", 
     "about": "About",
     "team": "Team",
     "location": "Location",
     "contact": "Contact"
+  }
+
+,
+  "hero": {
+    "badge": "Marketing & Audiovisual Production Agency",
+    "title": "CYGNUS VISUAL",
+    "slogan": "Audiovisual Marketing on Social Media • Latam e Internaltional",
+    "servicesList": ["Design", "Branding", "Photography", "Video", "Social Media Management", "Audiovisual Production"],
+    "cta": "Contact us",
+    "whatsapp": "WhatsApp",
+    "badgeAgency": "AUDIOVISUAL AGENCY",
+    "badgeServices": "SERVICES",
+    "scroll": "SCROLL",
+    "stats": {
+      "followers": "+200%",
+      "followersLabel": "Average growth",
+      "projects": "100%",
+      "projectsLabel": "Client satisfaction",
+      "following": "24/7",
+      "followingLabel": "Continuous support"
+    }
   },
-"hero": {
-  "badge": "Marketing & Audiovisual Production Agency",
-  "title": "CYGNUS VISUAL",
-  "slogan": "Audiovisual Marketing on Social Media • LATAM™",
-  "services": "Design | Branding | Photography | Video | Social Media Management | Audiovisual Production",
-  "cta": "Contact us",
-  "whatsapp": "WhatsApp",
-  "badgeAgency": "AUDIOVISUAL AGENCY",
-  "badgeServices": "SERVICES",
-  "scroll": "SCROLL",
-"stats": {
-  "followers": "+200%",
-  "followersLabel": "Average growth",
-  "projects": "100%",
-  "projectsLabel": "Client satisfaction",
-  "following": "24/7",
-  "followingLabel": "Continuous support"
-}
-},
   "services": {
     "title": "OUR SERVICES",
     "subtitle": "Creative and professional solutions to boost your brand",
@@ -47,35 +50,23 @@
       "title": "Advertising Material",
       "description": "Impactful designs that capture attention and communicate your message.",
       "items": [
-        "Flyers",
-        "Posters",
+        "Flyer Design",
+        "Posts and Posters",
         "Business Cards",
         "Catalogs",
         "Invitations",
         "Social Media",
         "Merchandise Design",
-        "Packaging"
+        "Packaging and more"
       ]
     },
     "additional": {
       "title": "We also offer",
       "items": [
-        {
-          "title": "Social Media Management",
-          "description": "Community management, strategy and growth"
-        },
-        {
-          "title": "Video Editing",
-          "description": "Professional editing, motion graphics and post-production"
-        },
-        {
-          "title": "Content Planning",
-          "description": "Editorial calendar, strategy and scheduled content"
-        },
-        {
-          "title": "Content Creation",
-          "description": "Professional photography, design and original content"
-        }
+        { "title": "Social Media Management", "description": "Community management, strategy and growth" },
+        { "title": "Video Editing", "description": "Professional editing, motion graphics and post-production" },
+        { "title": "Content Planning", "description": "Editorial calendar, strategy and scheduled content" },
+        { "title": "Content Creation", "description": "Professional photography, design and original content" }
       ]
     },
     "cta": "Request information"
@@ -87,26 +78,16 @@
     "vision": "Vision: Be leaders in visual innovation in Latin America."
   },
   "team": {
-    "title": "Our Team",
-    "subtitle": "Professionals passionate about what they do",
-    "members": [
-      {
-        "name": "Ana Martínez",
-        "role": "Creative Director",
-        "bio": "10+ years of experience in design and art direction."
-      },
-      {
-        "name": "Laura Gómez",
-        "role": "Audiovisual Producer",
-        "bio": "Expert in video production and professional photography."
-      },
-      {
-        "name": "Carlos López",
-        "role": "Community Manager",
-        "bio": "Growth strategies on social networks."
-      }
-    ]
-  },
+  "title": "Our Expert Team",
+  "subtitle": "5 specialized roles focused on your brand's growth",
+  "members": [
+    { "role": "Creative Director", "bio": "Over 10 years of experience in visual design and art direction." },
+    { "role": "Audiovisual Producer", "bio": "Expert in high-impact video production and photography." },
+    { "role": "Community Manager", "bio": "Strategic growth and community management for social networks." },
+    { "role": "Digital Strategist", "bio": "The mastermind behind your daily ad structure and performance." },
+    { "role": "Post-production Editor", "bio": "Specialist in rhythm, color grading, and persuasive sales content." }
+  ]
+},
   "location": {
     "title": "Our Location",
     "address": "LATAM — Operations throughout the region",

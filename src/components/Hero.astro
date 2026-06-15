@@ -4,6 +4,23 @@ const currentPath = Astro.url.pathname;
 const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
 const currentLang = isSpanish ? 'es' : 'en';
 
+// 1. Traer la variable de entorno de WhatsApp y limpiarla
+const rawWhatsAppNumber = import.meta.env.WHATSAPP_NUMBER || '';
+const whatsAppNumber = rawWhatsAppNumber.replace(/[^0-9]/g, '');
+
+// 2. Definir el mensaje predeterminado según el idioma de la página
+const defaultTextEs = "Hola Cygnus Visual, vi su sitio web y me gustaría obtener más información sobre sus servicios de marketing audiovisual.";
+const defaultTextEn = "Hello Cygnus Visual, I saw your website and I would like to get more information about your audiovisual marketing services.";
+const chosenText = isSpanish ? defaultTextEs : defaultTextEn;
+
+// 3. Codificar el texto para que sea seguro en una URL (cambia espacios por %20, etc.)
+const encodedMessage = encodeURIComponent(chosenText);
+
+// 4. Armar la URL final con el número y el mensaje
+const whatsappUrl = whatsAppNumber 
+  ? `https://wa.me/${whatsAppNumber}?text=${encodedMessage}`
+  : `https://wa.me/message/RSSN7IQ2AV6N1`; // Mantiene el link original como fallback por si no hay .env
+
 // Convertir servicios a array si es string
 const servicesArray = typeof t.hero?.services === 'string' 
   ? t.hero.services.split(' | ') 
@@ -12,7 +29,6 @@ const servicesArray = typeof t.hero?.services === 'string'
 
 <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-16 sm:pt-0">
   
-  <!-- ==================== FONDO CINEMÁTICO ==================== -->
   <div class="absolute inset-0">
     <div class="absolute inset-0 bg-gradient-to-br from-black via-azul-rey/10 to-black"></div>
     <div class="absolute inset-0 overflow-hidden">
@@ -28,13 +44,10 @@ const servicesArray = typeof t.hero?.services === 'string'
   </div>
   
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-8 sm:py-12">
-    <!-- Layout: columna en móvil, grid en desktop -->
     <div class="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       
-      <!-- ==================== COLUMNA IZQUIERDA - TEXTO ==================== -->
       <div class="text-center lg:text-left order-2 lg:order-1 space-y-4 sm:space-y-6">
         
-        <!-- Título responsive -->
         <div class="text-center lg:text-left">
           <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-tight">
             <span class="text-white">CYGNUS</span>
@@ -43,13 +56,11 @@ const servicesArray = typeof t.hero?.services === 'string'
           <div class="w-16 sm:w-20 h-0.5 sm:h-1 bg-azul-rey mx-auto lg:mx-0 mt-3 sm:mt-4"></div>
         </div>
         
-        <!-- Descripción destacada -->
         <div class="space-y-3 sm:space-y-4">
           <p class="text-azul-rey text-sm sm:text-base md:text-lg lg:text-xl font-semibold tracking-wide animate-fade-up animation-delay-200 px-2 sm:px-0">
             {t.hero?.slogan || "Audiovisual Marketing on Social Media • LATAM™"}
           </p>
           
-          <!-- Servicios como badges - SIN key -->
           {servicesArray.length > 0 && (
             <div class="flex flex-wrap gap-1.5 sm:gap-2 justify-center lg:justify-start">
               {servicesArray.map((service: string, idx: number) => (
@@ -65,7 +76,6 @@ const servicesArray = typeof t.hero?.services === 'string'
           )}
         </div>
         
-        <!-- Botones CTA responsivos -->
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4 justify-center lg:justify-start">
           <a 
             href="#contact" 
@@ -79,9 +89,10 @@ const servicesArray = typeof t.hero?.services === 'string'
           </a>
           
           <a 
-            href="https://wa.me/message/RSSN7IQ2AV6N1" 
+            href={whatsappUrl} 
             target="_blank"
-            class="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-white/5 backdrop-blur-md border border-white/20 rounded-full font-semibold text-white text-sm sm:text-base hover:bg-white/10 hover:border-azul-rey/50 transition-all duration-300 hover:scale-105 animate-fade-up animation-delay-400"
+            rel="noopener noreferrer"
+            class="group inline-flex items-center justify-center gap-2 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-white/5 backdrop-blur-md border border-white/20 rounded-full font-semibold text-white text-sm sm:text-base hover:bg-white/10 hover:border-azul-rey/50 transition-all duration-300 hover:scale-105 animate-fade-up animation-delay-400 relative"
           >
             <svg class="w-4 sm:w-5 h-4 sm:h-5 text-green-400 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z"/>
@@ -91,7 +102,6 @@ const servicesArray = typeof t.hero?.services === 'string'
           </a>
         </div>
         
-        <!-- Stats responsivos -->
         <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 max-w-md pt-4 sm:pt-6 border-t border-white/10 animate-fade-up animation-delay-500 mx-auto lg:mx-0">
           <div class="group text-center lg:text-left cursor-pointer">
             <div class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-azul-rey mb-0.5 sm:mb-1 group-hover:text-white transition-colors duration-300">
@@ -116,7 +126,6 @@ const servicesArray = typeof t.hero?.services === 'string'
           </div>
         </div>
         
-        <!-- Redes sociales responsivas -->
         <div class="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 pt-2 animate-fade-up animation-delay-600">
           <span class="text-[9px] sm:text-xs text-gray-500 tracking-wider">SÍGUENOS</span>
           <div class="h-px w-6 sm:w-8 bg-white/10"></div>
@@ -141,7 +150,6 @@ const servicesArray = typeof t.hero?.services === 'string'
         
       </div>
       
-      <!-- ==================== COLUMNA DERECHA - IMAGEN ==================== -->
       <div class="relative flex justify-center lg:justify-end order-1 lg:order-2 animate-fade-left animation-delay-200 mb-6 lg:mb-0">
         
         <div class="relative group w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
@@ -164,7 +172,6 @@ const servicesArray = typeof t.hero?.services === 'string'
             <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-azul-rey via-white/50 to-transparent rounded-b-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"></div>
           </div>
           
-          <!-- Badge flotante 1 -->
           <div class="absolute -top-3 -right-2 sm:-top-4 sm:-right-3 md:-top-6 md:-right-6 bg-black/90 backdrop-blur-md border-2 border-azul-rey rounded-lg sm:rounded-xl px-2 sm:px-3 md:px-5 py-1 sm:py-1.5 md:py-2.5 shadow-2xl animate-float z-20">
             <div class="flex items-center gap-1 sm:gap-2">
               <span class="text-azul-rey font-black text-base sm:text-lg md:text-xl">🚀</span>
@@ -172,15 +179,13 @@ const servicesArray = typeof t.hero?.services === 'string'
             </div>
           </div>
           
-          <!-- Badge flotante 2 -->
           <div class="absolute top-1/4 -left-4 md:-left-6 lg:-left-8 bg-gradient-to-r from-azul-rey to-azul-rey-dark rounded-lg px-2 md:px-3 lg:px-5 py-1 md:py-1.5 lg:py-2.5 shadow-2xl animate-float-delayed rotate-[-3deg] z-20 hidden lg:flex items-center gap-1 md:gap-2">
             <svg class="w-3 md:w-3.5 lg:w-4 h-3 md:h-3.5 lg:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
             </svg>
             <span class="text-white font-bold text-[10px] md:text-xs lg:text-sm whitespace-nowrap">{t.hero?.badgeAgency || "AGENCIA AUDIOVISUAL"}</span>
           </div>
           
-          <!-- Badge flotante 3 -->
           <div class="absolute -bottom-3 -right-2 sm:-bottom-4 sm:-right-3 md:-bottom-6 md:-right-6 bg-white rounded-lg sm:rounded-xl px-2 sm:px-3 md:px-5 py-1 sm:py-1.5 md:py-2.5 shadow-2xl animate-float z-20 flex items-center gap-1 sm:gap-2">
             <span class="text-lg sm:text-xl md:text-2xl">🎬</span>
             <span class="text-black font-bold text-[8px] sm:text-[10px] md:text-xs lg:text-sm whitespace-nowrap">{t.hero?.badgeServices || "SERVICIOS"}</span>
@@ -192,7 +197,6 @@ const servicesArray = typeof t.hero?.services === 'string'
     </div>
   </div>
   
-  <!-- ==================== SCROLL INDICATOR ==================== -->
   <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-10 animate-fade-up animation-delay-800">
     <div class="flex flex-col items-center gap-1 sm:gap-2">
       <span class="text-[8px] sm:text-[10px] text-gray-500 uppercase tracking-widest font-mono">{t.hero?.scroll || "SCROLL"}</span>
@@ -208,6 +212,7 @@ const servicesArray = typeof t.hero?.services === 'string'
 </section>
 
 <style is:global>
+  /* Se mantienen todos tus estilos css previos intactos */
   @keyframes shine {
     0% { background-position: 100% 0%; }
     100% { background-position: 0% 100%; }

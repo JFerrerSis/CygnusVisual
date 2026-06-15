@@ -1,83 +1,59 @@
 ---
-// 1. Recibimos la prop original de traducciones
 const { t } = Astro.props;
-
-// 2. Extraemos el bloque "team" de forma segura con fallbacks preventivos
 const jsonTeam = t?.team || {};
-const teamMembers = Array.isArray(jsonTeam.members) 
-  ? jsonTeam.members 
-  : (jsonTeam.members ? Object.values(jsonTeam.members) : []);
+const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
 
-// Función helper para obtener las iniciales del nombre de forma limpia
-const getInitials = (name: string) => {
-  if (!name) return "CV";
-  const words = name.split(" ");
-  return words.length > 1 
-    ? `${words[0][0]}${words[1][0]}`.toUpperCase() 
-    : `${words[0][0]}`.toUpperCase();
+// Helper para sacar iniciales del rol si no hay nombre
+const getRoleInitials = (role: string) => {
+  return role.split(" ").map(word => word[0]).slice(0, 2).join("").toUpperCase();
 };
 ---
 
-<section id="team" class="py-24 bg-gray-50 relative overflow-hidden">
-  
-  <div class="absolute inset-0 pointer-events-none opacity-30 select-none">
-    <div class="absolute bottom-0 right-10 w-[600px] h-[600px] bg-gradient-to-bl from-azul-rey/5 to-transparent rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<section id="team" class="py-20 bg-white">
+  <div class="container mx-auto px-6">
     
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10 mb-4">
-        <span class="w-1.5 h-1.5 bg-azul-rey rounded-full"></span>
-        <span class="text-xs font-bold text-azul-rey uppercase tracking-widest">{t?.nav?.team || 'Equipo'}</span>
-      </div>
-      
-      <h2 class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight mb-4">
-        {jsonTeam.title || 'Nuestro Equipo'}
-      </h2>
-      
-      <div class="w-16 h-1 bg-azul-rey mx-auto mb-6 rounded-full"></div>
-      
-      <p class="text-gray-500 text-lg max-w-2xl mx-auto font-medium">
-        {jsonTeam.subtitle || 'Profesionales apasionados por lo que hacen'}
-      </p>
+    <div class="text-center max-w-xl mx-auto mb-16">
+      <h2 class="text-4xl font-black text-gray-900 mb-4">{jsonTeam.title}</h2>
+      <p class="text-azul-rey font-bold uppercase tracking-widest text-xs">{jsonTeam.subtitle}</p>
     </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
       {teamMembers.map((member: any) => (
-        <div class="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col h-full">
+        <div class="group bg-white border border-gray-100 p-8 rounded-[2rem] flex flex-col items-center text-center transition-all duration-500 hover:border-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.1)]">
           
-          <div class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 h-40 flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-            
-            <div class="absolute -bottom-10 w-24 h-24 bg-white rounded-2xl p-1.5 shadow-md group-hover:scale-105 transition-transform duration-500">
-              <div class="w-full h-full bg-gradient-to-br from-azul-rey to-blue-700 rounded-xl flex items-center justify-center text-white font-black text-2xl tracking-wider shadow-inner">
-                {getInitials(member.name)}
-              </div>
-            </div>
-          </div>
-          
-          <div class="p-6 pt-14 text-center flex flex-col flex-grow">
-            <h3 class="text-xl font-bold text-gray-900 group-hover:text-azul-rey transition-colors duration-300 mb-1">
-              {member.name}
-            </h3>
-            <p class="text-azul-rey text-sm font-bold uppercase tracking-wider mb-4">
-              {member.role}
-            </p>
-            <p class="text-gray-500 text-sm leading-relaxed flex-grow font-medium">
-              {member.bio}
-            </p>
-            
-            <div class="flex items-center justify-center gap-3 mt-6 pt-4 border-t border-gray-50 text-gray-400">
-              <span class="text-xs font-semibold tracking-wider uppercase opacity-60 group-hover:opacity-100 group-hover:text-gray-600 transition-all duration-300">
-                Cygnus Team Talent
-              </span>
-            </div>
+          <div class="w-20 h-20 mb-8 bg-gray-900 rounded-full flex items-center justify-center text-white font-black text-xl tracking-widest group-hover:bg-blue-600 transition-colors duration-500">
+            {getRoleInitials(member.role)}
           </div>
 
+          <h3 class="text-sm font-black text-gray-900 mb-4 uppercase tracking-wider">
+            {member.role}
+          </h3>
+          
+          <p class="text-gray-500 text-xs leading-relaxed opacity-80">
+            {member.bio}
+          </p>
         </div>
       ))}
     </div>
-    
   </div>
 </section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay } from 'swiper/modules';
+
+  new Swiper('.teamSwiper', {
+    modules: [Autoplay],
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false, // Permite que se detenga al tocar
+    },
+    breakpoints: {
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 3.5 },
+    }
+  });
+</script>
