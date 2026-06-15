@@ -1,0 +1,474 @@
+---
+const currentPath = Astro.url.pathname;
+const isSpanish = currentPath.startsWith("/es") || currentPath === "/";
+const currentLang = isSpanish ? "es" : "en";
+
+const t = Astro.props.t;
+const phoneNumber = import.meta.env.WHATSAPP_NUMBER || "584141586749";
+// Textos adicionales
+const formTexts = {
+  es: {
+    title: "Contacto",
+    subtitle: "¿Listo para potenciar tu marca? Escríbenos",
+    name: "Nombre completo",
+    email: "Correo electrónico",
+    message: "Mensaje",
+    sendEmail: "Enviar por Email",
+    sendWhatsapp: "Enviar por WhatsApp",
+    sending: "Enviando...",
+    or: "o",
+    success: "¡Mensaje enviado con éxito! Te responderemos pronto.",
+    error: "Error al enviar. Por favor intenta nuevamente.",
+  },
+  en: {
+    title: "Contact",
+    subtitle: "Ready to boost your brand? Write to us",
+    name: "Full name",
+    email: "Email address",
+    message: "Message",
+    sendEmail: "Send by Email",
+    sendWhatsapp: "Send by WhatsApp",
+    sending: "Sending...",
+    or: "or",
+    success: "Message sent successfully! We will reply soon.",
+    error: "Error sending. Please try again.",
+  },
+};
+
+const texts = formTexts[currentLang];
+---
+
+<section
+  id="contact"
+  class="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden"
+>
+  <!-- Fondo decorativo -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div
+      class="absolute top-0 right-0 w-96 h-96 bg-azul-rey/5 rounded-full blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 left-0 w-96 h-96 bg-azul-rey/5 rounded-full blur-3xl"
+    >
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- Encabezado -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10 mb-6"
+      >
+        <svg
+          class="w-4 h-4 text-azul-rey"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          ></path>
+        </svg>
+        <span
+          class="text-xs font-semibold text-azul-rey uppercase tracking-wider"
+          >{texts.title}</span
+        >
+      </div>
+
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        {texts.title}
+      </h2>
+      <div class="w-20 h-1 bg-azul-rey mx-auto mb-6"></div>
+      <p class="text-gray-600 text-lg">{texts.subtitle}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+      <!-- ==================== FORMULARIO ==================== -->
+      <div
+        class="bg-white rounded-2xl shadow-xl p-6 md:p-8 transition-all duration-300 hover:shadow-2xl"
+      >
+        <form id="contact-form" class="space-y-6">
+          <!-- Campo Nombre -->
+          <div class="group">
+            <label
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              for="name"
+            >
+              {texts.name}
+              <span class="text-azul-rey">*</span>
+            </label>
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-azul-rey transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                ></path>
+              </svg>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-azul-rey focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                placeholder={currentLang === "es" ? "Juan Pérez" : "John Doe"}
+              />
+            </div>
+          </div>
+
+          <!-- Campo Email -->
+          <div class="group">
+            <label
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              for="email"
+            >
+              {texts.email}
+              <span class="text-azul-rey">*</span>
+            </label>
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-azul-rey transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-azul-rey focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+                placeholder="juan@ejemplo.com"
+              />
+            </div>
+          </div>
+
+          <!-- Campo Mensaje -->
+          <div class="group">
+            <label
+              class="block text-gray-700 text-sm font-semibold mb-2"
+              for="message"
+            >
+              {texts.message}
+              <span class="text-azul-rey">*</span>
+            </label>
+            <div class="relative">
+              <svg
+                class="absolute left-3 top-3 w-5 h-5 text-gray-400 group-focus-within:text-azul-rey transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                ></path>
+              </svg>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-azul-rey focus:border-transparent transition-all resize-none bg-gray-50 focus:bg-white"
+                placeholder={currentLang === "es"
+                  ? "Cuéntanos sobre tu proyecto..."
+                  : "Tell us about your project..."}></textarea>
+            </div>
+          </div>
+
+          <!-- Botón Email -->
+          <button
+            type="button"
+            id="submit-email"
+            class="group w-full bg-gradient-to-r from-azul-rey to-azul-rey/80 text-white py-3.5 rounded-xl font-semibold hover:from-azul-rey/90 hover:to-azul-rey transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-azul-rey/25 flex items-center justify-center gap-2"
+          >
+            <svg
+              class="w-5 h-5 transition-transform group-hover:-translate-y-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            <span id="btn-text">{texts.sendEmail}</span>
+            <span id="btn-loading" class="hidden">
+              <svg
+                class="inline w-4 h-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+              </svg>
+              {texts.sending}
+            </span>
+          </button>
+
+          <div
+            id="form-message"
+            class="hidden text-sm text-center p-3 rounded-xl"
+          >
+          </div>
+        </form>
+      </div>
+
+      <!-- ==================== INFORMACIÓN DE CONTACTO ==================== -->
+      <div class="space-y-6">
+        <!-- Tarjeta WhatsApp -->
+<!-- Tarjeta WhatsApp - Versión ultra compacta -->
+<div class="bg-gradient-to-br from-green-50 to-white rounded-2xl shadow-md p-4 border border-green-100 hover:shadow-lg transition-all duration-300">
+  <div class="flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="font-bold text-gray-800 text-sm">WhatsApp</h3>
+        <p class="text-gray-500 text-xs">Respuesta inmediata</p>
+      </div>
+    </div>
+    
+    <button
+      type="button"
+      id="submit-whatsapp"
+      class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-md flex items-center gap-1"
+    >
+      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z"/>
+      </svg>
+      {texts.sendWhatsapp}
+    </button>
+  </div>
+</div>
+
+        <!-- Tarjeta Email Directo -->
+        <div
+          class="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300"
+        >
+          <div class="flex items-start gap-4">
+            <div
+              class="w-12 h-12 bg-azul-rey/10 rounded-xl flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-azul-rey"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-800">Email Directo</h3>
+              <p class="text-gray-500 text-sm">Respuesta en 24h</p>
+              <a
+                href="mailto:info@cygnusvisual.com"
+                class="text-azul-rey text-sm font-medium hover:underline"
+                >info@cygnusvisual.com</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const form = document.getElementById(
+      "contact-form",
+    ) as HTMLFormElement | null;
+    const emailBtn = document.getElementById(
+      "submit-email",
+    ) as HTMLButtonElement | null;
+    const whatsappBtn = document.getElementById(
+      "submit-whatsapp",
+    ) as HTMLButtonElement | null;
+    const btnText = document.getElementById("btn-text") as HTMLElement | null;
+    const btnLoading = document.getElementById(
+      "btn-loading",
+    ) as HTMLElement | null;
+    const formMessage = document.getElementById(
+      "form-message",
+    ) as HTMLElement | null;
+
+    const nameField = document.getElementById(
+      "name",
+    ) as HTMLInputElement | null;
+    const emailField = document.getElementById(
+      "email",
+    ) as HTMLInputElement | null;
+    const messageField = document.getElementById(
+      "message",
+    ) as HTMLTextAreaElement | null;
+
+    const phoneNumber = "584141586749";
+    const currentLang = window.location.pathname.startsWith("/en")
+      ? "en"
+      : "es";
+
+    // Textos para el script
+    const scriptTexts = {
+      es: {
+        success: "¡Mensaje enviado con éxito! Te responderemos pronto.",
+        error: "Error al enviar. Por favor intenta nuevamente.",
+        fillFields: "Por favor completa todos los campos",
+        invalidEmail: "Por favor ingresa un email válido",
+      },
+      en: {
+        success: "Message sent successfully! We will reply soon.",
+        error: "Error sending. Please try again.",
+        fillFields: "Please fill all fields",
+        invalidEmail: "Please enter a valid email",
+      },
+    };
+
+    const t = scriptTexts[currentLang];
+
+    const showMessage = (msg: string, isSuccess: boolean): void => {
+      if (formMessage) {
+        formMessage.textContent = msg;
+        formMessage.classList.remove(
+          "hidden",
+          "bg-red-100",
+          "text-red-700",
+          "bg-green-100",
+          "text-green-700",
+        );
+        formMessage.classList.add(isSuccess ? "bg-green-100" : "bg-red-100");
+        formMessage.classList.add(
+          isSuccess ? "text-green-700" : "text-red-700",
+        );
+
+        setTimeout(() => {
+          formMessage.classList.add("hidden");
+        }, 5000);
+      }
+    };
+
+    const validateForm = (): boolean => {
+      if (!nameField || !emailField || !messageField) return false;
+
+      const nameVal = nameField.value.trim();
+      const emailVal = emailField.value.trim();
+      const messageVal = messageField.value.trim();
+
+      if (!nameVal || !emailVal || !messageVal) {
+        showMessage(t.fillFields, false);
+        return false;
+      }
+
+      if (!emailVal.includes("@") || !emailVal.includes(".")) {
+        showMessage(t.invalidEmail, false);
+        return false;
+      }
+
+      return true;
+    };
+
+    const resetFormFields = (): void => {
+      if (nameField) nameField.value = "";
+      if (emailField) emailField.value = "";
+      if (messageField) messageField.value = "";
+    };
+
+    const sendByEmail = async (): Promise<void> => {
+      if (!validateForm()) return;
+      if (!emailBtn) return;
+      if (!nameField || !emailField || !messageField) return;
+
+      emailBtn.disabled = true;
+      if (btnText) btnText.classList.add("hidden");
+      if (btnLoading) btnLoading.classList.remove("hidden");
+
+      const nameVal = nameField.value;
+      const emailVal = emailField.value;
+      const messageVal = messageField.value;
+
+      try {
+        const response = await fetch("/api/contacto", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameVal,
+            email: emailVal,
+            message: messageVal,
+            language: currentLang,
+          }),
+        });
+
+        const data = (await response.json()) as { error?: string };
+
+        if (response.ok) {
+          showMessage(t.success, true);
+          resetFormFields();
+        } else {
+          throw new Error(data.error || t.error);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        showMessage(t.error, false);
+      } finally {
+        if (emailBtn) emailBtn.disabled = false;
+        if (btnText) btnText.classList.remove("hidden");
+        if (btnLoading) btnLoading.classList.add("hidden");
+      }
+    };
+
+    // ==================== ENVÍO POR WHATSAPP (SIN VALIDACIÓN) ====================
+    const sendByWhatsApp = (): void => {
+      // Mensaje de saludo predeterminado
+      const welcomeMessage = `Hola, vengo de la landing page de Cygnus Visual y me gustaría recibir información sobre sus servicios.`;
+      const encodedMessage = encodeURIComponent(welcomeMessage);
+      window.open(
+        `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+        "_blank",
+      );
+    };
+
+    if (emailBtn) {
+      emailBtn.addEventListener("click", (e: MouseEvent) => {
+        e.preventDefault();
+        sendByEmail();
+      });
+    }
+
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener("click", (e: MouseEvent) => {
+        e.preventDefault();
+        sendByWhatsApp();
+      });
+    }
+  })();
+</script>

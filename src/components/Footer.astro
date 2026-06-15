@@ -1,0 +1,436 @@
+---
+const currentPath = Astro.url.pathname;
+const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
+const currentLang = isSpanish ? 'es' : 'en';
+
+// Textos según idioma
+const texts = {
+  es: {
+    brandDesc: 'Agencia de marketing, producción audiovisual y gestión de redes sociales.',
+    services: 'Servicios',
+    servicesList: ['Diseño Gráfico', 'Material Publicitario', 'Gestión de RRSS', 'Edición de Videos'],
+    contact: 'Contacto',
+    contactInfo: {
+      email: 'info@cygnusvisual.com',
+      phone: '+58 414-1586749',
+      whatsapp: '+58 414-1586749'
+    },
+    links: 'Enlaces rápidos',
+    rights: 'Todos los derechos reservados',
+    social: 'Síguenos',
+    legal: {
+      privacy: 'Política de privacidad',
+      terms: 'Términos y condiciones'
+    }
+  },
+  en: {
+    brandDesc: 'Marketing agency, audiovisual production and social media management.',
+    services: 'Services',
+    servicesList: ['Graphic Design', 'Advertising Material', 'Social Media Management', 'Video Editing'],
+    contact: 'Contact',
+    contactInfo: {
+      email: 'info@cygnusvisual.com',
+      phone: '+58 414-1586749',
+      whatsapp: '+58 414-1586749'
+    },
+    links: 'Quick links',
+    rights: 'All rights reserved',
+    social: 'Follow us',
+    legal: {
+      privacy: 'Privacy policy',
+      terms: 'Terms and conditions'
+    }
+  }
+};
+
+const t = texts[currentLang];
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-white">
+  
+  <!-- ==================== MAIN FOOTER ==================== -->
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      
+      <!-- Columna 1: Brand -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-azul-rey rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a3.53 3.53 0 0 0-2.5 1.06A3.54 3.54 0 0 0 8.5 5.6a5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 4.5 7.4 3.54 3.54 0 0 0 6.5 12a3.53 3.53 0 0 0-2 4.6 3.54 3.54 0 0 0 4.6 2 5.47 5.47 0 0 0 0 1.6 3.53 3.53 0 0 0 1.9 2.9 3.54 3.54 0 0 0 4.6-2 5.47 5.47 0 0 0 1.6 0 3.53 3.53 0 0 0 2.9-1.9 3.54 3.54 0 0 0-2-4.6 5.47 5.47 0 0 0 0-1.6 3.53 3.53 0 0 0-1.9-2.9 3.54 3.54 0 0 0-4.6 2 5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 12 2Z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold">Cygnus<span class="text-azul-rey">Visual</span></h3>
+        </div>
+        
+        <p class="text-gray-400 text-sm leading-relaxed">
+          {t.brandDesc}
+        </p>
+        
+        <!-- Redes Sociales -->
+        <div class="space-y-2">
+          <p class="text-gray-400 text-xs uppercase tracking-wider">{t.social}</p>
+          <div class="flex gap-3">
+            <a href="#" class="social-icon w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-azul-rey transition-all duration-300 hover:scale-110">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-icon w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-azul-rey transition-all duration-300 hover:scale-110">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-icon w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-azul-rey transition-all duration-300 hover:scale-110">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22.23 0H1.77C0.79 0 0 0.78 0 1.77v20.46C0 23.22 0.79 24 1.77 24h20.46c0.98 0 1.77-0.78 1.77-1.77V1.77C24 0.78 23.21 0 22.23 0zM7.08 20.31H3.55V8.97h3.53v11.34zM5.31 7.43c-1.13 0-2.05-0.92-2.05-2.05s0.92-2.05 2.05-2.05 2.05 0.92 2.05 2.05-0.92 2.05-2.05 2.05zM20.31 20.31h-3.53v-5.75c0-1.37-0.03-3.14-1.91-3.14s-2.2 1.49-2.2 3.03v5.86h-3.53V8.97h3.39v1.55h0.05c0.47-0.89 1.62-1.83 3.34-1.83 3.57 0 4.23 2.35 4.23 5.41v6.21z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-icon w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-azul-rey transition-all duration-300 hover:scale-110">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.5 4.6c-.8.4-1.6.6-2.5.7.9-.5 1.6-1.3 1.9-2.3-.9.5-1.8.9-2.8 1.1C19.5 3.4 18.3 3 17 3c-2.4 0-4.3 2-4.3 4.4 0 .3 0 .7.1 1-3.6-.2-6.8-2-8.9-4.7-.4.6-.6 1.3-.6 2.1 0 1.5.8 2.8 2 3.6-.7 0-1.4-.2-2-.5v.1c0 2.1 1.5 3.9 3.5 4.3-.4.1-.8.1-1.2.1-.3 0-.6 0-.9-.1.6 1.9 2.4 3.3 4.5 3.3-1.7 1.3-3.8 2.1-6.1 2.1-.4 0-.8 0-1.2-.1 2.2 1.4 4.8 2.2 7.6 2.2 9.1 0 14.1-7.6 14.1-14.1 0-.2 0-.4 0-.6 1-.7 1.9-1.5 2.6-2.5z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Columna 2: Servicios -->
+      <div>
+        <h4 class="text-white font-semibold text-lg mb-4 relative inline-block">
+          {t.services}
+          <span class="absolute -bottom-1 left-0 w-8 h-0.5 bg-azul-rey rounded-full"></span>
+        </h4>
+        <ul class="space-y-2">
+          {t.servicesList.map((service) => (
+            <li>
+              <a href="#services" class="text-gray-400 hover:text-white hover:translate-x-1 transition-all duration-300 inline-flex items-center gap-2 text-sm">
+                <svg class="w-3 h-3 text-azul-rey" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                {service}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <!-- Columna 3: Contacto -->
+      <div>
+        <h4 class="text-white font-semibold text-lg mb-4 relative inline-block">
+          {t.contact}
+          <span class="absolute -bottom-1 left-0 w-8 h-0.5 bg-azul-rey rounded-full"></span>
+        </h4>
+        <ul class="space-y-3">
+          <li>
+            <a href="mailto:info@cygnusvisual.com" class="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group">
+              <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-azul-rey transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <span class="text-sm">{t.contactInfo.email}</span>
+            </a>
+          </li>
+          <li>
+            <a href="tel:+584141586749" class="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group">
+              <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-azul-rey transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </div>
+              <span class="text-sm">{t.contactInfo.phone}</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://wa.me/584141586749" target="_blank" class="flex items-center gap-3 text-gray-400 hover:text-white transition-colors group">
+              <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-green-600 transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-5.45-4.45-9.9-9.91-9.9z"/>
+                </svg>
+              </div>
+              <span class="text-sm">{t.contactInfo.whatsapp}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- ==================== BOTTOM FOOTER ==================== -->
+  <div class="border-t border-gray-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        
+        <div class="text-gray-400 text-sm text-center md:text-left">
+          © {currentYear} Cygnus Visual. {t.rights}
+        </div>
+        
+        <div class="flex gap-6">
+          <button id="open-privacy" class="text-gray-400 text-sm hover:text-azul-rey transition-colors cursor-pointer">
+            {t.legal.privacy}
+          </button>
+          <button id="open-terms" class="text-gray-400 text-sm hover:text-azul-rey transition-colors cursor-pointer">
+            {t.legal.terms}
+          </button>
+        </div>
+        
+        <!-- Botón volver arriba -->
+        <button id="back-to-top" class="flex items-center gap-1 text-gray-400 hover:text-azul-rey transition-colors text-sm group">
+          <span>Volver arriba</span>
+          <svg class="w-4 h-4 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+          </svg>
+        </button>
+        
+      </div>
+    </div>
+  </div>
+  
+</footer>
+
+<!-- ==================== MODAL: POLÍTICA DE PRIVACIDAD ==================== -->
+<div id="modal-privacy" class="modal fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4" style="display: none;">
+  <div class="modal-container bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+    
+    <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gray-50">
+      <h3 class="text-xl font-bold text-gray-900">Política de Privacidad</h3>
+      <button class="close-modal text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+      <div class="prose prose-sm max-w-none">
+        <p class="text-gray-500 text-sm mb-4">Última actualización: {new Date().toLocaleDateString()}</p>
+        
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <p class="text-gray-700 text-sm">
+            En <strong>Cygnus Visual</strong>, nos tomamos muy en serio la privacidad de nuestros usuarios. 
+            Esta política explica cómo recopilamos, usamos y protegemos tu información.
+          </p>
+        </div>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">1. Información que recopilamos</h4>
+        <p class="text-gray-600 text-sm mb-3">Podemos recopilar la siguiente información:</p>
+        <ul class="list-disc pl-5 text-gray-600 text-sm space-y-1 mb-4">
+          <li><strong>Datos de contacto</strong>: Nombre, correo electrónico, número de teléfono.</li>
+          <li><strong>Datos de proyecto</strong>: Información que nos proporcionas sobre tus necesidades creativas.</li>
+          <li><strong>Datos de navegación</strong>: IP, tipo de navegador, páginas visitadas.</li>
+          <li><strong>Cookies</strong>: Para mejorar tu experiencia en nuestro sitio.</li>
+        </ul>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">2. Cómo usamos tu información</h4>
+        <p class="text-gray-600 text-sm mb-3">Utilizamos tu información para:</p>
+        <ul class="list-disc pl-5 text-gray-600 text-sm space-y-1 mb-4">
+          <li>Responder a tus consultas y cotizaciones.</li>
+          <li>Procesar y gestionar tus proyectos.</li>
+          <li>Enviar información sobre nuestros servicios (solo con tu consentimiento).</li>
+          <li>Mejorar nuestro sitio web y servicios.</li>
+        </ul>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">3. Protección de tu información</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Implementamos medidas de seguridad técnicas y organizativas para proteger tu información 
+          contra acceso no autorizado, alteración o destrucción.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">4. Tus derechos</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Tienes derecho a acceder, rectificar o eliminar tus datos personales. Para ejercer estos derechos, 
+          contáctanos en <strong>info@cygnusvisual.com</strong>.
+        </p>
+        
+        <div class="bg-azul-rey/5 border border-azul-rey/20 rounded-lg p-4 mt-6">
+          <p class="text-azul-rey text-sm font-medium">Contacto de privacidad</p>
+          <p class="text-gray-600 text-sm mt-1">Email: info@cygnusvisual.com | Tel: +58 414-1586749</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- ==================== MODAL: TÉRMINOS Y CONDICIONES ==================== -->
+<div id="modal-terms" class="modal fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4" style="display: none;">
+  <div class="modal-container bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+    
+    <div class="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gray-50">
+      <h3 class="text-xl font-bold text-gray-900">Términos y Condiciones</h3>
+      <button class="close-modal text-gray-400 hover:text-gray-600 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+      <div class="prose prose-sm max-w-none">
+        <p class="text-gray-500 text-sm mb-4">Última actualización: {new Date().toLocaleDateString()}</p>
+        
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <p class="text-gray-700 text-sm">
+            Al utilizar nuestros servicios, aceptas los siguientes <strong>Términos y Condiciones</strong>. 
+            Te recomendamos leerlos detenidamente.
+          </p>
+        </div>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">1. Aceptación de los términos</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Al acceder y utilizar el sitio web de Cygnus Visual y sus servicios, aceptas cumplir con estos términos. 
+          Si no estás de acuerdo, por favor no utilices nuestros servicios.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">2. Servicios ofrecidos</h4>
+        <p class="text-gray-600 text-sm mb-3">Cygnus Visual ofrece servicios de:</p>
+        <ul class="list-disc pl-5 text-gray-600 text-sm space-y-1 mb-4">
+          <li>Diseño Gráfico y Branding</li>
+          <li>Material Publicitario</li>
+          <li>Gestión de Redes Sociales</li>
+          <li>Edición y Producción de Videos</li>
+          <li>Planificación y Creación de Contenido</li>
+        </ul>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">3. Propiedad intelectual</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Todo el contenido de este sitio web, incluyendo logotipos, diseños, textos e imágenes, 
+          es propiedad de Cygnus Visual y está protegido por derechos de autor.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">4. Responsabilidad del cliente</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          El cliente se compromete a proporcionar información veraz y completa para el desarrollo de los proyectos. 
+          Cygnus Visual no se hace responsable por retrasos causados por información incorrecta o incompleta.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">5. Pagos y reembolsos</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Los pagos se acuerdan previamente con cada cliente. No se ofrecen reembolsos una vez iniciado el proyecto, 
+          a menos que se acuerde lo contrario por escrito.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">6. Limitación de responsabilidad</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Cygnus Visual no será responsable por daños indirectos, pérdida de datos o lucro cesante derivado del uso de nuestros servicios.
+        </p>
+        
+        <h4 class="text-lg font-bold text-gray-800 mt-6 mb-3">7. Modificaciones</h4>
+        <p class="text-gray-600 text-sm mb-4">
+          Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios serán efectivos 
+          inmediatamente después de su publicación en el sitio web.
+        </p>
+        
+        <div class="bg-azul-rey/5 border border-azul-rey/20 rounded-lg p-4 mt-6">
+          <p class="text-azul-rey text-sm font-medium">Contacto</p>
+          <p class="text-gray-600 text-sm mt-1">Para consultas sobre estos términos, contáctanos en info@cygnusvisual.com</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Back to top button
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    
+    // ==================== MODAL FUNCTIONS ====================
+    const privacyModal = document.getElementById('modal-privacy');
+    const termsModal = document.getElementById('modal-terms');
+    const openPrivacyBtn = document.getElementById('open-privacy');
+    const openTermsBtn = document.getElementById('open-terms');
+    const closeButtons = document.querySelectorAll('.close-modal');
+    
+    function openModal(modal: HTMLElement | null) {
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    function closeModal(modal: HTMLElement | null) {
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+    
+    // Abrir modales
+    if (openPrivacyBtn) {
+      openPrivacyBtn.addEventListener('click', () => openModal(privacyModal));
+    }
+    if (openTermsBtn) {
+      openTermsBtn.addEventListener('click', () => openModal(termsModal));
+    }
+    
+    // Cerrar con botón X
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        closeModal(privacyModal);
+        closeModal(termsModal);
+      });
+    });
+    
+    // Cerrar al hacer clic fuera del modal
+    window.addEventListener('click', (e) => {
+      if (privacyModal && e.target === privacyModal) {
+        closeModal(privacyModal);
+      }
+      if (termsModal && e.target === termsModal) {
+        closeModal(termsModal);
+      }
+    });
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal(privacyModal);
+        closeModal(termsModal);
+      }
+    });
+  })();
+</script>
+
+<style is:global>
+  .social-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .social-icon:hover {
+    transform: translateY(-3px) scale(1.1);
+  }
+  
+  .modal {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .modal-container {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

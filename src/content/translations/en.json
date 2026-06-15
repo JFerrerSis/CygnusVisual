@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "team": "Team",
+    "location": "Location",
+    "contact": "Contact"
+  },
+"hero": {
+  "badge": "Marketing & Audiovisual Production Agency",
+  "title": "CYGNUS VISUAL",
+  "slogan": "Audiovisual Marketing on Social Media • LATAM™",
+  "services": "Design | Branding | Photography | Video | Social Media Management | Audiovisual Production",
+  "cta": "Contact us",
+  "whatsapp": "WhatsApp",
+  "badgeAgency": "AUDIOVISUAL AGENCY",
+  "badgeServices": "SERVICES",
+  "scroll": "SCROLL",
+"stats": {
+  "followers": "+200%",
+  "followersLabel": "Average growth",
+  "projects": "100%",
+  "projectsLabel": "Client satisfaction",
+  "following": "24/7",
+  "followingLabel": "Continuous support"
+}
+},
+  "services": {
+    "title": "OUR SERVICES",
+    "subtitle": "Creative and professional solutions to boost your brand",
+    "design": {
+      "title": "Graphic Design",
+      "description": "We create unique visual identities that reflect the essence of your brand.",
+      "items": [
+        "Logo",
+        "Color Palette",
+        "Typography",
+        "Social Media Posts",
+        "Stickers",
+        "Mockups",
+        "Brand Manual",
+        "Complete Branding"
+      ]
+    },
+    "advertising": {
+      "title": "Advertising Material",
+      "description": "Impactful designs that capture attention and communicate your message.",
+      "items": [
+        "Flyers",
+        "Posters",
+        "Business Cards",
+        "Catalogs",
+        "Invitations",
+        "Social Media",
+        "Merchandise Design",
+        "Packaging"
+      ]
+    },
+    "additional": {
+      "title": "We also offer",
+      "items": [
+        {
+          "title": "Social Media Management",
+          "description": "Community management, strategy and growth"
+        },
+        {
+          "title": "Video Editing",
+          "description": "Professional editing, motion graphics and post-production"
+        },
+        {
+          "title": "Content Planning",
+          "description": "Editorial calendar, strategy and scheduled content"
+        },
+        {
+          "title": "Content Creation",
+          "description": "Professional photography, design and original content"
+        }
+      ]
+    },
+    "cta": "Request information"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "At Cygnus Visual we combine cutting-edge technology with unlimited creativity. We are an agency specialized in audiovisual marketing for social media, combining creativity, strategy and technology to boost your brand in LATAM.",
+    "mission": "Mission: Democratize access to high-quality visual content.",
+    "vision": "Vision: Be leaders in visual innovation in Latin America."
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "Professionals passionate about what they do",
+    "members": [
+      {
+        "name": "Ana Martínez",
+        "role": "Creative Director",
+        "bio": "10+ years of experience in design and art direction."
+      },
+      {
+        "name": "Laura Gómez",
+        "role": "Audiovisual Producer",
+        "bio": "Expert in video production and professional photography."
+      },
+      {
+        "name": "Carlos López",
+        "role": "Community Manager",
+        "bio": "Growth strategies on social networks."
+      }
+    ]
+  },
+  "location": {
+    "title": "Our Location",
+    "address": "LATAM — Operations throughout the region",
+    "schedule": "Monday to Friday: 9:00 - 18:00",
+    "mapLink": "#"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Ready to boost your brand? Write to us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "whatsapp": "Contact us on WhatsApp"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "social": "Follow us on social media"
+  }
+}

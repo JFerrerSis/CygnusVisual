@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "about": "Nosotros",
+    "team": "Equipo",
+    "location": "Ubicación",
+    "contact": "Contacto"
+  },
+"hero": {
+  "badge": "Agencia de Marketing & Producción Audiovisual",
+  "slogan": "Marketing Audiovisual en RRSS • LATAM™",
+  "servicesList": ["Diseño", "Branding", "Fotografía", "Vídeo", "Gestión RRSS", "Producción Audiovisual"],
+  "cta": "Contáctanos",
+  "whatsapp": "WhatsApp",
+  "badgeAgency": "AGENCIA AUDIOVISUAL",
+  "badgeServices": "SERVICIOS",
+  "scroll": "SCROLL",
+"stats": {
+  "followers": "+200%",
+  "followersLabel": "Crecimiento promedio",
+  "projects": "100%",
+  "projectsLabel": "Satisfacción cliente",
+  "following": "24/7",
+  "followingLabel": "Soporte continuo"
+}
+},
+  "services": {
+    "title": "NUESTROS SERVICIOS",
+    "subtitle": "Soluciones creativas y profesionales para potenciar tu marca",
+    "design": {
+      "title": "Diseño Gráfico",
+      "description": "Creamos identidades visuales únicas que reflejan la esencia de tu marca.",
+      "items": [
+        "Logotipo",
+        "Paleta de colores",
+        "Tipografía",
+        "Post RRSS",
+        "Stickers",
+        "Mockups",
+        "Manual de Marca",
+        "Branding completo"
+      ]
+    },
+    "advertising": {
+      "title": "Material Publicitario",
+      "description": "Diseños impactantes que capturan atención y comunican tu mensaje.",
+      "items": [
+        "Flyers",
+        "Carteles",
+        "Tarjetas de Presentación",
+        "Catálogos",
+        "Invitaciones",
+        "Redes Sociales",
+        "Diseño de Merch",
+        "Empaques y más"
+      ]
+    },
+    "additional": {
+      "title": "También ofrecemos",
+      "items": [
+        {
+          "title": "Gestión de RRSS",
+          "description": "Community management, estrategia y crecimiento"
+        },
+        {
+          "title": "Edición de Videos",
+          "description": "Edición profesional, motion graphics y post-producción"
+        },
+        {
+          "title": "Planificación",
+          "description": "Calendario editorial, estrategia y contenido"
+        },
+        {
+          "title": "Creación",
+          "description": "Fotografía profesional, diseño y contenido original"
+        }
+      ]
+    },
+    "cta": "Solicita información"
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "description": "En Cygnus Visual combinamos tecnología de vanguardia con creatividad ilimitada. Somos una agencia especializada en marketing audiovisual para redes sociales, combinando creatividad, estrategia y tecnología para potenciar tu marca en LATAM.",
+    "mission": "Misión: Democratizar el acceso a contenido visual de alta calidad.",
+    "vision": "Visión: Ser referentes en innovación visual en Latinoamérica."
+  },
+  "team": {
+    "title": "Nuestro Equipo",
+    "subtitle": "Profesionales apasionados por lo que hacen",
+    "members": [
+      {
+        "name": "Ana Martínez",
+        "role": "Directora Creativa",
+        "bio": "10+ años de experiencia en diseño y dirección de arte."
+      },
+      {
+        "name": "Laura Gómez",
+        "role": "Productora Audiovisual",
+        "bio": "Experta en producción de video y fotografía profesional."
+      },
+      {
+        "name": "Carlos López",
+        "role": "Community Manager",
+        "bio": "Estrategias de crecimiento en redes sociales."
+      }
+    ]
+  },
+  "location": {
+    "title": "Nuestra Ubicación",
+    "address": "LATAM — Operaciones en toda la región",
+    "schedule": "Lunes a Viernes: 9:00 - 18:00",
+    "mapLink": "#"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Listo para potenciar tu marca? Escríbenos",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "whatsapp": "Contáctanos por WhatsApp"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados",
+    "social": "Síguenos en redes"
+  }
+}

@@ -1,0 +1,55 @@
+---
+const t = Astro.props.t;
+---
+
+<section id="location" class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-azul-rey mb-4">
+        {t.location.title}
+      </h2>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="location-info space-y-4">
+        <div class="flex items-start space-x-3">
+          <svg class="w-6 h-6 text-azul-rey mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <div>
+            <p class="font-semibold text-gray-800">Dirección</p>
+            <p class="text-gray-600">{t.location.address}</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start space-x-3">
+          <svg class="w-6 h-6 text-azul-rey mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <div>
+            <p class="font-semibold text-gray-800">Horario</p>
+            <p class="text-gray-600">{t.location.schedule}</p>
+          </div>
+        </div>
+        
+        <a 
+          href={t.location.mapLink}
+          target="_blank"
+          class="inline-block bg-azul-rey text-white px-6 py-2 rounded-lg hover:bg-azul-rey-oscuro transition-colors mt-4"
+        >
+          Ver en Google Maps →
+        </a>
+      </div>
+      
+      <div class="location-map bg-gray-200 rounded-lg h-64 md:h-auto">
+        <iframe 
+          src="https://maps.google.com/maps?q=Av.+Principal+123&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          class="w-full h-full rounded-lg"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>

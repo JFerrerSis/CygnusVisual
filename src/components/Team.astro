@@ -1,0 +1,29 @@
+---
+const t = Astro.props.t;
+---
+
+<section id="team" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-azul-rey mb-4">
+        {t.team.title}
+      </h2>
+      <p class="text-gray-600">{t.team.subtitle}</p>
+    </div>
+    
+    <div class="team-members grid grid-cols-1 md:grid-cols-3 gap-8">
+      {t.team.members.map((member, index) => (
+        <div class="team-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+          <div class="bg-gradient-to-br from-azul-rey to-azul-rey-oscuro h-48 flex items-center justify-center">
+            <span class="text-white text-6xl">👤</span>
+          </div>
+          <div class="p-6 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
+            <p class="text-azul-rey font-semibold mb-3">{member.role}</p>
+            <p class="text-gray-600 text-sm">{member.bio}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

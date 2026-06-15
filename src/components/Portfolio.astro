@@ -1,0 +1,246 @@
+---
+const t = Astro.props.t;
+
+// Datos de los videos
+const videos = [
+  {
+    id: 1,
+    title: "Reel Campaña Verano 2024",
+    category: "Instagram",
+    platform: "Instagram",
+    duration: "0:30",
+    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Campaña de verano para marca de moda. +50k reproducciones en 7 días.",
+    stats: { views: "50k", likes: "3.2k" }
+  },
+  {
+    id: 2,
+    title: "Spot Publicitario - Marca X",
+    category: "YouTube",
+    platform: "YouTube",
+    duration: "1:15",
+    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Spot para televisión y redes sociales. Producción completa con equipo profesional.",
+    stats: { views: "100k", comments: "500" }
+  },
+  {
+    id: 3,
+    title: "Tutorial: Tips de Marketing",
+    category: "TikTok",
+    platform: "TikTok",
+    duration: "2:45",
+    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    description: "Contenido educativo viral. +200k reproducciones y alto engagement.",
+    stats: { views: "200k", shares: "5k" }
+  }
+];
+---
+
+<section id="portfolio" class="py-24 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- ==================== ENCABEZADO ==================== -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10 mb-6">
+        <svg class="w-4 h-4 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+        </svg>
+        <span class="text-xs font-semibold text-azul-rey uppercase tracking-wider">Portafolio</span>
+      </div>
+      
+      <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        Nuestros<span class="text-azul-rey"> Trabajos</span>
+      </h2>
+      
+      <div class="w-20 h-1 bg-azul-rey mx-auto mb-6"></div>
+      
+      <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+        Proyectos reales que han potenciado la presencia digital de nuestras marcas aliadas
+      </p>
+    </div>
+    
+    <!-- ==================== FILTROS ==================== -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      {["Todos", "Redes Sociales", "Publicidad", "Branding", "Motion Graphics"].map((filter) => (
+        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-azul-rey hover:text-white border border-gray-200 bg-white text-gray-600">
+          {filter}
+        </button>
+      ))}
+    </div>
+    
+    <!-- ==================== GRID DE VIDEOS ==================== -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto" id="video-grid">
+      {videos.map((video) => (
+        <div class="video-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" data-video-id={video.id}>
+          <div class="relative aspect-video bg-gray-900 overflow-hidden">
+            <img 
+              src={video.thumbnail}
+              alt={video.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="w-16 h-16 bg-azul-rey rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                <svg class="w-8 h-8 text-white ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 3l14 9-14 9V3z"/>
+                </svg>
+              </div>
+            </div>
+            <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-md">{video.duration}</span>
+            <span class="absolute top-2 left-2 bg-azul-rey/90 text-white text-xs px-2 py-1 rounded-md">{video.platform}</span>
+          </div>
+          
+          <div class="p-5">
+            <h3 class="font-bold text-gray-800 mb-2">{video.title}</h3>
+            <p class="text-gray-500 text-sm mb-3">{video.description}</p>
+            <div class="flex items-center gap-3 text-xs text-gray-400">
+              <span class="flex items-center gap-1">📱 {video.stats.views} views</span>
+              {video.stats.likes && <span class="flex items-center gap-1">❤️ {video.stats.likes} likes</span>}
+              {video.stats.comments && <span class="flex items-center gap-1">💬 {video.stats.comments}</span>}
+              {video.stats.shares && <span class="flex items-center gap-1">🔁 {video.stats.shares} shares</span>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- ==================== BOTÓN VER MÁS ==================== -->
+    <div class="text-center mt-12">
+      <a 
+        href="#" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 hover:border-azul-rey hover:text-azul-rey transition-all duration-300"
+      >
+        <span>Ver más proyectos</span>
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ==================== MODAL LIGHTBOX ==================== -->
+<div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4">
+  <div class="relative w-full max-w-5xl">
+    <button id="close-modal" class="absolute -top-12 right-0 text-white hover:text-azul-rey transition-colors">
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+    
+    <div class="aspect-video bg-black rounded-xl overflow-hidden">
+      <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <div id="modal-info" class="mt-4 text-white">
+      <h3 id="modal-title" class="text-xl font-bold"></h3>
+      <p id="modal-description" class="text-gray-400 text-sm mt-1"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Elementos del DOM
+    const modal = document.getElementById('video-modal');
+    const iframe = document.getElementById('video-iframe') as HTMLIFrameElement | null;
+    const closeBtn = document.getElementById('close-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    
+    // Datos de videos
+    const videosData: Record<number, { title: string; description: string; url: string }> = {
+      1: {
+        title: "Reel Campaña Verano 2024",
+        description: "Campaña de verano para marca de moda. +50k reproducciones en 7 días.",
+        url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+      },
+      2: {
+        title: "Spot Publicitario - Marca X",
+        description: "Spot para televisión y redes sociales. Producción completa con equipo profesional.",
+        url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+      },
+      3: {
+        title: "Tutorial: Tips de Marketing",
+        description: "Contenido educativo viral. +200k reproducciones y alto engagement.",
+        url: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+      }
+    };
+    
+    // Función para abrir modal
+    function openModal(videoId: number) {
+      const video = videosData[videoId];
+      if (!video) return;
+      
+      if (modalTitle && modalDescription) {
+        modalTitle.textContent = video.title;
+        modalDescription.textContent = video.description;
+      }
+      
+      if (iframe) {
+        iframe.src = video.url;
+      }
+      
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    // Función para cerrar modal
+    function closeModal() {
+      if (modal) {
+        modal.style.display = 'none';
+      }
+      if (iframe) {
+        iframe.src = '';
+      }
+      document.body.style.overflow = '';
+    }
+    
+    // Agregar event listeners a las tarjetas de video
+    const videoCards = document.querySelectorAll('.video-card');
+    videoCards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const videoId = (card as HTMLElement).dataset.videoId;
+        if (videoId) {
+          openModal(parseInt(videoId));
+        }
+      });
+    });
+    
+    // Cerrar modal con botón
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+    
+    // Cerrar modal haciendo clic fuera
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    }
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  })();
+</script>
+
+<style is:global>
+  .video-card {
+    cursor: pointer;
+  }
+  
+  #video-modal {
+    backdrop-filter: blur(8px);
+  }
+</style>

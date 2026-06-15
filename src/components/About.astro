@@ -1,0 +1,146 @@
+---
+const currentPath = Astro.url.pathname;
+const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
+const currentLang = isSpanish ? 'es' : 'en';
+
+const texts = {
+  es: {
+    badge: 'Sobre nosotros',
+    title: 'Transformamos ideas en experiencias visuales',
+    description: 'En Cygnus Visual combinamos creatividad, estrategia y tecnología para potenciar la presencia digital de tu marca. Somos una agencia especializada en marketing audiovisual con enfoque en resultados.',
+    missionTitle: 'Misión',
+    missionDesc: 'Democratizar el acceso a contenido visual de alta calidad, ayudando a marcas a conectar con sus audiencias de manera auténtica y efectiva.',
+    visionTitle: 'Visión',
+    visionDesc: 'Ser referentes en innovación visual en Latinoamérica, reconocidos por nuestra creatividad, calidad y compromiso con los resultados.',
+    valuesTitle: 'Nuestros valores',
+    values: [
+      { title: 'Creatividad', desc: 'Soluciones originales que destacan' },
+      { title: 'Calidad', desc: 'Estándares profesionales en cada proyecto' },
+      { title: 'Compromiso', desc: 'Dedicación total a tus objetivos' },
+      { title: 'Innovación', desc: 'Siempre a la vanguardia' }
+    ],
+    cta: 'Conoce nuestro trabajo'
+  },
+  en: {
+    badge: 'About us',
+    title: 'We turn ideas into visual experiences',
+    description: 'At Cygnus Visual we combine creativity, strategy and technology to boost your brand\'s digital presence. We are an agency specialized in audiovisual marketing with a focus on results.',
+    missionTitle: 'Mission',
+    missionDesc: 'Democratize access to high-quality visual content, helping brands connect with their audiences authentically and effectively.',
+    visionTitle: 'Vision',
+    visionDesc: 'To be leaders in visual innovation in Latin America, recognized for our creativity, quality and commitment to results.',
+    valuesTitle: 'Our values',
+    values: [
+      { title: 'Creativity', desc: 'Original solutions that stand out' },
+      { title: 'Quality', desc: 'Professional standards in every project' },
+      { title: 'Commitment', desc: 'Total dedication to your goals' },
+      { title: 'Innovation', desc: 'Always at the forefront' }
+    ],
+    cta: 'See our work'
+  }
+};
+
+const t = texts[currentLang];
+---
+
+<section id="about" class="py-24 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- ==================== ENCABEZADO ==================== -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-azul-rey text-sm font-semibold uppercase tracking-wider mb-2 block">{t.badge}</span>
+      
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        {t.title}
+      </h2>
+      
+      <div class="w-16 h-1 bg-azul-rey mx-auto mb-6"></div>
+      
+      <p class="text-gray-600 text-lg leading-relaxed">
+        {t.description}
+      </p>
+    </div>
+    
+    <!-- ==================== MISIÓN Y VISIÓN ==================== -->
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-20">
+      
+      <!-- Misión -->
+      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+        <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1010 10 10 10 0 00-10-10zM12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">{t.missionTitle}</h3>
+        <p class="text-gray-600 leading-relaxed">
+          {t.missionDesc}
+        </p>
+      </div>
+      
+      <!-- Visión -->
+      <div class="bg-gray-50 rounded-xl p-8 border border-gray-100">
+        <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">{t.visionTitle}</h3>
+        <p class="text-gray-600 leading-relaxed">
+          {t.visionDesc}
+        </p>
+      </div>
+      
+    </div>
+    
+    <!-- ==================== VALORES ==================== -->
+    <div class="text-center mb-12">
+      <h3 class="text-2xl font-bold text-gray-800">{t.valuesTitle}</h3>
+      <div class="w-12 h-0.5 bg-azul-rey mx-auto mt-3"></div>
+    </div>
+    
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+      
+      {t.values.map((value) => (
+        <div class="text-center p-6 bg-gray-50 rounded-xl border border-gray-100 hover:border-azul-rey/30 transition-all duration-300">
+          <div class="w-12 h-12 bg-azul-rey/10 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a3.53 3.53 0 0 0-2.5 1.06A3.54 3.54 0 0 0 8.5 5.6a5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 4.5 7.4 3.54 3.54 0 0 0 6.5 12a3.53 3.53 0 0 0-2 4.6 3.54 3.54 0 0 0 4.6 2 5.47 5.47 0 0 0 0 1.6 3.53 3.53 0 0 0 1.9 2.9 3.54 3.54 0 0 0 4.6-2 5.47 5.47 0 0 0 1.6 0 3.53 3.53 0 0 0 2.9-1.9 3.54 3.54 0 0 0-2-4.6 5.47 5.47 0 0 0 0-1.6 3.53 3.53 0 0 0-1.9-2.9 3.54 3.54 0 0 0-4.6 2 5.47 5.47 0 0 0-1.6 0A3.53 3.53 0 0 0 12 2Z"/>
+            </svg>
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">{value.title}</h4>
+          <p class="text-gray-500 text-sm">{value.desc}</p>
+        </div>
+      ))}
+      
+    </div>
+    
+    <!-- ==================== CTA ==================== -->
+    <div class="text-center">
+      <a 
+        href="#portfolio" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-azul-rey text-white rounded-lg font-semibold hover:bg-azul-rey/90 transition-all duration-300"
+      >
+        <span>{t.cta}</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+    
+  </div>
+</section>
+
+<script>
+  (function() {
+    const ctaButton = document.querySelector('#about a[href="#portfolio"]');
+    if (ctaButton) {
+      ctaButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const portfolioSection = document.getElementById('portfolio');
+        if (portfolioSection) {
+          portfolioSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  })();
+</script>
