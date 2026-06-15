@@ -1,9 +1,21 @@
 ---
 // src/pages/index.astro
 const acceptLanguage = Astro.request.headers.get('accept-language') || '';
-
-// Buscamos si 'en' está en cualquier parte del inicio de las preferencias
 const preferredLang = acceptLanguage.toLowerCase().includes('en') ? 'en' : 'es';
 
 return Astro.redirect(`/${preferredLang}`, 302);
 ---
+
+<!DOCTYPE html>
+<html lang={preferredLang}>
+<head>
+    <meta http-equiv="refresh" content={`0;url=/${preferredLang}`} />
+    <title>Cygnus Visual</title>
+    <script define:vars={{ preferredLang }}>
+        // Respaldo definitivo en el cliente por si acaso
+        window.location.pathname = `/${preferredLang}`;
+    </script>
+</head>
+<body class="bg-white">
+</body>
+</html>
