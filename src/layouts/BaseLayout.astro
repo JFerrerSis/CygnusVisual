@@ -4,8 +4,8 @@ import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
 import '../styles/globals.css';
 
-// Recibir el idioma como prop
-const { lang = 'es', title = 'Cygnus Visual' } = Astro.props;
+// Recibir el idioma y las traducciones como props
+const { lang = 'es', title = 'Cygnus Visual', t } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,7 +18,7 @@ const { lang = 'es', title = 'Cygnus Visual' } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="bg-white text-gray-900">
-    <Header />
+    <Header t={t} />
     <main>
       <slot />
     </main>

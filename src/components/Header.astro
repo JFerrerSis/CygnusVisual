@@ -7,149 +7,162 @@ const isEnglish = currentPath.startsWith('/en');
 // Detectar idioma actual para los links
 const currentLang = isSpanish ? 'es' : 'en';
 
+// Recibir traducciones como prop y establecer valores por defecto
+const t = Astro.props.t || {};
+
+// Valores por defecto para nav (en caso de que no existan)
+const defaultNav = {
+  home: currentLang === 'es' ? 'Inicio' : 'Home',
+  services: currentLang === 'es' ? 'Servicios' : 'Services',
+  about: currentLang === 'es' ? 'Nosotros' : 'About',
+  team: currentLang === 'es' ? 'Equipo' : 'Team',
+  location: currentLang === 'es' ? 'Ubicación' : 'Location',
+  contact: currentLang === 'es' ? 'Contacto' : 'Contact'
+};
+
+// Usar t.nav si existe, si no usar defaultNav
+const nav = t.nav || defaultNav;
+
 // Links de navegación con sus anchors
 const navLinks = [
-  { id: 'home', label: 'Inicio', labelEn: 'Home', href: '#home' },
-  { id: 'services', label: 'Servicios', labelEn: 'Services', href: '#services' },
-  { id: 'about', label: 'Nosotros', labelEn: 'About', href: '#about' },
-  { id: 'team', label: 'Equipo', labelEn: 'Team', href: '#team' },
-  { id: 'location', label: 'Ubicación', labelEn: 'Location', href: '#location' },
-  { id: 'contact', label: 'Contacto', labelEn: 'Contact', href: '#contact' }
+  { id: 'home', href: '#home' },
+  { id: 'services', href: '#services' },
+  { id: 'about', href: '#about' },
+  { id: 'team', href: '#team' },
+  { id: 'location', href: '#location' },
+  { id: 'contact', href: '#contact' }
 ];
 ---
 
-<header class="header-scroll fixed top-0 left-0 w-full z-50 transition-all duration-500">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-3 md:py-4">
+<header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent overflow-x-hidden">
+  <div class="container mx-auto px-4">
+    <!-- Altura más cómoda para móviles (h-14) y desktop (h-16) -->
+    <div class="flex justify-between items-center h-14 sm:h-16">
       
-      <!-- Logo con efecto hover -->
+      <!-- Logo con mejor tamaño -->
       <a 
         href={currentLang === 'es' ? '/es' : '/en'} 
-        class="group relative text-2xl font-bold text-white hover:text-gray-100 transition-colors"
+        class="text-white font-bold text-base sm:text-lg md:text-xl whitespace-nowrap tracking-wide"
       >
-        <span class="relative">
-          Cygnus<span class="text-gray-200">Visual</span>
-        </span>
-        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+        Cygnus<span class="text-gray-200 font-medium">Visual</span>
       </a>
       
       <!-- Navegación Desktop -->
       <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
         {navLinks.map((link) => (
           <a 
-            href={link.href} 
-            class="nav-link relative px-3 lg:px-4 py-2 text-white/90 hover:text-white transition-colors text-sm font-medium rounded-lg hover:bg-white/10"
+            href={link.href}
+            class="nav-link text-white/80 hover:text-white transition-colors text-sm font-medium px-3 py-1.5 rounded-md hover:bg-white/10"
           >
-            {currentLang === 'es' ? link.label : link.labelEn}
-            <span class="absolute -bottom-0 left-1/2 w-0 h-0.5 bg-white transition-all duration-300 -translate-x-1/2 group-hover:w-6"></span>
+            {nav[link.id]}
           </a>
         ))}
+        <a 
+          href="#contact" 
+          class="ml-3 px-4 py-2 bg-white text-azul-rey rounded-full text-sm font-semibold hover:bg-gray-100 transition-all shadow-md"
+        >
+          {t.hero?.cta || (currentLang === 'es' ? 'Cotizar' : 'Quote')}
+        </a>
       </nav>
       
       <!-- Selector de idioma + Botón móvil -->
       <div class="flex items-center gap-3">
         
-        <!-- Language Switcher mejorado -->
-        <div class="language-switcher flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full px-1 py-1 border border-white/20 transition-all duration-300">
+        <!-- Language Switcher optimizado con texto en azul rey cuando está activo -->
+        <div class="flex items-center bg-white/10 backdrop-blur-md rounded-full p-1 border border-white/20">
           <a 
             href="/es" 
-            class={`relative px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${
+            class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${
               isSpanish 
-                ? 'text-azul-rey bg-white shadow-md' 
-                : 'text-white/80 hover:text-white hover:bg-white/20'
+                ? 'text-azul-rey bg-white shadow-sm' 
+                : 'text-white/80 hover:text-white hover:bg-white/10'
             }`}
           >
             ES
           </a>
           <a 
             href="/en" 
-            class={`relative px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${
+            class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${
               isEnglish 
-                ? 'text-azul-rey bg-white shadow-md' 
-                : 'text-white/80 hover:text-white hover:bg-white/20'
+                ? 'text-azul-rey bg-white shadow-sm' 
+                : 'text-white/80 hover:text-white hover:bg-white/10'
             }`}
           >
             EN
           </a>
         </div>
         
-        <!-- Botón menú móvil mejorado -->
-        <button id="menu-btn" class="md:hidden relative w-10 h-10 rounded-lg hover:bg-white/10 transition-all duration-300 focus:outline-none group">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <svg class="w-5 h-5 text-white transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-          </div>
-        </button>
-        
-        <!-- Botón CTA desktop -->
-        <a 
-          href="#contact" 
-          class="hidden lg:flex items-center gap-2 px-5 py-2 bg-white text-azul-rey rounded-full text-sm font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-md"
-        >
-          <span>{currentLang === 'es' ? 'Cotizar' : 'Quote'}</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        <!-- Botón menú hamburguesa más grande y accesible -->
+        <button id="menu-btn" class="md:hidden w-10 h-10 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Abrir menú">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
-        </a>
+        </button>
       </div>
       
     </div>
-    
-    <!-- Menú móvil (oculto por defecto) -->
-    <div id="mobile-menu" class="hidden md:hidden overflow-hidden">
-      <nav class="flex flex-col space-y-1 pb-4 pt-2">
+  </div>
+  
+  <!-- Menú móvil - Fondo Azul Rey con desenfoque de fondo -->
+  <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-72 sm:w-80 bg-azul-rey/95 backdrop-blur-lg z-50 shadow-2xl invisible">
+    <div class="flex flex-col h-full">
+      <!-- Header del drawer con botón cerrar -->
+      <div class="flex justify-between items-center px-6 py-4 border-b border-white/10">
+        <span class="text-white font-bold text-lg tracking-wide">Menú</span>
+        <button id="close-menu-btn" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Links de navegación móviles -->
+      <nav class="flex flex-col p-6 space-y-2 overflow-y-auto">
         {navLinks.map((link, index) => (
           <a 
-            href={link.href} 
-            class="mobile-nav-link px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-300 text-base font-medium"
-            style={`animation-delay: ${index * 0.05}s`}
+            href={link.href}
+            class="mobile-nav-link text-white/85 hover:text-white hover:bg-white/10 px-4 py-3.5 rounded-xl text-base font-semibold transition-all"
+            style={`transition-delay: ${index * 0.03}s`}
           >
-            <div class="flex items-center justify-between">
-              <span>{currentLang === 'es' ? link.label : link.labelEn}</span>
-              <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </div>
+            {nav[link.id]}
           </a>
         ))}
         
-        <div class="border-t border-white/10 my-2"></div>
+        <div class="border-t border-white/10 my-4"></div>
         
         <a 
           href="#contact" 
-          class="mx-4 mt-2 px-4 py-3 bg-white text-azul-rey rounded-lg text-center font-semibold hover:bg-gray-100 transition-all duration-300"
+          class="px-4 py-3.5 bg-white text-azul-rey rounded-xl text-center font-bold text-base hover:bg-gray-100 transition-all shadow-lg"
         >
-          {currentLang === 'es' ? 'Cotizar ahora' : 'Get a quote'}
+          {t.hero?.cta || (currentLang === 'es' ? 'Cotizar ahora' : 'Get a quote')}
         </a>
       </nav>
     </div>
-    
   </div>
   
+  <!-- Overlay oscuro detrás del drawer -->
+  <div id="menu-overlay" class="md:hidden fixed inset-0 bg-black/60 z-40 invisible opacity-0 transition-opacity duration-300"></div>
+  
   <!-- Barra de progreso de scroll -->
-  <div class="progress-bar absolute bottom-0 left-0 h-0.5 bg-white/50 w-0 transition-all duration-300"></div>
+  <div id="progress-bar" class="absolute bottom-0 left-0 h-0.5 bg-white/50 w-0 transition-all duration-300"></div>
   
 </header>
 
-<style is:global>
-  /* Estado inicial - transparente */
-  .header-scroll {
-    background-color: transparent;
-    transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+<style>
+  /* Color de fondo Azul Rey con scroll */
+  #main-header.scrolled {
+    background-color: rgba(0, 51, 160, 0.95); 
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
   }
   
-  /* Estado con scroll - fondo sólido */
-  .header-scroll.scrolled {
-    background-color: rgba(0, 51, 160, 0.95);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+  #main-header.menu-open {
+    background-color: rgba(0, 51, 160, 1);
+    backdrop-filter: none;
   }
   
-  /* Efecto de hover en los links */
   .nav-link {
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
   
   html {
@@ -157,57 +170,74 @@ const navLinks = [
   }
   
   section, [id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 70px;
   }
   
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
+  /* Animación optimizada para prevenir saltos de pantalla horizontal */
+  #mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+  }
+  
+  #mobile-menu.open {
+    visibility: visible;
+    transform: translateX(0);
+  }
+  
+  /* Control del Overlay */
+  #menu-overlay.open {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Animación interna de los links del menú móvil */
+  #mobile-menu.open .mobile-nav-link {
+    opacity: 0;
+    transform: translateX(10px);
+    animation: slideInRight 0.3s ease-out forwards;
+  }
+  
+  @keyframes slideInRight {
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
   
-  .mobile-nav-link {
-    animation: slideIn 0.3s ease-out forwards;
-    opacity: 0;
+  body.menu-open {
+    overflow: hidden;
   }
 </style>
 
 <script>
   (function() {
-    // Elementos del DOM
-    const header = document.querySelector('.header-scroll') as HTMLElement | null;
-    const progressBar = document.querySelector('.progress-bar') as HTMLElement | null;
-    const menuBtn = document.getElementById('menu-btn') as HTMLButtonElement | null;
-    const mobileMenu = document.getElementById('mobile-menu') as HTMLElement | null;
+    const header = document.getElementById('main-header');
+    const progressBar = document.getElementById('progress-bar');
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const menuOverlay = document.getElementById('menu-overlay');
     
     let ticking = false;
     let isMenuOpen = false;
-    let lastScroll = 0;
     
-    // ==================== HEADER SCROLL ====================
     function updateHeader() {
       if (!header) return;
       const currentScroll = window.pageYOffset;
       
-      // Agregar/quitar clase scrolled basado en scroll
-      if (currentScroll > 10) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
+      if (!isMenuOpen) {
+        if (currentScroll > 30) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
       }
       
-      // Actualizar barra de progreso
       if (progressBar) {
         const scrollPercent = (currentScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         progressBar.style.width = scrollPercent + '%';
       }
       
-      lastScroll = currentScroll;
       ticking = false;
     }
     
@@ -218,74 +248,72 @@ const navLinks = [
       }
     });
     
-    // ==================== MENÚ MÓVIL ====================
-    function toggleMenu() {
-      if (!menuBtn || !mobileMenu) return;
+    // ==================== LÓGICA DE APERTURA Y CIERRE ====================
+    function openMenu() {
+      if (!mobileMenu || !menuOverlay) return;
       
-      isMenuOpen = !isMenuOpen;
+      isMenuOpen = true;
+      mobileMenu.classList.add('open');
+      menuOverlay.classList.add('open');
+      document.body.classList.add('menu-open');
       
-      if (isMenuOpen) {
-        mobileMenu.classList.remove('hidden');
-        menuBtn.innerHTML = `
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        `;
-        document.body.style.overflow = 'hidden';
-      } else {
-        mobileMenu.classList.add('hidden');
-        menuBtn.innerHTML = `
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        `;
-        document.body.style.overflow = '';
+      if (header) {
+        header.classList.add('menu-open', 'scrolled');
       }
     }
     
-    if (menuBtn) {
-      menuBtn.addEventListener('click', toggleMenu);
+    function closeMenu() {
+      if (!mobileMenu || !menuOverlay) return;
+      
+      isMenuOpen = false;
+      mobileMenu.classList.remove('open');
+      menuOverlay.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      
+      if (header) {
+        header.classList.remove('menu-open');
+        if (window.pageYOffset <= 30) {
+          header.classList.remove('scrolled');
+        }
+      }
     }
     
-    // Cerrar menú móvil al hacer clic en un link
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+    if (menuOverlay) menuOverlay.addEventListener('click', closeMenu);
+    
+    // Cerrar menú y scroll suave al hacer click en links del drawer
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
     mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (isMenuOpen && mobileMenu) {
-          mobileMenu.classList.add('hidden');
-          if (menuBtn) {
-            menuBtn.innerHTML = `
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            `;
-          }
-          document.body.style.overflow = '';
-          isMenuOpen = false;
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          closeMenu();
+          setTimeout(() => {
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 300);
+        } else {
+          closeMenu();
         }
       });
     });
     
-    // ==================== CIERRE AUTOMÁTICO AL REDIMENSIONAR ====================
     window.addEventListener('resize', () => {
-      if (window.innerWidth >= 768 && isMenuOpen && mobileMenu && menuBtn) {
-        mobileMenu.classList.add('hidden');
-        menuBtn.innerHTML = `
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        `;
-        document.body.style.overflow = '';
-        isMenuOpen = false;
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        closeMenu();
       }
     });
     
-    // ==================== DESTACAR LINK ACTIVO ====================
+    // ==================== HIGHLIGHT LINK ACTIVO ====================
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
     
     function highlightActiveLink() {
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 90;
       
       sections.forEach((section) => {
         const sectionElement = section as HTMLElement;
@@ -296,12 +324,12 @@ const navLinks = [
         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
           navLinks.forEach((link) => {
             const anchor = link as HTMLAnchorElement;
-            anchor.classList.remove('text-white', 'font-bold');
+            anchor.classList.remove('text-white', 'font-bold', 'bg-white/10');
             anchor.classList.add('text-white/80');
             
             if (anchor.getAttribute('href') === `#${sectionId}`) {
               anchor.classList.remove('text-white/80');
-              anchor.classList.add('text-white', 'font-bold');
+              anchor.classList.add('text-white', 'font-bold', 'bg-white/10');
             }
           });
         }
@@ -310,9 +338,6 @@ const navLinks = [
     
     window.addEventListener('scroll', highlightActiveLink);
     highlightActiveLink();
-    
-    // Llamar al inicio para asegurar estado correcto
     updateHeader();
-    
   })();
 </script>
