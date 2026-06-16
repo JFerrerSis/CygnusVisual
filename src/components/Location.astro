@@ -1,54 +1,63 @@
 ---
-const t = Astro.props.t;
+const { t } = Astro.props;
 ---
 
-<section id="location" class="py-20 bg-white">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-azul-rey mb-4">
-        {t.location.title}
+<section id="location" class="py-24 bg-gray-50">
+  <div class="container mx-auto px-6 max-w-7xl">
+    
+    <!-- Encabezado -->
+    <div class="mb-16">
+      <h2 class="text-5xl font-black text-gray-900 tracking-tighter mb-4">
+        {t.location.title || "UBICACIÓN"}<span class="text-blue-600">.</span>
       </h2>
+      <p class="text-blue-600 font-black uppercase tracking-[0.2em] text-[10px]">
+        ¿DÓNDE ENCONTRARNOS?
+      </p>
     </div>
     
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="location-info space-y-4">
-        <div class="flex items-start space-x-3">
-          <svg class="w-6 h-6 text-azul-rey mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-          </svg>
+    <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+      
+      <!-- Info Box con brillo LED -->
+      <div class="bg-white p-8 rounded-[2.5rem] border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)] flex flex-col justify-center space-y-8">
+        
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
           <div>
-            <p class="font-semibold text-gray-800">Dirección</p>
-            <p class="text-gray-600">{t.location.address}</p>
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Dirección</p>
+            <p class="font-bold text-gray-900 leading-tight">Sector El Amparo, Maracaibo, Zulia, Venezuela.</p>
           </div>
         </div>
         
-        <div class="flex items-start space-x-3">
-          <svg class="w-6 h-6 text-azul-rey mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
           <div>
-            <p class="font-semibold text-gray-800">Horario</p>
-            <p class="text-gray-600">{t.location.schedule}</p>
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Horario</p>
+            <p class="font-bold text-gray-900 leading-tight">Lunes a Viernes: 08:00 AM - 05:00 PM</p>
           </div>
         </div>
         
         <a 
-          href={t.location.mapLink}
+          href="https://maps.app.goo.gl/TU_ENLACE_AQUI"
           target="_blank"
-          class="inline-block bg-azul-rey text-white px-6 py-2 rounded-lg hover:bg-azul-rey-oscuro transition-colors mt-4"
+          class="block text-center bg-gray-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-blue-600 transition-all shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
         >
-          Ver en Google Maps →
+          Abrir en Maps
         </a>
       </div>
       
-      <div class="location-map bg-gray-200 rounded-lg h-64 md:h-auto">
+      <!-- Mapa con borde LED -->
+      <div class="bg-white p-3 rounded-[2.5rem] border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)] overflow-hidden">
         <iframe 
-          src="https://maps.google.com/maps?q=Av.+Principal+123&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          class="w-full h-full rounded-lg"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.1192809117195!2d-71.6565157!3d10.6698668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e899986b2d2f78b%3A0x6d9f95d52a234a6e!2sEl%20Amparo%2C%20Maracaibo%2C%20Zulia!5e0!3m2!1ses!2sve!4v1684346714013!5m2!1ses!2sve"
+          class="w-full h-full min-h-[300px] rounded-[1.8rem]"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
       </div>
     </div>
   </div>
