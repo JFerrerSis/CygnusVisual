@@ -1,11 +1,7 @@
 ---
-// 1. Recibimos la prop original de traducciones desde el index
 const { t } = Astro.props;
-
-// 2. Extraemos el bloque "about" de forma segura
 const jsonAbout = t?.about || {};
 
-// Separamos los títulos del cuerpo de la misión/visión para mantener la UX limpia con iconos individuales
 const missionText = jsonAbout.mission || "Misión: Democratizar el acceso a contenido visual de alta calidad.";
 const visionText = jsonAbout.vision || "Visión: Ser referentes en innovación visual en Latinoamérica.";
 
@@ -14,103 +10,55 @@ const visionBody = visionText.includes("Visión:") ? visionText.split("Visión:"
 ---
 
 <section id="about" class="py-28 bg-white relative overflow-hidden">
-  
-  <div class="absolute inset-0 pointer-events-none opacity-40 select-none">
-    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-gradient-to-tr from-azul-rey/5 to-transparent rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+  <div class="container mx-auto px-6 max-w-7xl relative z-10">
     
-    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-16 items-center">
       
-      <div class="lg:col-span-6 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10">
-          <span class="w-1.5 h-1.5 bg-azul-rey rounded-full animate-pulse"></span>
-          <span class="text-xs font-bold text-azul-rey uppercase tracking-widest">{t?.nav?.about || 'Nosotros'}</span>
+      <!-- Lado Izquierdo: Texto -->
+      <div class="lg:col-span-5 space-y-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 rounded-full border border-blue-100">
+          <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+          <span class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">{t?.nav?.about || 'Nosotros'}</span>
         </div>
         
-        <h2 class="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight leading-[1.1]">
-          {jsonAbout.title || 'Sobre Nosotros'}
+        <h2 class="text-5xl md:text-6xl font-black text-gray-900 tracking-tighter leading-[0.95]">
+          {jsonAbout.title || 'Sobre Nosotros'}<span class="text-blue-600">.</span>
         </h2>
         
-        <div class="w-16 h-1 bg-azul-rey rounded-full"></div>
-        
-        <p class="text-gray-600 text-lg leading-relaxed font-medium">
-          {jsonAbout.description || 'En Cygnus Visual combinamos tecnología de vanguardia con creatividad ilimitada...'}
+        <p class="text-gray-500 text-lg leading-relaxed font-medium">
+          {jsonAbout.description || 'En Cygnus Visual combinamos tecnología de vanguardia con creatividad ilimitada.'}
         </p>
 
-        <div class="pt-4 hidden lg:block">
-          <a 
-            href="#portfolio" 
-            class="group inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-xl font-semibold hover:bg-azul-rey transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-azul-rey/20"
-          >
-            <span>{t?.services?.cta || 'Conoce nuestro trabajo'}</span>
-            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </a>
-        </div>
+        <a href="#contact" id="about-cta" 
+           class="inline-flex items-center gap-3 px-10 py-5 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-700 transition-all shadow-[0_10px_30px_rgba(37,99,235,0.4)]">
+          <span>{t?.services?.cta || 'Conoce nuestro trabajo'}</span>
+        </a>
       </div>
       
-      <div class="lg:col-span-6 grid sm:grid-cols-2 lg:grid-cols-1 gap-6 w-full">
+      <!-- Lado Derecho: Tarjetas LED -->
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-8">
         
-        <div class="group bg-gray-50/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-100 hover:border-azul-rey/20 hover:bg-white hover:shadow-xl transition-all duration-500">
-          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-5 border border-gray-100 shadow-sm group-hover:bg-azul-rey/10 group-hover:border-azul-rey/20 transition-all duration-300">
-            <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 1010 10 10 10 0 00-10-10zM12 6v6l4 2"/>
-            </svg>
+        {[ { title: "Misión", body: missionBody, icon: "M12 2a10 10 0 1010 10 10 10 0 00-10-10zM12 6v6l4 2" },
+           { title: "Visión", body: visionBody, icon: "M22 12h-4l-3 9L9 3l-3 9H2" } ].map((item) => (
+          <div class="bg-white rounded-[2.5rem] p-8 border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.25)] transition-all">
+            <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 border border-blue-100">
+              <svg class="w-7 h-7 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon}/>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-black text-gray-900 mb-3 tracking-tight">{item.title}</h3>
+            <p class="text-gray-500 leading-relaxed text-sm">{item.body}</p>
           </div>
-          <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
-            {jsonAbout.mission ? "Misión" : "Misión"}
-          </h3>
-          <p class="text-gray-600 leading-relaxed text-base font-medium">
-            {missionBody}
-          </p>
-        </div>
-        
-        <div class="group bg-gray-50/60 backdrop-blur-sm rounded-2xl p-8 border border-gray-100 hover:border-azul-rey/20 hover:bg-white hover:shadow-xl transition-all duration-500">
-          <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center mb-5 border border-gray-100 shadow-sm group-hover:bg-azul-rey/10 group-hover:border-azul-rey/20 transition-all duration-300">
-            <svg class="w-6 h-6 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
-            {jsonAbout.vision ? "Visión" : "Visión"}
-          </h3>
-          <p class="text-gray-600 leading-relaxed text-base font-medium">
-            {visionBody}
-          </p>
-        </div>
+        ))}
         
       </div>
     </div>
-    
-    <div class="text-center mt-12 block lg:hidden">
-      <a 
-        href="#portfolio" 
-        class="group inline-flex items-center gap-2.5 px-7 py-3.5 bg-gray-900 text-white rounded-xl font-semibold hover:bg-azul-rey transition-all duration-300 shadow-md"
-      >
-        <span>{t?.services?.cta || 'Conoce nuestro trabajo'}</span>
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </a>
-    </div>
-    
   </div>
 </section>
 
 <script>
-  (function() {
-    const ctaButtons = document.querySelectorAll('#about a[href="#portfolio"]');
-    ctaButtons.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const portfolioSection = document.getElementById('portfolio');
-        if (portfolioSection) {
-          portfolioSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-  })();
+  document.getElementById('about-cta')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  });
 </script>

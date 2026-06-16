@@ -3,25 +3,33 @@ const { t } = Astro.props;
 const jsonTeam = t?.team || {};
 const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
 
-// Helper para sacar iniciales del rol si no hay nombre
 const getRoleInitials = (role: string) => {
   return role.split(" ").map(word => word[0]).slice(0, 2).join("").toUpperCase();
 };
 ---
 
-<section id="team" class="py-20 bg-white">
-  <div class="container mx-auto px-6">
+<section id="team" class="py-24 bg-gray-50">
+  <div class="container mx-auto px-6 max-w-7xl">
     
-    <div class="text-center max-w-xl mx-auto mb-16">
-      <h2 class="text-4xl font-black text-gray-900 mb-4">{jsonTeam.title}</h2>
-      <p class="text-azul-rey font-bold uppercase tracking-widest text-xs">{jsonTeam.subtitle}</p>
+    <div class="mb-16">
+      <h2 class="text-5xl font-black text-gray-900 tracking-tighter mb-4">
+        {jsonTeam.title || "EQUIPO"}<span class="text-blue-600">.</span>
+      </h2>
+      <p class="text-blue-600 font-black uppercase tracking-[0.2em] text-[10px]">
+        {jsonTeam.subtitle || "TALENTO HUMANO"}
+      </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+    <!-- Grid con efecto LED estático -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
       {teamMembers.map((member: any) => (
-        <div class="group bg-white border border-gray-100 p-8 rounded-[2rem] flex flex-col items-center text-center transition-all duration-500 hover:border-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.1)]">
+        <div class="bg-white p-8 rounded-[2.5rem] border-2 border-blue-500/30 
+                    shadow-[0_0_20px_rgba(37,99,235,0.1)] 
+                    flex flex-col items-center text-center transition-all">
           
-          <div class="w-20 h-20 mb-8 bg-gray-900 rounded-full flex items-center justify-center text-white font-black text-xl tracking-widest group-hover:bg-blue-600 transition-colors duration-500">
+          <!-- Icono con brillo constante -->
+          <div class="w-20 h-20 mb-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-black text-xl tracking-widest 
+                      shadow-[0_0_20px_rgba(37,99,235,0.4)]">
             {getRoleInitials(member.role)}
           </div>
 
@@ -29,7 +37,7 @@ const getRoleInitials = (role: string) => {
             {member.role}
           </h3>
           
-          <p class="text-gray-500 text-xs leading-relaxed opacity-80">
+          <p class="text-gray-500 text-[11px] leading-relaxed">
             {member.bio}
           </p>
         </div>
@@ -37,23 +45,3 @@ const getRoleInitials = (role: string) => {
     </div>
   </div>
 </section>
-
-<script>
-  import Swiper from 'swiper';
-  import { Autoplay } from 'swiper/modules';
-
-  new Swiper('.teamSwiper', {
-    modules: [Autoplay],
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: false, // Permite que se detenga al tocar
-    },
-    breakpoints: {
-      640: { slidesPerView: 2 },
-      1024: { slidesPerView: 3.5 },
-    }
-  });
-</script>

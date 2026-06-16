@@ -1,220 +1,76 @@
 ---
-// 1. Recibimos la prop original de traducciones
 const { t } = Astro.props;
-
-// 2. Extraemos el bloque del portafolio de forma segura
 const jsonPortfolio = t?.portfolio || {};
 
-// 3. Convertimos los videos del JSON de forma segura. 
-// Si viene como Objeto/Diccionario, lo transformamos en un Array limpio para el .map()
 const videosList = Array.isArray(jsonPortfolio.videos)
   ? jsonPortfolio.videos
   : (jsonPortfolio.videos ? Object.values(jsonPortfolio.videos) : []);
 
-// 4. Si el JSON está vacío en desarrollo local, usamos tu array como fallback para que no se vea vacío
 const videos = videosList.length > 0 ? videosList : [
-  {
-    id: 1,
-    title: "Reel Campaña Verano 2024",
-    category: "Instagram",
-    platform: "Instagram",
-    duration: "0:30",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    description: "Campaña de verano para marca de moda. +50k reproducciones en 7 días.",
-    stats: { views: "50k", likes: "3.2k" }
-  },
-  {
-    id: 2,
-    title: "Spot Publicitario - Marca X",
-    category: "YouTube",
-    platform: "YouTube",
-    duration: "1:15",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    description: "Spot para televisión y redes sociales. Producción completa con equipo profesional.",
-    stats: { views: "100k", comments: "500" }
-  },
-  {
-    id: 3,
-    title: "Tutorial: Tips de Marketing",
-    category: "TikTok",
-    platform: "TikTok",
-    duration: "2:45",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    description: "Contenido educativo viral. +200k reproducciones y alto engagement.",
-    stats: { views: "200k", shares: "5k" }
-  }
+  { title: "Campaña Verano 2024", category: "Social", duration: "0:30", thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Campaña de verano para marca de moda." },
+  { title: "Spot Publicitario", category: "Publicidad", duration: "1:15", thumbnail: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Producción completa para TV." },
+  { title: "Tips de Marketing", category: "Branding", duration: "2:45", thumbnail: "https://images.unsplash.com/photo-1611162616305-c69b369528b9?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Contenido viral educativo." }
 ];
 
-// Convertimos las categorías de los filtros dinámicamente si existen en el JSON
-const filterItems = Array.isArray(jsonPortfolio.filters)
-  ? jsonPortfolio.filters
-  : ["Todos", "Redes Sociales", "Publicidad", "Branding", "Motion Graphics"];
+const filterItems = Array.isArray(jsonPortfolio.filters) ? jsonPortfolio.filters : ["Todos", "Social", "Publicidad", "Branding"];
 ---
 
-<section id="portfolio" class="py-24 bg-gray-50">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<section id="portfolio" class="py-24 bg-gray-50 text-gray-900">
+  <div class="container mx-auto px-6 max-w-7xl">
     
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-azul-rey/5 rounded-full border border-azul-rey/10 mb-6">
-        <svg class="w-4 h-4 text-azul-rey" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-        </svg>
-        <span class="text-xs font-semibold text-azul-rey uppercase tracking-wider">{jsonPortfolio.badge || "Portafolio"}</span>
-      </div>
-      
-      <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-        {jsonPortfolio.title || "Nuestros"}<span class="text-azul-rey"> {jsonPortfolio.titleAccent || "Trabajos"}</span>
+    <!-- Título y Subtítulo recuperados -->
+    <div class="mb-16">
+      <h2 class="text-5xl md:text-6xl font-black mb-6 tracking-tighter">
+        {jsonPortfolio.title || "PORTFOLIO"}<span class="text-blue-600">.</span>
       </h2>
-      
-      <div class="w-20 h-1 bg-azul-rey mx-auto mb-6"></div>
-      
-      <p class="text-gray-500 text-lg max-w-2xl mx-auto">
-        {jsonPortfolio.subtitle || "Proyectos reales que han potenciado la presencia digital de nuestras marcas aliadas"}
+      <p class="text-gray-500 text-lg max-w-lg font-medium">
+        {jsonPortfolio.subtitle || "Selección de trabajos destacados realizados con estrategia y diseño."}
       </p>
     </div>
     
-    <div class="flex flex-wrap justify-center gap-3 mb-12">
+    <!-- Filtros completos -->
+    <div class="flex flex-wrap gap-3 mb-16">
       {filterItems.map((filter: any) => (
-        <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-azul-rey hover:text-white border border-gray-200 bg-white text-gray-600">
-          {typeof filter === 'object' ? filter.name || filter.title : filter}
+        <button class="px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest bg-white border-2 border-blue-500/30 text-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+          {filter}
         </button>
       ))}
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto" id="video-grid">
+    <!-- Grid con toda la información -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {videos.map((video: any) => (
-        <div class="video-card group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer" data-video-id={video.id} data-video-url={video.videoUrl || video.url} data-video-title={video.title} data-video-desc={video.description}>
-          <div class="relative aspect-video bg-gray-900 overflow-hidden">
-            <img 
-              src={video.thumbnail}
-              alt={video.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="w-16 h-16 bg-azul-rey rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                <svg class="w-8 h-8 text-white ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 3l14 9-14 9V3z"/>
-                </svg>
-              </div>
+        <div class="video-card bg-white rounded-[2.5rem] p-4 border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.25)] flex flex-col h-full" 
+             data-video-url={video.videoUrl}>
+          
+          <div class="relative aspect-[4/3] rounded-[1.8rem] overflow-hidden mb-6">
+            <img src={video.thumbnail} alt={video.title} class="w-full h-full object-cover" />
+            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-[10px] font-black px-3 py-1 rounded-full uppercase">
+              {video.category}
             </div>
-            <span class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-md">{video.duration}</span>
-            <span class="absolute top-2 left-2 bg-azul-rey/90 text-white text-xs px-2 py-1 rounded-md">{video.platform || video.category}</span>
+            <div class="absolute bottom-4 right-4 bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase shadow-[0_0_15px_rgba(37,99,235,0.6)]">
+              {video.duration}
+            </div>
           </div>
           
-          <div class="p-5">
-            <h3 class="font-bold text-gray-800 mb-2">{video.title}</h3>
-            <p class="text-gray-500 text-sm mb-3">{video.description}</p>
-            <div class="flex items-center gap-3 text-xs text-gray-400">
-              {video.stats?.views && <span class="flex items-center gap-1">📱 {video.stats.views} views</span>}
-              {video.stats?.likes && <span class="flex items-center gap-1">❤️ {video.stats.likes} likes</span>}
-              {video.stats?.comments && <span class="flex items-center gap-1">💬 {video.stats.comments}</span>}
-              {video.stats?.shares && <span class="flex items-center gap-1">🔁 {video.stats.shares} shares</span>}
-            </div>
+          <div class="px-3 pb-3 flex-grow">
+            <h3 class="font-black text-xl mb-2">{video.title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-4">{video.description}</p>
           </div>
         </div>
       ))}
     </div>
-    
-    <div class="text-center mt-12">
-      <a 
-        href="#" 
-        class="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 hover:border-azul-rey hover:text-azul-rey transition-all duration-300"
-      >
-        <span>{jsonPortfolio.moreBtn || "Ver más proyectos"}</span>
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-        </svg>
-      </a>
-    </div>
-    
   </div>
 </section>
-
-<div id="video-modal" class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4">
-  <div class="relative w-full max-w-5xl">
-    <button id="close-modal" class="absolute -top-12 right-0 text-white hover:text-azul-rey transition-colors">
-      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-    
-    <div class="aspect-video bg-black rounded-xl overflow-hidden">
-      <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
-    </div>
-    
-    <div id="modal-info" class="mt-4 text-white">
-      <h3 id="modal-title" class="text-xl font-bold"></h3>
-      <p id="modal-description" class="text-gray-400 text-sm mt-1"></p>
-    </div>
-  </div>
-</div>
-
 <script>
-  (function() {
-    const modal = document.getElementById('video-modal');
-    const iframe = document.getElementById('video-iframe') as HTMLIFrameElement | null;
-    const closeBtn = document.getElementById('close-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalDescription = document.getElementById('modal-description');
-    
-    function openModal(url: string, title: string, desc: string) {
-      if (!url) return;
-      
-      // Asegurar que lleve autoplay al abrirse en el lightbox
-      const cleanUrl = url.includes('?') ? `${url}&autoplay=1` : `${url}?autoplay=1`;
-      
-      if (modalTitle) modalTitle.textContent = title;
-      if (modalDescription) modalDescription.textContent = desc;
-      if (iframe) iframe.src = cleanUrl;
-      if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
-    }
-    
-    function closeModal() {
-      if (modal) modal.style.display = 'none';
-      if (iframe) iframe.src = '';
-      document.body.style.overflow = '';
-    }
-    
-    // Leemos los datos directamente desde los atributos data- del HTML renderizado por el JSON
-    const videoCards = document.querySelectorAll('.video-card');
-    videoCards.forEach((card) => {
-      card.addEventListener('click', () => {
-        const htmlCard = card as HTMLElement;
-        const url = htmlCard.dataset.videoUrl || '';
-        const title = htmlCard.dataset.videoTitle || '';
-        const desc = htmlCard.dataset.videoDesc || '';
-        openModal(url, title, desc);
-      });
-    });
-    
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    
-    if (modal) {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-    }
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal && modal.style.display === 'flex') {
-        closeModal();
-      }
-    });
-  })();
+  // Script para manejar el modal
+  const modal = document.getElementById('video-modal');
+  const iframe = document.getElementById('video-iframe') as HTMLIFrameElement;
+  document.querySelectorAll('.video-card').forEach(card => card.addEventListener('click', () => {
+    iframe.src = `${(card as HTMLElement).dataset.videoUrl}?autoplay=1`;
+    modal?.classList.remove('hidden'); modal?.classList.add('flex');
+  }));
+  document.getElementById('close-modal')?.addEventListener('click', () => {
+    iframe.src = ''; modal?.classList.add('hidden'); modal?.classList.remove('flex');
+  });
 </script>
-
-<style is:global>
-  .video-card {
-    cursor: pointer;
-  }
-  
-  #video-modal {
-    backdrop-filter: blur(8px);
-  }
-</style>

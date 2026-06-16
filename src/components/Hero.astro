@@ -77,7 +77,7 @@ const servicesArray = typeof t.hero?.services === 'string'
         </div>
         
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4 justify-center lg:justify-start">
-          <a 
+          <a id="hero-cont"
             href="#contact" 
             class="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-azul-rey to-azul-rey-dark rounded-full font-bold text-white text-sm sm:text-base overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-azul-rey/40 animate-fade-up animation-delay-300"
           >
@@ -392,3 +392,10 @@ const servicesArray = typeof t.hero?.services === 'string'
     }
   }
 </style>
+
+<script>
+  document.getElementById('hero-cont')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>

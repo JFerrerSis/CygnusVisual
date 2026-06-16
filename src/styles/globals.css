@@ -13,3 +13,6 @@ html, body {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+.bg-cygnus-dark {
+  background-color: #030712;
+}
