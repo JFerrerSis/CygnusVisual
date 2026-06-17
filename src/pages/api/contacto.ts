@@ -12,38 +12,38 @@ export const POST: APIRoute = async ({ request }) => {
     auth: { user: import.meta.env.SMTP_USER, pass: import.meta.env.SMTP_PASS },
   });
 
-  const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        body { font-family: sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; border-top: 4px solid #2563eb; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header { text-align: center; margin-bottom: 20px; }
-        .logo { font-size: 24px; font-weight: 900; color: #000; }
-        .logo span { color: #2563eb; }
-        .field { margin-bottom: 15px; }
-        .label { font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; }
-        .value { background: #f9fafb; padding: 10px; border-radius: 6px; margin-top: 5px; }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header"><div class="logo">CYGNUS<span>VISUAL</span></div></div>
-        <div class="field"><div class="label">Nombre</div><div class="value">${name}</div></div>
-        <div class="field"><div class="label">Correo</div><div class="value">${email}</div></div>
-        <div class="field"><div class="label">Mensaje</div><div class="value">${message.replace(/\n/g, '<br>')}</div></div>
-      </div>
-    </body>
-    </html>
-  `;
-
   try {
+    // 1. Correo para TI (Administrador)
     await transporter.sendMail({
       from: `"Cygnus Visual" <${import.meta.env.SMTP_USER}>`,
       to: import.meta.env.EMAIL_TO,
       subject: `📩 Nuevo mensaje de ${name}`,
-      html: htmlContent
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border-top: 4px solid #2563eb;">
+          <h2 style="color: #000;">CYGNUS<span>VISUAL</span></h2>
+          <p><strong>Nombre:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Mensaje:</strong><br>${message.replace(/\n/g, '<br>')}</p>
+        </div>`
+    });
+
+    // 2. Correo de CONFIRMACIÓN para el CLIENTE
+    const isEs = language === 'es';
+    await transporter.sendMail({
+      from: `"Cygnus Visual" <${import.meta.env.SMTP_USER}>`,
+      to: email,
+      subject: isEs ? '✨ ¡Hemos recibido tu mensaje!' : '✨ We received your message!',
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border-top: 4px solid #2563eb; background: #f9fafb; border-radius: 8px;">
+          <h2 style="color: #000;">CYGNUS<span>VISUAL</span></h2>
+          <p style="font-size: 16px;">${isEs ? 'Hola' : 'Hello'} <strong>${name}</strong>,</p>
+          <p>${isEs 
+            ? 'Gracias por contactarnos. Hemos recibido tu mensaje correctamente y uno de nuestros asesores te responderá a la brevedad posible.' 
+            : 'Thank you for contacting us. We have received your message and one of our advisors will get back to you as soon as possible.'}</p>
+          <p style="color: #666; font-size: 12px; margin-top: 30px;">
+            ${isEs ? 'Este es un mensaje automático, por favor no responder.' : 'This is an automated message, please do not reply.'}
+          </p>
+        </div>`
     });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
