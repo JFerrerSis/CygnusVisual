@@ -23,26 +23,26 @@ const texts = {
 
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
       
-      <form id="contact-form" class="lg:col-span-7 bg-gray-50 p-6 sm:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 shadow-[0_10px_30px_rgba(37,99,235,0.08)] space-y-5">
-        <div>
-          <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.name}</label>
-          <input type="text" class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="Nombre" />
-        </div>
-        
-        <div>
-          <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.email}</label>
-          <input type="email" class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="correo@ejemplo.com" />
-        </div>
+<form id="contact-form" class="lg:col-span-7 bg-gray-50 p-6 sm:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-gray-100 shadow-[0_10px_30px_rgba(37,99,235,0.08)] space-y-5">
+  <div>
+    <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.name}</label>
+    <input type="text" name="name" required class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="Nombre" />
+  </div>
+  
+  <div>
+    <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.email}</label>
+    <input type="email" name="email" required class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="correo@ejemplo.com" />
+  </div>
 
-        <div>
-          <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.message}</label>
-          <textarea rows="3" class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="¿En qué podemos ayudarte?"></textarea>
-        </div>
+  <div>
+    <label class="block text-[10px] sm:text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.message}</label>
+    <textarea name="message" required rows="3" class="w-full bg-white border border-gray-200 rounded-xl md:rounded-2xl py-3.5 px-4 focus:border-blue-500 transition-all outline-none text-sm" placeholder="¿En qué podemos ayudarte?"></textarea>
+  </div>
 
-        <button type="button" class="w-full bg-blue-600 text-white rounded-xl md:rounded-2xl py-4 font-black uppercase tracking-widest text-xs md:text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] hover:bg-blue-700 transition-all">
-          {texts.sendEmail}
-        </button>
-      </form>
+  <button type="submit" id="submit-form" class="w-full bg-blue-600 text-white rounded-xl md:rounded-2xl py-4 font-black uppercase tracking-widest text-xs md:text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] hover:bg-blue-700 transition-all">
+    {texts.sendEmail}
+  </button>
+</form>
 
       <div class="lg:col-span-5 space-y-6">
         
@@ -62,29 +62,50 @@ const texts = {
   </div>
 </section>
 <script>
-  (() => {
-    const whatsappBtn = document.getElementById("submit-whatsapp") as HTMLButtonElement | null;
-    const currentLang = window.location.pathname.startsWith("/en") ? "en" : "es";
-    const phoneNumber = "584141586749";
+  import Swal from 'sweetalert2'; // Importamos la librería
+  
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const btn = document.getElementById('submit-form') as HTMLButtonElement;
 
-    // Mensaje predeterminado fijo
-    const fixedMessages = {
-      es: "Hola Cygnus Visual, vi su sitio web y me gustaría obtener más información sobre sus servicios de marketing audiovisual.",
-      en: "Hello Cygnus Visual, I saw your website and I would like to get more information about your audiovisual marketing services.",
-    };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    
+    const formData = new FormData(form);
+    const data = { ...Object.fromEntries(formData.entries()), language: window.location.pathname.startsWith('/en') ? 'en' : 'es' };
 
-    const sendByWhatsApp = (): void => {
-      const message = fixedMessages[currentLang];
-      const encodedMessage = encodeURIComponent(message);
-      window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
-    };
-
-    // Solo escuchamos el botón de WhatsApp
-    if (whatsappBtn) {
-      whatsappBtn.addEventListener("click", (e: MouseEvent) => {
-        e.preventDefault();
-        sendByWhatsApp();
+    try {
+      const res = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
       });
+
+      if (!res.ok) throw new Error();
+
+      // Alerta de éxito con estilo Cygnus
+      Swal.fire({
+        title: '¡Mensaje enviado!',
+        text: 'Te responderemos lo más pronto posible.',
+        icon: 'success',
+        confirmButtonColor: '#2563eb', // El azul de tu marca
+        background: '#fff',
+        color: '#000'
+      });
+      form.reset();
+
+    } catch {
+      // Alerta de error
+      Swal.fire({
+        title: 'Oops...',
+        text: 'Algo salió mal, intenta nuevamente.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+      });
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Enviar por Email';
     }
-  })();
+  });
 </script>
