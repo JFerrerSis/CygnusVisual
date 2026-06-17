@@ -14,54 +14,56 @@ const videos = videosList.length > 0 ? videosList : [
 
 const filterItems = Array.isArray(jsonPortfolio.filters) ? jsonPortfolio.filters : ["Todos", "Social", "Publicidad", "Branding"];
 ---
-
-<section id="portfolio" class="py-24 bg-gray-50 text-gray-900">
-  <div class="container mx-auto px-6 max-w-7xl">
+<section id="portfolio" class="py-16 md:py-24 bg-gray-50 text-gray-900">
+  <div class="container mx-auto px-4 md:px-6 max-w-7xl">
     
-    <!-- Título y Subtítulo recuperados -->
-    <div class="mb-16">
-      <h2 class="text-5xl md:text-6xl font-black mb-6 tracking-tighter">
+    <div class="mb-10 md:mb-16 text-center lg:text-left">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tighter">
         {jsonPortfolio.title || "PORTFOLIO"}<span class="text-blue-600">.</span>
       </h2>
-      <p class="text-gray-500 text-lg max-w-lg font-medium">
+      <p class="text-gray-500 text-base md:text-lg max-w-lg mx-auto lg:mx-0 font-medium">
         {jsonPortfolio.subtitle || "Selección de trabajos destacados realizados con estrategia y diseño."}
       </p>
     </div>
     
-    <!-- Filtros completos -->
-    <div class="flex flex-wrap gap-3 mb-16">
+    <div class="flex overflow-x-auto gap-3 mb-12 pb-4 scrollbar-hide">
       {filterItems.map((filter: any) => (
-        <button class="px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest bg-white border-2 border-blue-500/30 text-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+        <button class="whitespace-nowrap px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest bg-white border-2 border-blue-500/30 text-blue-600 shadow-sm hover:shadow-md transition-all">
           {filter}
         </button>
       ))}
     </div>
     
-    <!-- Grid con toda la información -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       {videos.map((video: any) => (
-        <div class="video-card bg-white rounded-[2.5rem] p-4 border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.25)] flex flex-col h-full" 
+        <div class="video-card cursor-pointer group bg-white rounded-[2rem] md:rounded-[2.5rem] p-3 border-2 border-blue-500/10 hover:border-blue-500/30 shadow-lg shadow-blue-900/5 hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 flex flex-col h-full" 
              data-video-url={video.videoUrl}>
           
-          <div class="relative aspect-[4/3] rounded-[1.8rem] overflow-hidden mb-6">
-            <img src={video.thumbnail} alt={video.title} class="w-full h-full object-cover" />
-            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-[10px] font-black px-3 py-1 rounded-full uppercase">
+          <div class="relative aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-4">
+            <img src={video.thumbnail} alt={video.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-[9px] md:text-[10px] font-black px-3 py-1 rounded-full uppercase">
               {video.category}
             </div>
-            <div class="absolute bottom-4 right-4 bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase shadow-[0_0_15px_rgba(37,99,235,0.6)]">
+            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[9px] md:text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-lg">
               {video.duration}
             </div>
           </div>
           
-          <div class="px-3 pb-3 flex-grow">
-            <h3 class="font-black text-xl mb-2">{video.title}</h3>
-            <p class="text-gray-500 text-sm leading-relaxed mb-4">{video.description}</p>
+          <div class="px-2 pb-2 flex-grow">
+            <h3 class="font-black text-lg md:text-xl mb-1.5">{video.title}</h3>
+            <p class="text-gray-500 text-xs md:text-sm leading-relaxed mb-4">{video.description}</p>
           </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  /* Oculta la barra de scroll de los filtros pero permite deslizar */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
 <script>
   // Script para manejar el modal
   const modal = document.getElementById('video-modal');
