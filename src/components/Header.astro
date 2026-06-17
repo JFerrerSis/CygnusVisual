@@ -3,11 +3,10 @@ const { t = {} } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
-const isEnglish = currentPath.startsWith('/en'); // Definido correctamente
+const isEnglish = currentPath.startsWith('/en');
 
 const navData = t?.nav || {};
 
-// Definimos el tipo del objeto para que TS no se queje
 const nav: Record<string, string> = {
   home: navData.home || (isSpanish ? 'Inicio' : 'Home'),
   services: navData.services || (isSpanish ? 'Servicios' : 'Services'),
@@ -24,18 +23,18 @@ const navLinks = [
   { id: 'portfolio', href: '#portfolio' },
   { id: 'about', href: '#about' },
   { id: 'team', href: '#team' },
-  { id: 'location', href: '#location' },
   { id: 'contact', href: '#contact' }
 ];
 ---
 
 <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent overflow-x-hidden">
   <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center h-14 sm:h-16">
+    <div class="flex justify-between items-center h-16 sm:h-20">
       
-      <a href={isSpanish ? '/es' : '/en'} class="text-white font-bold text-lg sm:text-xl tracking-wide">
-        Cygnus<span class="text-gray-200 font-medium">Visual</span>
-      </a>
+      <a href={isSpanish ? '/es' : '/en'} class="flex items-center">
+  <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-light" class="h-14 w-auto transition-all block logo-switch" />
+  <img src="/assets/logoazuloscuro.webp" alt="Cygnus Visual" id="logo-dark" class="h-14 w-auto transition-all hidden logo-switch" />
+</a>
       
       <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
         {navLinks.map((link) => (
@@ -54,7 +53,7 @@ const navLinks = [
           <a href="/en" class={`px-2.5 py-1 text-xs font-bold rounded-full transition-all ${isEnglish ? 'text-azul-rey bg-white shadow-sm' : 'text-white/80'}`}>EN</a>
         </div>
         
-        <button id="menu-btn" class="md:hidden w-10 h-10 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Abrir menú">
+        <button id="menu-btn" class="md:hidden w-10 h-10 rounded-xl hover:bg-white/10 transition-all flex items-center justify-center">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
@@ -112,6 +111,7 @@ const navLinks = [
       overlay?.classList.add('open');
       document.body.classList.add('menu-open');
     } else {
+      menu?.classList.remove('base');
       menu?.classList.remove('open');
       overlay?.classList.remove('open');
       document.body.classList.remove('menu-open');
@@ -123,14 +123,11 @@ const navLinks = [
   overlay?.addEventListener('click', () => toggleMenu(false));
 
   window.addEventListener('scroll', () => {
-    // Scroll header
     header?.classList.toggle('scrolled', window.scrollY > 30);
-    // Progress bar
     const scroll = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
     if (progressBar) progressBar.style.width = (scroll * 100) + '%';
   });
 
-  // Cerrar al clickear links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', () => toggleMenu(false));
   });

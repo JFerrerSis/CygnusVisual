@@ -4,17 +4,16 @@ const isSpanish = currentPath.startsWith("/es") || currentPath === "/";
 const currentLang = isSpanish ? "es" : "en";
 
 const texts = {
-  es: { title: "Contacto", subtitle: "¿Listo para potenciar tu marca? Escríbenos", name: "Nombre completo", email: "Correo electrónico", message: "Mensaje", sendEmail: "Enviar por Email", sendWhatsapp: "Enviar por WhatsApp", sending: "Enviando..." },
-  en: { title: "Contact", subtitle: "Ready to boost your brand? Write to us", name: "Full name", email: "Email address", message: "Message", sendEmail: "Send by Email", sendWhatsapp: "Send by WhatsApp", sending: "Sending..." },
+  es: { title: "Contacto", subtitle: "¿Listo para potenciar tu marca? Escríbenos", name: "Nombre completo", email: "Correo electrónico", message: "Mensaje", sendEmail: "Enviar por Email", sendWhatsapp: "Enviar por WhatsApp" },
+  en: { title: "Contact", subtitle: "Ready to boost your brand? Write to us", name: "Full name", email: "Email address", message: "Message", sendEmail: "Send by Email", sendWhatsapp: "Send by WhatsApp" },
 }[currentLang];
 ---
 
-<section id="contact" class="py-24 bg-gray-50">
+<section id="contact" class="py-24 bg-white">
   <div class="container mx-auto px-6 max-w-7xl">
     
-    <!-- Encabezado -->
     <div class="mb-16">
-      <h2 class="text-5xl font-black text-gray-900 tracking-tighter mb-4">
+      <h2 class="text-5xl font-black text-gray-950 tracking-tighter mb-4">
         {texts.title}<span class="text-blue-600">.</span>
       </h2>
       <p class="text-blue-600 font-black uppercase tracking-[0.2em] text-[10px]">
@@ -24,53 +23,51 @@ const texts = {
 
     <div class="grid lg:grid-cols-2 gap-12">
       
-      <!-- Formulario con borde LED -->
-      <form id="contact-form" class="bg-white p-8 rounded-[2.5rem] border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)] space-y-6">
+      <!-- Formulario con sombra azul fija -->
+      <form id="contact-form" class="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-[0_10px_30px_rgba(37,99,235,0.15)] space-y-6">
         <div>
           <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.name}</label>
-          <input type="text" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="Nombre" />
+          <input type="text" class="w-full bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="Nombre" />
         </div>
         
         <div>
           <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.email}</label>
-          <input type="email" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="correo@ejemplo.com" />
+          <input type="email" class="w-full bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="correo@ejemplo.com" />
         </div>
 
         <div>
           <label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">{texts.message}</label>
-          <textarea rows="3" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="¿En qué podemos ayudarte?"></textarea>
+          <textarea rows="3" class="w-full bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:border-blue-500 transition-all outline-none" placeholder="¿En qué podemos ayudarte?"></textarea>
         </div>
 
-        <button type="button" class="w-full bg-blue-600 text-white rounded-2xl py-4 font-black uppercase tracking-widest shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:bg-blue-700 transition-all">
+        <button type="button" class="w-full bg-blue-600 text-white rounded-2xl py-4 font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:bg-blue-700 transition-all">
           {texts.sendEmail}
         </button>
       </form>
 
       <!-- Información de Contacto -->
       <div class="space-y-6">
-        <!-- WhatsApp -->
-        <div class="bg-white p-8 rounded-[2.5rem] border-2 border-green-500/30 shadow-[0_0_30px_rgba(22,163,74,0.1)] flex items-center justify-between">
+        
+        <!-- WhatsApp con sombra azul fija -->
+        <div class="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-[0_10px_30px_rgba(37,99,235,0.15)] flex items-center justify-between">
           <div>
-            <h3 class="font-black text-gray-900">WhatsApp</h3>
-            <p class="text-xs text-gray-500 font-bold uppercase tracking-widest">Respuesta inmediata</p>
+            <h3 class="font-black text-gray-950">WhatsApp</h3>
           </div>
-          <button id="submit-whatsapp" class="bg-green-600 text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-700 transition-all shadow-[0_5px_15px_rgba(22,163,74,0.3)]">
+          <button id="submit-whatsapp" class="bg-green-600 text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest shadow-[0_10px_20px_rgba(22,163,74,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:bg-blue-600 transition-all">
             {texts.sendWhatsapp}
           </button>
         </div>
 
-        <!-- Email Directo -->
-        <div class="bg-white p-8 rounded-[2.5rem] border-2 border-blue-500/30 shadow-[0_0_30px_rgba(37,99,235,0.1)]">
-          <h3 class="font-black text-gray-900 mb-1">Email Directo</h3>
-          <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-4">Respuesta en 24h</p>
-          <a href="mailto:Cygnusmedia2@gmail.com" class="text-blue-600 font-black hover:underline">Cygnusmedia2@gmail.com</a>
+        <!-- Email Directo con sombra azul fija -->
+        <div class="bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-[0_10px_30px_rgba(37,99,235,0.15)]">
+          <h3 class="font-black text-gray-950 mb-1">Email</h3>
+          <a href="mailto:Cygnusmedia2@gmail.com" class="text-blue-600 font-black hover:text-blue-800 transition-colors underline decoration-2 underline-offset-4">Cygnusmedia2@gmail.com</a>
         </div>
       </div>
       
     </div>
   </div>
 </section>
-
 <script>
   (() => {
     const whatsappBtn = document.getElementById("submit-whatsapp") as HTMLButtonElement | null;
