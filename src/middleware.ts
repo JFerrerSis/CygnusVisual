@@ -2,17 +2,20 @@
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware((context, next) => {
-  const url = context.url;
+  const { url, request } = context;
 
-  // Si ya estamos en /es o /en, no hacer nada
-  if (url.pathname !== "/") {
+  // 1. Si la ruta ya tiene idioma, dejar pasar
+  if (url.pathname.startsWith('/es') || url.pathname.startsWith('/en')) {
     return next();
   }
 
-  // Detectar idioma
-  const acceptLanguage = context.request.headers.get('accept-language') || '';
-  const preferredLang = acceptLanguage.toLowerCase().startsWith('en') ? 'en' : 'es';
+  // 2. Si es la raíz, redirigir según idioma
+  if (url.pathname === "/") {
+    const acceptLanguage = request.headers.get('accept-language') || '';
+    const preferredLang = acceptLanguage.toLowerCase().startsWith('en') ? 'en' : 'es';
+    
+    return context.redirect(`/${preferredLang}`, 302);
+  }
 
-  // Redirigir
-  return context.redirect(`/${preferredLang}`, 302);
+  return next();
 });
