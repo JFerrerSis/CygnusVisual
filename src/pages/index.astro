@@ -1,26 +1,10 @@
 ---
 // src/pages/index.astro
-export const prerender = false; // <-- OBLIGA a Netlify a procesar la redirección en el servidor al instante
-
-const acceptLanguage = Astro.request.headers.get('accept-language') || '';
-const preferredLang = acceptLanguage.toLowerCase().includes('en') ? 'en' : 'es';
-
-return Astro.redirect(`/${preferredLang}`, 302);
+// Solo necesita estar vacío o redirigir con un header 302, 
+// el middleware se encargará de todo el trabajo sucio.
 ---
-
 <!DOCTYPE html>
-<html lang={preferredLang}>
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0;url=/${preferredLang}`} />
-    <title>Cygnus Visual</title>
-    <script define:vars={{ preferredLang }}>
-        // Tercera capa de seguridad: Si el navegador frena el meta refresh, el JS lo empuja
-        if (window.location.pathname !== `/${preferredLang}`) {
-            window.location.pathname = `/${preferredLang}`;
-        }
-    </script>
-</head>
-<body class="bg-white">
-</body>
+<html>
+  <head><title>Cygnus Visual</title></head>
+  <body></body>
 </html>
