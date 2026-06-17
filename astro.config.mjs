@@ -15,7 +15,7 @@ export default defineConfig({
     defaultLocale: 'es',
     locales: ['es', 'en'],
     routing: {
-      prefixDefaultLocale: true
+      strategy: 'prefix' // Esto es más seguro para Vercel
     }
   },
 
