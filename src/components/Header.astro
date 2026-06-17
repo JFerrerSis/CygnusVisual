@@ -129,7 +129,24 @@ const navLinks = [
     // Lógica de progress-bar eliminada
   });
 
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', () => toggleMenu(false));
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Evitamos el salto brusco
+      e.preventDefault();
+      
+      const targetId = link.getAttribute('href');
+      const targetElement = targetId ? document.querySelector(targetId) : null;
+
+      if (targetElement) {
+        // Ejecuta el scroll suave
+        targetElement.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+
+      // Cerramos el menú
+      toggleMenu(false);
+    });
   });
+  
 </script>
