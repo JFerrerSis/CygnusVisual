@@ -1,15 +1,15 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import netlify from '@astrojs/netlify';
+import vercel from '@astrojs/vercel'; // Cambiamos el import
 
 export default defineConfig({
   integrations: [tailwind()],
 
-  // 1. ELIMINA por completo la línea de output o déjala como 'static'
-  output: 'static', 
+  // Vercel soporta tanto 'static' (SSG) como 'server' (SSR). 
+  // Si tu formulario SMTP necesita ejecutarse en el servidor, usa 'server'.
+  output: 'server', 
 
-  // 2. El adaptador se encarga de dejar viva tu API automáticamente
-  adapter: netlify(),
+  adapter: vercel(), // Usamos el adaptador de Vercel
 
   i18n: {
     defaultLocale: 'es',
