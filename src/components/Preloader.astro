@@ -6,7 +6,7 @@ const title = isSpanish ? 'PREPARANDO CYGNUS VISUAL...' : 'PREPARING CYGNUS VISU
 const subtitle = isSpanish ? 'Expertos en Marketing Digital' : 'Experts in Digital Marketing';
 ---
 
-<div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000a1f] transition-opacity duration-700">
+<div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000a1f] transition-opacity duration-700 pointer-events-auto">
   
   <div class="relative mb-12">
     <div class="absolute inset-0 bg-azul-rey/30 blur-3xl rounded-full scale-150 animate-pulse"></div>
@@ -38,30 +38,54 @@ const subtitle = isSpanish ? 'Expertos en Marketing Digital' : 'Experts in Digit
   }
   .animate-gradient-x { animation: gradient-x 3s linear infinite; }
 </style>
-
 <script>
+  // Función para forzar el bloqueo de scroll
+  function lockScroll() {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Función para desbloquear
+  function unlockScroll() {
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+  }
+
+  // Bloqueamos al iniciar el componente
+  lockScroll();
+
   function hidePreloader() {
     const preloader = document.getElementById('preloader');
     if (preloader) {
       preloader.style.opacity = '0';
-      setTimeout(() => { preloader.style.display = 'none'; }, 700);
+      preloader.style.pointerEvents = 'none';
+      
+      // Restauramos el scroll
+      unlockScroll();
+      
+      setTimeout(() => { 
+        preloader.style.display = 'none'; 
+      }, 700);
     }
   }
 
   window.addEventListener('load', () => {
     const progressBar = document.getElementById('progress-bar');
     if (progressBar) {
-      progressBar.style.transition = 'width 3 linear';
+      progressBar.style.transition = 'width 3s linear';
       progressBar.style.width = '100%';
     }
     setTimeout(hidePreloader, 3000);
   });
 
   window.addEventListener('beforeunload', () => {
+    // Bloqueamos nuevamente al salir
+    lockScroll();
     const preloader = document.getElementById('preloader');
     if (preloader) {
       preloader.style.display = 'flex';
       preloader.style.opacity = '1';
+      preloader.style.pointerEvents = 'auto';
     }
   });
 </script>

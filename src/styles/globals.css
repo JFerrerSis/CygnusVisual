@@ -16,3 +16,23 @@ html, body {
 .bg-cygnus-dark {
   background-color: #030712;
 }
+
+
+  /* Para navegadores basados en Webkit (Chrome, Edge, Safari) */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000a1f; /* Color de fondo del track (tu azul oscuro) */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #0033a0; /* Color de la barra (tu azul rey) */
+    border-radius: 5px;
+    border: 2px solid #000a1f; /* Espacio para que se vea integrado */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1a56d6; /* Un azul más claro al pasar el mouse */
+  }
