@@ -9,9 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/netlify": "^7.0.13",
     "@astrojs/tailwind": "^5.0.0",
-    "@astrojs/vercel": "^10.0.8",
     "astro": "^6.4.7",
     "gsap": "^3.12.0",
     "nodemailer": "^6.9.0",
@@ -19,6 +17,7 @@
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
+    "@astrojs/vercel": "^10.0.8",
     "@types/nodemailer": "^6.4.0"
   },
   "overrides": {
