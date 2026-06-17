@@ -32,9 +32,9 @@ const navLinks = [
     <div class="flex justify-between items-center h-16 sm:h-20">
       
       <a href={isSpanish ? '/es' : '/en'} class="flex items-center">
-  <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-light" class="h-14 w-auto transition-all block logo-switch" />
-  <img src="/assets/logoazuloscuro.webp" alt="Cygnus Visual" id="logo-dark" class="h-14 w-auto transition-all hidden logo-switch" />
-</a>
+        <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-light" class="h-14 w-auto transition-all block" />
+        <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-dark" class="h-14 w-auto transition-all hidden" />
+      </a>
       
       <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
         {navLinks.map((link) => (
@@ -79,8 +79,7 @@ const navLinks = [
   </div>
   
   <div id="menu-overlay" class="md:hidden fixed inset-0 bg-black/60 z-40 invisible opacity-0 transition-opacity duration-300"></div>
-  <div id="progress-bar" class="absolute bottom-0 left-0 h-0.5 bg-white/50 w-0 transition-all duration-300"></div>
-</header>
+  </header>
 
 <style>
   #main-header.scrolled {
@@ -88,6 +87,11 @@ const navLinks = [
     backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
   }
+  
+  /* Lógica de cambio de logo al hacer scroll */
+  #main-header.scrolled #logo-light { display: none; }
+  #main-header.scrolled #logo-dark { display: block; }
+
   #mobile-menu {
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
@@ -103,7 +107,6 @@ const navLinks = [
   const closeBtn = document.getElementById('close-menu-btn');
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('menu-overlay');
-  const progressBar = document.getElementById('progress-bar');
 
   function toggleMenu(open: boolean) {
     if (open) {
@@ -111,7 +114,6 @@ const navLinks = [
       overlay?.classList.add('open');
       document.body.classList.add('menu-open');
     } else {
-      menu?.classList.remove('base');
       menu?.classList.remove('open');
       overlay?.classList.remove('open');
       document.body.classList.remove('menu-open');
@@ -124,8 +126,7 @@ const navLinks = [
 
   window.addEventListener('scroll', () => {
     header?.classList.toggle('scrolled', window.scrollY > 30);
-    const scroll = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    if (progressBar) progressBar.style.width = (scroll * 100) + '%';
+    // Lógica de progress-bar eliminada
   });
 
   document.querySelectorAll('a[href^="#"]').forEach(link => {

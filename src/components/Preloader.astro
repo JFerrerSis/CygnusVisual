@@ -1,0 +1,67 @@
+---
+const currentPath = Astro.url.pathname;
+const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
+
+const title = isSpanish ? 'PREPARANDO CYGNUS VISUAL...' : 'PREPARING CYGNUS VISUAL...';
+const subtitle = isSpanish ? 'Expertos en Marketing Digital' : 'Experts in Digital Marketing';
+---
+
+<div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000a1f] transition-opacity duration-700">
+  
+  <div class="relative mb-12">
+    <div class="absolute inset-0 bg-azul-rey/30 blur-3xl rounded-full scale-150 animate-pulse"></div>
+    <img src="/assets/logoico.webp" alt="Cygnus Visual" class="w-32 h-32 md:w-48 md:h-48 animate-spin-slow relative z-10 drop-shadow-[0_0_15px_rgba(0,51,160,0.5)]" />
+  </div>
+
+  <div class="w-[85%] max-w-lg">
+    <p class="text-white text-center font-bold tracking-widest text-sm md:text-base mb-3 animate-pulse">
+      {title}
+    </p>
+    
+    <div class="h-3 w-full bg-black/30 rounded-full overflow-hidden border border-white/10 backdrop-blur-sm">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-azul-rey via-blue-400 to-azul-rey bg-[length:200%_100%] animate-gradient-x rounded-full"></div>
+    </div>
+
+    <p class="mt-4 text-white/50 text-center text-xs tracking-[0.2em] uppercase">
+      {subtitle}
+    </p>
+  </div>
+</div>
+
+<style>
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .animate-spin-slow { animation: spin-slow 4s linear infinite; }
+
+  @keyframes gradient-x {
+    0% { background-position: 200% 0%; }
+    100% { background-position: -200% 0%; }
+  }
+  .animate-gradient-x { animation: gradient-x 3s linear infinite; }
+</style>
+
+<script>
+  function hidePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.style.opacity = '0';
+      setTimeout(() => { preloader.style.display = 'none'; }, 700);
+    }
+  }
+
+  window.addEventListener('load', () => {
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+      progressBar.style.transition = 'width 3 linear';
+      progressBar.style.width = '100%';
+    }
+    setTimeout(hidePreloader, 3000);
+  });
+
+  window.addEventListener('beforeunload', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.style.display = 'flex';
+      preloader.style.opacity = '1';
+    }
+  });
+</script>

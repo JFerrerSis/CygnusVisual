@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Preloader from '../components/Preloader.astro';
 import '../styles/globals.css';
 
 // Recibir el idioma y las traducciones como props
@@ -20,12 +21,11 @@ const { lang = 'es', title = 'Cygnus Visual', t } = Astro.props;
   <body class=" ">
     <Header t={t} />
     <main>
-      <slot />
+    <Preloader />  <slot />
     </main>
     <Footer />
     <WhatsAppButton />
     
     <!-- Scripts globales -->
-    <script type="module" src="/src/scripts/animations.js"></script>
   </body>
 </html>
