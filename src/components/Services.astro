@@ -5,13 +5,13 @@ const servicesData = t?.services || {};
 // Unificamos el array, poniendo primero los servicios adicionales
 const additionalItems = (servicesData.additional?.items || []).map((item: any) => ({
     ...item,
-    icon: "⚡", 
+    icon: "", 
     isMain: false
 }));
 
 const mainServices = [
-  { ...servicesData.design, icon: "🎨", isMain: true },
-  { ...servicesData.advertising, icon: "📢", isMain: true }
+  { ...servicesData.design, icon: "", isMain: true },
+  { ...servicesData.advertising, icon: "", isMain: true }
 ];
 
 // Aquí cambiamos el orden: primero los adicionales, luego los principales
