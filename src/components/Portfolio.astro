@@ -1,57 +1,37 @@
 ---
-const { t } = Astro.props;
-const jsonPortfolio = t?.portfolio || {};
+// 1. Detectar el idioma (asumiendo que tienes la misma lógica de antes)
+const lang = Astro.currentLocale || 'es'; 
+const btnText = lang === 'es' ? 'Ver Proyecto' : 'View Project';
 
-const videosList = Array.isArray(jsonPortfolio.videos)
-  ? jsonPortfolio.videos
-  : (jsonPortfolio.videos ? Object.values(jsonPortfolio.videos) : []);
-
-const videos = videosList.length > 0 ? videosList : [
-  { title: "Campaña Verano 2024", category: "Social", duration: "0:30", thumbnail: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Campaña de verano para marca de moda." },
-  { title: "Spot Publicitario", category: "Publicidad", duration: "1:15", thumbnail: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Producción completa para TV." },
-  { title: "Tips de Marketing", category: "Branding", duration: "2:45", thumbnail: "https://images.unsplash.com/photo-1611162616305-c69b369528b9?q=80&w=800", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", description: "Contenido viral educativo." }
+const portfolioImages = [
+  { src: "/assets/portfolio/5.png", title: "Proyecto A", category: "Social" },
+  { src: "/assets/portfolio/6.png", title: "Proyecto B", category: "Branding" },
+  { src: "/assets/portfolio/7.png", title: "Proyecto A", category: "Social" },
+  { src: "/assets/portfolio/8.png", title: "Proyecto B", category: "Branding" },
 ];
-
-const filterItems = Array.isArray(jsonPortfolio.filters) ? jsonPortfolio.filters : ["Todos", "Social", "Publicidad", "Branding"];
 ---
-<section id="portfolio" class="py-16 md:py-24 bg-gray-50 text-gray-900">
-  <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+
+<section id="portfolio" class="py-24 bg-gray-100">
+  <div class="container mx-auto px-6 max-w-6xl">
     
-    <div class="mb-10 md:mb-16 text-center lg:text-left">
-      <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-tighter">
-        {jsonPortfolio.title || "PORTFOLIO"}<span class="text-blue-600">.</span>
+    <div class="mb-20 text-center lg:text-left">
+      <h2 class="text-6xl md:text-7xl font-black mb-6 tracking-tighter text-gray-900">
+        Portafolio<span class="text-blue-600">.</span>
       </h2>
-      <p class="text-gray-500 text-base md:text-lg max-w-lg mx-auto lg:mx-0 font-medium">
-        {jsonPortfolio.subtitle || "Selección de trabajos destacados realizados con estrategia y diseño."}
-      </p>
     </div>
-    
-    <div class="flex overflow-x-auto gap-3 mb-12 pb-4 scrollbar-hide">
-      {filterItems.map((filter: any) => (
-        <button class="whitespace-nowrap px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest bg-white border-2 border-blue-500/30 text-blue-600 shadow-sm hover:shadow-md transition-all">
-          {filter}
-        </button>
-      ))}
-    </div>
-    
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      {videos.map((video: any) => (
-        <div class="video-card cursor-pointer group bg-white rounded-[2rem] md:rounded-[2.5rem] p-3 border-2 border-blue-500/10 hover:border-blue-500/30 shadow-lg shadow-blue-900/5 hover:shadow-xl hover:shadow-blue-900/10 transition-all duration-300 flex flex-col h-full" 
-             data-video-url={video.videoUrl}>
-          
-          <div class="relative aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-4">
-            <img src={video.thumbnail} alt={video.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-[9px] md:text-[10px] font-black px-3 py-1 rounded-full uppercase">
-              {video.category}
-            </div>
-            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[9px] md:text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-lg">
-              {video.duration}
-            </div>
-          </div>
-          
-          <div class="px-2 pb-2 flex-grow">
-            <h3 class="font-black text-lg md:text-xl mb-1.5">{video.title}</h3>
-            <p class="text-gray-500 text-xs md:text-sm leading-relaxed mb-4">{video.description}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {portfolioImages.map((item) => (
+        <div class="portfolio-item group relative overflow-hidden rounded-[2.5rem] cursor-pointer" data-src={item.src}>
+          <img 
+            src={item.src} 
+            alt={item.title} 
+            class="w-full h-auto block transition-transform duration-700 group-hover:scale-105" 
+          />
+          <div class="absolute inset-0 bg-blue-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <span class="text-white font-black tracking-widest uppercase bg-blue-600 px-8 py-3 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
+              {btnText}
+            </span>
           </div>
         </div>
       ))}
@@ -59,20 +39,37 @@ const filterItems = Array.isArray(jsonPortfolio.filters) ? jsonPortfolio.filters
   </div>
 </section>
 
-<style>
-  /* Oculta la barra de scroll de los filtros pero permite deslizar */
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-</style>
+<div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/90 items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+  <button id="close-modal" class="absolute top-8 right-8 text-white text-4xl hover:text-blue-500 transition-colors">&times;</button>
+  <img id="lightbox-img" src="" class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl" />
+</div>
+
 <script>
-  // Script para manejar el modal
-  const modal = document.getElementById('video-modal');
-  const iframe = document.getElementById('video-iframe') as HTMLIFrameElement;
-  document.querySelectorAll('.video-card').forEach(card => card.addEventListener('click', () => {
-    iframe.src = `${(card as HTMLElement).dataset.videoUrl}?autoplay=1`;
-    modal?.classList.remove('hidden'); modal?.classList.add('flex');
-  }));
-  document.getElementById('close-modal')?.addEventListener('click', () => {
-    iframe.src = ''; modal?.classList.add('hidden'); modal?.classList.remove('flex');
+  // ... (tu script sigue funcionando igual)
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('close-modal');
+
+  document.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const src = item.getAttribute('data-src');
+      if (src) {
+        lightboxImg.src = src;
+        lightbox?.classList.remove('hidden');
+        lightbox?.classList.add('flex'); // Aseguramos que sea flex
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    lightbox?.classList.add('hidden');
+    lightbox?.classList.remove('flex');
+  });
+
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+    }
   });
 </script>
