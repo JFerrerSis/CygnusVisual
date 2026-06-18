@@ -40,12 +40,16 @@ const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
 
 <script>
   import { gsap } from 'gsap';
+  import { Draggable } from 'gsap/Draggable';
+
+  gsap.registerPlugin(Draggable);
 
   const wrapper = document.querySelector('#carousel-wrapper') as HTMLElement;
   
   if (wrapper) {
     const totalWidth = wrapper.scrollWidth / 2;
 
+    // 1. Animación automática
     const tl = gsap.to(wrapper, {
       x: -totalWidth,
       duration: 40,
@@ -53,6 +57,16 @@ const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
       repeat: -1,
     });
 
+    // 2. Hacer el carrusel arrastrable (Draggable)
+    Draggable.create(wrapper, {
+      type: "x",
+      bounds: { minX: -totalWidth, maxX: 0 },
+      inertia: true, // Agrega un efecto de inercia al soltar
+      onDragStart: () => tl.pause(), // Pausamos la animación al tocar
+      onDragEnd: () => tl.play(),    // Reanudamos al soltar
+    });
+
+    // 3. Pausar al pasar el mouse
     wrapper.addEventListener('mouseenter', () => tl.pause());
     wrapper.addEventListener('mouseleave', () => tl.play());
   }
