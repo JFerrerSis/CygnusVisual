@@ -36,15 +36,19 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
       
       <!-- Brand -->
-      <div class="space-y-6">
-        <div class="flex items-center gap-2">
-          <div class="w-10 h-10 bg-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-            <span class="font-black text-white text-lg">C</span>
-          </div>
-          <h3 class="text-xl font-black tracking-tighter">CYGNUS<span class="text-blue-600">VISUAL</span></h3>
-        </div>
-        <p class="text-gray-500 text-sm leading-relaxed">{t.brandDesc}</p>
-      </div>
+<div class="space-y-6">
+  <div class="flex items-center gap-3">
+    <div class="w-12 h-12 flex items-center justify-center">
+      <img 
+        src="/assets/logoprincipal.png" 
+        alt="Cygnus Visual Logo" 
+        class="w-full h-full object-contain" 
+      />
+    </div>
+    <h3 class="text-xl font-black tracking-tighter">CYGNUS<span class="text-blue-600">VISUAL</span></h3>
+  </div>
+  <p class="text-gray-500 text-sm leading-relaxed">{t.brandDesc}</p>
+</div>
       
       <!-- Servicios -->
       <div>
@@ -66,23 +70,28 @@ const currentYear = new Date().getFullYear();
       </div>
       
       <!-- Redes Sociales (Actualizado) -->
-      <div>
-        <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">{t.social}</h4>
-        <div class="flex flex-wrap gap-3">
-          {[ 
-            { url: "https://www.instagram.com/cygnusinternacional", label: "@cygnusinternacional" },
-            { url: "https://www.instagram.com/cygnustudios.ve", label: "@cygnustudios.ve" }
-          ].map(social => (
-            <a href={social.url} target="_blank" class="w-full flex items-center gap-3 bg-gray-900 border border-gray-800 p-3 rounded-2xl hover:bg-blue-600 hover:border-blue-500 transition-all group">
-              <svg class="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"></path>
-              </svg>
-              <span class="text-xs font-bold text-gray-300 group-hover:text-white truncate">{social.label}</span>
-            </a>
-          ))}
-        </div>
-      </div>
+<div>
+  <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">{t.social}</h4>
+  
+  <a 
+    href="https://www.instagram.com/cygnustudios.ve" 
+    target="_blank" 
+    class="flex items-center gap-4 group transition-transform hover:scale-105 duration-300 w-fit"
+  >
+    <div class="w-16 h-16 flex items-center justify-center">
+      <img 
+        src="/assets/logoprincipal.png" 
+        alt="Cygnus Visual Logo" 
+        class="w-full h-full object-contain" 
+      />
+    </div>
+    
+    <div class="flex flex-col">
+      <span class="text-xs font-black text-white uppercase tracking-wider">Cygnus Studios</span>
+      <span class="text-[11px] font-bold text-blue-500">@cygnustudios.ve</span>
+    </div>
+  </a>
+</div>
     </div>
   </div>
 
