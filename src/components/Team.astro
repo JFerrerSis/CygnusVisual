@@ -3,11 +3,7 @@ const { t } = Astro.props;
 const jsonTeam = t?.team || {};
 const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
 
-// 1. Detectamos el idioma actual automáticamente
-// Si tu ruta es /es/equipo, lang será 'es'. Si es /en/team, lang será 'en'.
 const lang = Astro.currentLocale || 'es'; 
-
-// 2. Definimos los textos basados en el idioma detectado
 const text = {
   founders: lang === 'es' ? 'Fundadoras' : 'Founders',
   subtitle: lang === 'es' ? 'Visión y Estrategia' : 'Vision & Strategy'
@@ -25,62 +21,34 @@ const text = {
     </p>
   </div>
 
-<div class="container mx-auto px-6 mb-24 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 max-w-5xl">
-  
-  <div class="w-full md:w-1/2 flex justify-center md:justify-end">
-    <img 
-      src="/assets/CYGNUS-LOGO.png" 
-      alt="Cygnus Logo" 
-      class="h-48 md:h-64 w-auto object-contain drop-shadow-md transition-all duration-300" 
-    />
-  </div>
-
-  <div class="w-full md:w-1/2 flex justify-center md:justify-start">
-    <div class="relative w-full max-w-[280px] p-2 bg-white rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(37,99,235,0.2)] border border-blue-50">
-      
-      <div class="absolute -top-2 left-8 w-12 h-0.5 bg-blue-500 rounded-full"></div>
-      <div class="absolute -bottom-2 right-8 w-12 h-0.5 bg-blue-500 rounded-full"></div>
-      
-      <div class="overflow-hidden rounded-[1.8rem]">
-        <img 
-          src="/assets/team/founders.jpeg" 
-          alt={text.founders} 
-          class="w-full h-auto transition-transform duration-700 hover:scale-105" 
-        />
-      </div>
-      
-      <div class="mt-4 mb-2 pl-2 text-left">
-        <h3 class="text-blue-900 font-black uppercase tracking-widest text-xs">
-          {text.founders}
-        </h3>
-        <p class="text-blue-500 font-bold text-[9px] tracking-[0.2em] uppercase mt-1">
-          {text.subtitle}
-        </p>
+  <div class="container mx-auto px-6 mb-24 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20 max-w-5xl">
+    <div class="w-full md:w-1/2 flex justify-center md:justify-end">
+      <img src="/assets/CYGNUS-LOGO.png" alt="Cygnus Logo" class="h-48 md:h-64 w-auto object-contain" />
+    </div>
+    <div class="w-full md:w-1/2 flex justify-center md:justify-start">
+      <div class="relative w-full max-w-[280px] p-2 bg-white rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(37,99,235,0.2)] border border-blue-50">
+        <div class="overflow-hidden rounded-[1.8rem]">
+          <img src="/assets/team/founders.jpeg" alt={text.founders} class="w-full h-auto transition-transform duration-700 hover:scale-105" />
+        </div>
+        <div class="mt-4 mb-2 pl-2 text-left">
+          <h3 class="text-blue-900 font-black uppercase tracking-widest text-xs">{text.founders}</h3>
+          <p class="text-blue-500 font-bold text-[9px] tracking-[0.2em] uppercase mt-1">{text.subtitle}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
-  <div class="w-full">
+
+  <div class="w-full relative">
     <div id="carousel-wrapper" class="flex gap-6 w-max px-6"> 
-      {[...teamMembers, ...teamMembers].map((member) => (
-        <div class="card-item w-[240px]"> 
+      {[...teamMembers, ...teamMembers, ...teamMembers].map((member) => (
+        <div class="card-item w-[240px] flex-shrink-0"> 
           <div class="relative bg-white rounded-[2rem] border border-blue-500 p-5 h-full shadow-[0_15px_35px_-10px_rgba(37,99,235,0.1)] flex flex-col">
             <div class="relative w-full aspect-[3/4] mb-6 overflow-hidden rounded-[1.5rem] bg-gray-100"> 
-              <img 
-                src={`/assets/team/${member.img}`} 
-                alt={member.role} 
-                class="w-full h-full object-cover object-top" 
-                onerror="this.src='/assets/azul.png'" 
-              />
+              <img src={`/assets/team/${member.img}`} alt={member.role} class="w-full h-full object-cover object-top" onerror="this.src='/assets/azul.png'" />
             </div>
             <div class="flex-grow">
-              <h3 class="text-[11px] font-black text-blue-600 uppercase tracking-widest mb-2">
-                {member.role}
-                <span class="block w-10 h-1 bg-gradient-to-r from-blue-600 to-transparent mt-2 rounded-full"></span>
-              </h3>
-              <p class="text-gray-500 text-[10px] leading-snug italic border-l-2 border-blue-200 pl-3">
-                "{member.bio}"
-              </p>
+              <h3 class="text-[11px] font-black text-blue-600 uppercase tracking-widest mb-2">{member.role}</h3>
+              <p class="text-gray-500 text-[10px] leading-snug italic border-l-2 border-blue-200 pl-3">"{member.bio}"</p>
             </div>
           </div>
         </div>
@@ -89,27 +57,45 @@ const text = {
   </div>
 </section>
 
+<style>
+  #carousel-wrapper { touch-action: pan-y; cursor: grab; }
+  #carousel-wrapper:active { cursor: grabbing; }
+</style>
+
 <script>
   import { gsap } from "gsap";
+  import { Draggable } from "gsap/Draggable";
+  gsap.registerPlugin(Draggable);
 
   const wrapper = document.querySelector("#carousel-wrapper") as HTMLElement;
 
   if (wrapper) {
-    const totalWidth = wrapper.scrollWidth / 2;
+    // Calculamos el ancho de UN SOLO bloque original
+    const singleWidth = wrapper.scrollWidth / 3;
 
+    // Animación infinita sincronizada
     const loop = gsap.to(wrapper, {
-      x: `-=${totalWidth}`,
-      duration: 60,
+      x: `-=${singleWidth}`,
+      duration: 50,
       ease: "none",
       repeat: -1,
       modifiers: {
-        x: (x) => (parseFloat(x) % totalWidth) + "px",
-      },
+        x: (x) => (parseFloat(x) % singleWidth) + "px"
+      }
     });
 
-    if (window.matchMedia("(pointer: fine)").matches) {
-      wrapper.addEventListener("mouseenter", () => loop.pause());
-      wrapper.addEventListener("mouseleave", () => loop.play());
-    }
+    Draggable.create(wrapper, {
+      type: "x",
+      onDragStart: () => loop.pause(),
+      onDragEnd: function() {
+        // Sincronizamos la posición: el % nos da la posición dentro del bloque único
+        const currentX = gsap.getProperty(wrapper, "x") as number;
+        const progress = (currentX % singleWidth) / singleWidth;
+        
+        // Reajustamos el loop a la posición donde soltamos
+        loop.progress(progress < 0 ? 1 + progress : progress);
+        loop.play();
+      }
+    });
   }
 </script>
