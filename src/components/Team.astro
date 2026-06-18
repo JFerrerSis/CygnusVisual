@@ -5,7 +5,7 @@ const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
 ---
 
 <section id="team" class="py-24 bg-slate-50 overflow-hidden">
-  <div class="container mx-auto px-6 mb-16 text-center lg:text-left">
+  <div class="container mx-auto px-6 mb-16 text-center lg:text-left max-w-7xl">
     <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter mb-4">
       {jsonTeam.title}<span class="text-blue-600">.</span>
     </h2>
@@ -14,60 +14,57 @@ const teamMembers = Array.isArray(jsonTeam.members) ? jsonTeam.members : [];
     </p>
   </div>
 
-  <div id="carousel-wrapper" class="flex gap-8 cursor-grab active:cursor-grabbing px-6">
-    {[...teamMembers, ...teamMembers].map((member) => (
-      <div class="card-item min-w-[280px] md:min-w-[320px]">
-        <div class="relative bg-white rounded-[2rem] border border-blue-100 p-6 h-full 
-                    shadow-[0_15px_35px_-10px_rgba(37,99,235,0.2)]">
-          
-          <div class="relative w-full h-64 mb-6 overflow-hidden rounded-[1.5rem]">
-            <img src={`/assets/team/${member.img}`} alt={member.role} class="w-full h-full object-contain p-2" onerror="this.src='/assets/azul.png'" />
+  <div class="w-full">
+    <div id="carousel-wrapper" class="flex gap-6 w-max px-6"> 
+      {[...teamMembers, ...teamMembers].map((member) => (
+        <div class="card-item w-[240px]"> <div class="relative bg-white rounded-[2rem] border border-blue-100 p-5 h-full shadow-[0_15px_35px_-10px_rgba(37,99,235,0.1)] flex flex-col">
+            
+            <div class="relative w-full aspect-[3/4] mb-6 overflow-hidden rounded-[1.5rem] bg-gray-100"> 
+              <img 
+                src={`/assets/team/${member.img}`} 
+                alt={member.role} 
+                class="w-full h-full object-cover object-top" 
+                onerror="this.src='/assets/azul.png'" 
+              />
+            </div>
+            
+            <div class="flex-grow">
+              <h3 class="text-[11px] font-black text-blue-600 uppercase tracking-widest mb-2">
+                {member.role}
+                <span class="block w-10 h-1 bg-gradient-to-r from-blue-600 to-transparent mt-2 rounded-full"></span>
+              </h3>
+              <p class="text-gray-500 text-[10px] leading-snug italic border-l-2 border-blue-200 pl-3">
+                "{member.bio}"
+              </p>
+            </div>
           </div>
-          
-          <h3 class="text-sm font-black text-blue-600 uppercase tracking-widest mb-4">
-            {member.role}
-            <span class="block w-16 h-1 bg-gradient-to-r from-blue-600 to-transparent mt-2 rounded-full"></span>
-          </h3>
-          
-          <p class="text-gray-500 text-[11px] leading-relaxed italic border-l-2 border-blue-200 pl-4">
-            "{member.bio}"
-          </p>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 </section>
-
 <script>
-  import { gsap } from 'gsap';
-  import { Draggable } from 'gsap/Draggable';
+  import { gsap } from "gsap";
 
-  gsap.registerPlugin(Draggable);
+  const wrapper = document.querySelector("#carousel-wrapper") as HTMLElement;
 
-  const wrapper = document.querySelector('#carousel-wrapper') as HTMLElement;
-  
   if (wrapper) {
+    // Calculamos el ancho basándonos en el scrollWidth real
     const totalWidth = wrapper.scrollWidth / 2;
 
-    // 1. Animación automática
-    const tl = gsap.to(wrapper, {
-      x: -totalWidth,
-      duration: 40,
+    const loop = gsap.to(wrapper, {
+      x: `-=${totalWidth}`,
+      duration: 60, // Ligeramente más lento para fluidez en PC
       ease: "none",
       repeat: -1,
+      modifiers: {
+        x: (x) => (parseFloat(x) % totalWidth) + "px",
+      },
     });
 
-    // 2. Hacer el carrusel arrastrable (Draggable)
-    Draggable.create(wrapper, {
-      type: "x",
-      bounds: { minX: -totalWidth, maxX: 0 },
-      inertia: true, // Agrega un efecto de inercia al soltar
-      onDragStart: () => tl.pause(), // Pausamos la animación al tocar
-      onDragEnd: () => tl.play(),    // Reanudamos al soltar
-    });
-
-    // 3. Pausar al pasar el mouse
-    wrapper.addEventListener('mouseenter', () => tl.pause());
-    wrapper.addEventListener('mouseleave', () => tl.play());
+    if (window.matchMedia("(pointer: fine)").matches) {
+      wrapper.addEventListener("mouseenter", () => loop.pause());
+      wrapper.addEventListener("mouseleave", () => loop.play());
+    }
   }
 </script>
