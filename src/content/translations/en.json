@@ -78,16 +78,36 @@
     "vision": "Vision: Be leaders in visual innovation in Latin America."
   },
   "team": {
-  "title": "Our Expert Team",
-  "subtitle": "5 specialized roles focused on your brand's growth",
-  "members": [
-    { "role": "Creative Director", "bio": "Over 10 years of experience in visual design and art direction." },
-    { "role": "Audiovisual Producer", "bio": "Expert in high-impact video production and photography." },
-    { "role": "Community Manager", "bio": "Strategic growth and community management for social networks." },
-    { "role": "Digital Strategist", "bio": "The mastermind behind your daily ad structure and performance." },
-    { "role": "Post-production Editor", "bio": "Specialist in rhythm, color grading, and persuasive sales content." }
-  ]
-},
+    "title": "Our Expert Team",
+    "subtitle": "5 specialized roles focused on your brand's growth",
+    "members": [
+      { 
+        "role": "Creative Director", 
+        "bio": "Over 10 years of experience in visual design and art direction.", 
+        "img": "disenadora-grafica.png" 
+      },
+      { 
+        "role": "Audiovisual Producer", 
+        "bio": "Expert in high-impact video production and photography.", 
+        "img": "editora-audiovisual.png" 
+      },
+      { 
+        "role": "Community Manager", 
+        "bio": "Strategic growth and community management for social networks.", 
+        "img": "community-manager.png" 
+      },
+      { 
+        "role": "Digital Strategist", 
+        "bio": "The mastermind behind your daily ad structure and performance.", 
+        "img": "social-media-manager.png" 
+      },
+      { 
+        "role": "Post-production Editor", 
+        "bio": "Specialist in rhythm, color grading, and persuasive sales content.", 
+        "img": "creadora-contenido.png" 
+      }
+    ]
+  },
   "location": {
     "title": "Our Location",
     "address": "LATAM — Operations throughout the region",

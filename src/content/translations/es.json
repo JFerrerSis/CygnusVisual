@@ -10,8 +10,16 @@
   },
   "hero": {
     "badge": "Agencia de Marketing & Producción Audiovisual",
+    "title": "CYGNUS VISUAL",
     "slogan": "Marketing Audiovisual en RRSS • Latam e Internacional™",
-    "servicesList": ["Diseño", "Branding", "Fotografía", "Vídeo", "Gestión RRSS", "Producción Audiovisual"],
+    "servicesList": [
+      "Diseño",
+      "Branding",
+      "Fotografía",
+      "Vídeo",
+      "Gestión RRSS",
+      "Producción Audiovisual"
+    ],
     "cta": "Contáctanos",
     "whatsapp": "WhatsApp",
     "badgeAgency": "AGENCIA AUDIOVISUAL",
@@ -86,33 +94,37 @@
     "mission": "Misión: Democratizar el acceso a contenido visual de alta calidad.",
     "vision": "Visión: Ser referentes en innovación visual en Latinoamérica."
   },
-"team": {
+  "team": {
     "title": "Nuestro Equipo de Expertos",
     "subtitle": "5 roles especializados dedicados a potenciar tu marca",
     "members": [
-      { 
-        "role": "Director Creativo", 
-        "bio": "Más de 10 años de experiencia en diseño visual y dirección de arte." 
+      {
+        "role": "Director Creativo",
+        "bio": "Experiencia en diseño visual y dirección de arte.",
+        "img": "disenadora-grafica.png"
       },
-      { 
-        "role": "Productor Audiovisual", 
-        "bio": "Experto en producción de video de alto impacto y fotografía profesional." 
+      {
+        "role": "Productor Audiovisual",
+        "bio": "Experto en producción de video de alto impacto y fotografía profesional.",
+        "img": "editora-audiovisual.png"
       },
-      { 
-        "role": "Community Manager", 
-        "bio": "Estrategias de crecimiento y gestión de comunidades en redes sociales." 
+      {
+        "role": "Community Manager",
+        "bio": "Estrategias de crecimiento y gestión de comunidades en redes sociales.",
+        "img": "community-manager.png"
       },
-      { 
-        "role": "Estratega Digital", 
-        "bio": "La mente maestra detrás de tu estructura de anuncios y crecimiento diario." 
+      {
+        "role": "Estratega Digital",
+        "bio": "La mente maestra detrás de tu estructura de anuncios y crecimiento diario.",
+        "img": "social-media-manager.png"
       },
-      { 
-        "role": "Editor de Post-producción", 
-        "bio": "Especialista en ritmo, corrección de color y contenido de ventas persuasivo." 
+      {
+        "role": "Editor de Post-producción",
+        "bio": "Especialista en ritmo, corrección de color y contenido de ventas persuasivo.",
+        "img": "creadora-contenido.png"
       }
     ]
-  }
-,
+  },
   "location": {
     "title": "Nuestra Ubicación",
     "address": "LATAM — Operaciones en toda la región",
