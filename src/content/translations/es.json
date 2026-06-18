@@ -99,12 +99,12 @@
     "subtitle": "5 roles especializados dedicados a potenciar tu marca",
     "members": [
       {
-        "role": "Director Creativo",
+        "role": "Disenadora Grafica",
         "bio": "Experiencia en diseño visual y dirección de arte.",
         "img": "disenadora-grafica.png"
       },
       {
-        "role": "Productor Audiovisual",
+        "role": "Editora Audiovisual",
         "bio": "Experto en producción de video de alto impacto y fotografía profesional.",
         "img": "editora-audiovisual.png"
       },
@@ -119,7 +119,7 @@
         "img": "social-media-manager.png"
       },
       {
-        "role": "Editor de Post-producción",
+        "role": "Creadora de Contenido",
         "bio": "Especialista en ritmo, corrección de color y contenido de ventas persuasivo.",
         "img": "creadora-contenido.png"
       }
