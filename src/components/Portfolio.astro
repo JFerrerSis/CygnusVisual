@@ -1,7 +1,28 @@
 ---
-// 1. Detectar el idioma (asumiendo que tienes la misma lógica de antes)
-const lang = Astro.currentLocale || 'es'; 
-const btnText = lang === 'es' ? 'Ver Proyecto' : 'View Project';
+// 1. Definimos la estructura del tipo para que TypeScript no se pierda
+interface Translation {
+  title: string;
+  subtitle: string;
+  btn: string;
+}
+
+const lang = (Astro.currentLocale === 'en' ? 'en' : 'es') as 'es' | 'en';
+
+// 2. Aplicamos el tipo al objeto
+const i18n: Record<'es' | 'en', Translation> = {
+  es: {
+    title: "Portafolio",
+    subtitle: "Nuestra selección de trabajos visuales.",
+    btn: "Ver Proyecto"
+  },
+  en: {
+    title: "Portfolio",
+    subtitle: "Our selection of visual works.",
+    btn: "View Project"
+  }
+};
+
+const t = i18n[lang];
 
 const portfolioImages = [
   { src: "/assets/portfolio/5.png", title: "Proyecto A", category: "Social" },
@@ -16,8 +37,9 @@ const portfolioImages = [
     
     <div class="mb-20 text-center lg:text-left">
       <h2 class="text-6xl md:text-7xl font-black mb-6 tracking-tighter text-gray-900">
-        Portafolio<span class="text-blue-600">.</span>
+        {t.title}<span class="text-blue-600">.</span>
       </h2>
+      <p class="text-gray-500 font-medium text-lg">{t.subtitle}</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -30,7 +52,7 @@ const portfolioImages = [
           />
           <div class="absolute inset-0 bg-blue-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
             <span class="text-white font-black tracking-widest uppercase bg-blue-600 px-8 py-3 rounded-full shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-              {btnText}
+              {t.btn}
             </span>
           </div>
         </div>
@@ -45,7 +67,7 @@ const portfolioImages = [
 </div>
 
 <script>
-  // ... (tu script sigue funcionando igual)
+  // Script para manejar el modal...
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
   const closeBtn = document.getElementById('close-modal');
@@ -56,7 +78,7 @@ const portfolioImages = [
       if (src) {
         lightboxImg.src = src;
         lightbox?.classList.remove('hidden');
-        lightbox?.classList.add('flex'); // Aseguramos que sea flex
+        lightbox?.classList.add('flex');
       }
     });
   });
