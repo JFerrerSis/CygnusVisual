@@ -21,8 +21,9 @@ const { lang = 'es', title = 'Cygnus Visual', t } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/assets/azul.webp" />
   </head>
   <body class=" ">
-    <Header t={t} />
+    
     <main>
+      <Header t={t} />
     <Preloader />  <slot />
     </main>
     <Footer />

@@ -1,12 +1,10 @@
 ---
+// ... (tu lógica de Astro se mantiene intacta)
 const { t = {} } = Astro.props;
-
 const currentPath = Astro.url.pathname;
 const isSpanish = currentPath.startsWith('/es') || currentPath === '/';
 const isEnglish = currentPath.startsWith('/en');
-
 const navData = t?.nav || {};
-
 const nav: Record<string, string> = {
   home: navData.home || (isSpanish ? 'Inicio' : 'Home'),
   services: navData.services || (isSpanish ? 'Servicios' : 'Services'),
@@ -16,7 +14,6 @@ const nav: Record<string, string> = {
   location: navData.location || (isSpanish ? 'Ubicación' : 'Location'),
   contact: navData.contact || (isSpanish ? 'Contacto' : 'Contact')
 };
-
 const navLinks = [
   { id: 'home', href: '#home' },
   { id: 'services', href: '#services' },
@@ -30,7 +27,6 @@ const navLinks = [
 <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent overflow-x-hidden">
   <div class="container mx-auto px-4">
     <div class="flex justify-between items-center h-16 sm:h-20">
-      
       <a href={isSpanish ? '/es' : '/en'} class="flex items-center">
         <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-light" class="h-14 w-auto transition-all block" />
         <img src="/assets/logoico.webp" alt="Cygnus Visual" id="logo-dark" class="h-14 w-auto transition-all hidden" />
@@ -59,46 +55,35 @@ const navLinks = [
       </div>
     </div>
   </div>
-  
-  <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-80 bg-azul-rey/95 backdrop-blur-lg z-50 shadow-2xl invisible">
-    <div class="flex flex-col h-full">
-      <div class="flex justify-between items-center px-6 py-4 border-b border-white/10">
-        <span class="text-white font-bold text-lg">Menu</span>
-        <button id="close-menu-btn" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-      <nav class="flex flex-col p-6 space-y-2">
-        {navLinks.map((link) => (
-          <a href={link.href} class="mobile-nav-link text-white/85 hover:text-white hover:bg-white/10 px-4 py-3.5 rounded-xl font-semibold transition-all">
-            {nav[link.id]}
-          </a>
-        ))}
-      </nav>
+</header>
+
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 bg-azul-rey/95 backdrop-blur-lg z-[100] shadow-2xl translate-x-full transition-transform duration-300">
+  <div class="flex flex-col h-full">
+    <div class="flex justify-between items-center px-6 py-4 border-b border-white/10">
+      <img src="/assets/logoico.webp" class="h-10 w-auto" alt="Logo" />
+      <button id="close-menu-btn" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
     </div>
+    <nav class="flex flex-col p-6 space-y-2">
+      {navLinks.map((link) => (
+        <a href={link.href} class="mobile-nav-link text-white/85 hover:text-white hover:bg-white/10 px-4 py-3.5 rounded-xl font-semibold transition-all">
+          {nav[link.id]}
+        </a>
+      ))}
+    </nav>
   </div>
-  
-  <div id="menu-overlay" class="md:hidden fixed inset-0 bg-black/60 z-40 invisible opacity-0 transition-opacity duration-300"></div>
-  </header>
+</div>
+<div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[90] invisible opacity-0 transition-opacity duration-300"></div>
 
 <style>
-  #main-header.scrolled {
-    background-color: rgba(0, 51, 160, 0.95); 
-    backdrop-filter: blur(12px);
-    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Lógica de cambio de logo al hacer scroll */
+  #main-header.scrolled { background-color: rgba(0, 51, 160, 0.95); backdrop-filter: blur(12px); box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3); }
   #main-header.scrolled #logo-light { display: none; }
   #main-header.scrolled #logo-dark { display: block; }
 
-  #mobile-menu {
-    transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
-  }
-  #mobile-menu.open { visibility: visible; transform: translateX(0); }
+  #mobile-menu.open { transform: translateX(0); }
   #menu-overlay.open { visibility: visible; opacity: 1; }
-  body.menu-open { overflow: hidden; }
+  :global(body.menu-open) { overflow: hidden; }
 </style>
 
 <script>
@@ -126,27 +111,15 @@ const navLinks = [
 
   window.addEventListener('scroll', () => {
     header?.classList.toggle('scrolled', window.scrollY > 30);
-    // Lógica de progress-bar eliminada
   });
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
-      // Evitamos el salto brusco
       e.preventDefault();
-      
       const targetId = link.getAttribute('href');
       const targetElement = targetId ? document.querySelector(targetId) : null;
-
-      if (targetElement) {
-        // Ejecuta el scroll suave
-        targetElement.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-
-      // Cerramos el menú
+      if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
       toggleMenu(false);
     });
   });
-  
 </script>
