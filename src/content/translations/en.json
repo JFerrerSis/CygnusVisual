@@ -84,28 +84,28 @@
       { 
         "role": "Content Creator", 
         "bio": "Specialist in rhythm, color grading, and persuasive sales content.", 
-        "img": "creadora-contenido.png" 
+        "img": "creadora-contenido.webp" 
       }
       ,
       { 
         "role": "Audiovisual Editor", 
         "bio": "Expert in high-impact video production and photography.", 
-        "img": "editora-audiovisual.png" 
+        "img": "editora-audiovisual.webp" 
       },
       { 
         "role": "Community Manager", 
         "bio": "Strategic growth and community management for social networks.", 
-        "img": "community-manager.png" 
+        "img": "community-manager.webp" 
       },
       { 
         "role": "Social Media Manager", 
         "bio": "The mastermind behind your daily ad structure and performance.", 
-        "img": "social-media-manager.png" 
+        "img": "social-media-manager.webp" 
       },
       { 
         "role": "Graphic designe", 
         "bio": "Experience in visual design and art direction.", 
-        "img": "disenadora-grafica.png" 
+        "img": "disenadora-grafica.webp" 
       }
     ]
   },

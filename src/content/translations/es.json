@@ -101,27 +101,27 @@
       {
         "role": "Creadora de Contenido",
         "bio": "Especialista en ritmo, corrección de color y contenido de ventas persuasivo.",
-        "img": "creadora-contenido.png"
+        "img": "creadora-contenido.webp"
       },
       {
         "role": "Editora Audiovisual",
         "bio": "Experto en producción de video de alto impacto y fotografía profesional.",
-        "img": "editora-audiovisual.png"
+        "img": "editora-audiovisual.webp"
       },
       {
         "role": "Community Manager",
         "bio": "Estrategias de crecimiento y gestión de comunidades en redes sociales.",
-        "img": "community-manager.png"
+        "img": "community-manager.webp"
       },
       {
         "role": "Estratega Digital",
         "bio": "La mente maestra detrás de tu estructura de anuncios y crecimiento diario.",
-        "img": "social-media-manager.png"
+        "img": "social-media-manager.webp"
       },
       {
         "role": "Disenadora Grafica",
         "bio": "Experiencia en diseño visual y dirección de arte.",
-        "img": "disenadora-grafica.png"
+        "img": "disenadora-grafica.webp"
       }
     ]
   },
